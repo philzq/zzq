@@ -26,22 +26,7 @@ public class UserController {
     UserMapper um;
 
     @RequestMapping("findByPage")
-    public Object findByPage(Page page, User user){
-        return um.selectPage(page, new Wrapper() {
-            @Override
-            public Object getEntity() {
-                return null;
-            }
-
-            @Override
-            public MergeSegments getExpression() {
-                return null;
-            }
-
-            @Override
-            public String getSqlSegment() {
-                return null;
-            }
-        });
-    };
+    public Object findByPage(Page page, User user) {
+        return page.setRecords(um.selectUserPage(page,user));
+    }
 }
