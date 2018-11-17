@@ -1,6 +1,7 @@
 package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 /**
  * 〈功能简述〉<br>
@@ -10,6 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @create 2018/11/17 0017
  */
 @TableName("zzq_menu")
+@Data
 public class Menu extends SuperEntity{
 
     //标题

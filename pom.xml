@@ -88,16 +88,16 @@
 
     <repositories>
         <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
+            <id>repo2</id>
+            <name>repo2</name>
             <url>http://repo2.maven.org/maven2/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
+            <id>uk</id>
+            <name>uk</name>
             <url>http://uk.maven.org/maven2/</url>
             <snapshots>
                 <enabled>true</enabled>

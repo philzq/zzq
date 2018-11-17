@@ -11,4 +11,12 @@
     <artifactId>zzq-admin</artifactId>
     <packaging>jar</packaging>
     <name>zzq-admin</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>zzq</groupId>
+            <artifactId>zzq-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

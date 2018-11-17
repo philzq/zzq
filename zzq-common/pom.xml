@@ -9,6 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zzq-common</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>zzq-common</name>
 </project>

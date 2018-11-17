@@ -1,6 +1,7 @@
 package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  * @create 2018/11/17 0017
  */
 @TableName("zzq_group")
+@Data
 public class Group extends SuperEntity{
 
     //名字

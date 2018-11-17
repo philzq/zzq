@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import zzq.entity.User;
 import zzq.mapper.UserMapper;
+import zzq.service.UserService;
+import zzq.utils.R;
 
 /**
  * 〈功能简述〉<br>
@@ -23,10 +25,17 @@ import zzq.mapper.UserMapper;
 public class UserController {
 
     @Autowired
-    UserMapper um;
+    UserService us;
 
-    @RequestMapping("findByPage")
-    public Object findByPage(Page page, User user) {
-        return page.setRecords(um.selectUserPage(page,user));
+    @RequestMapping("findOne")
+    public R findOne(User user) {
+        R r = null;
+        try {
+            r = us.findOne(user);
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error("操作失败");
+        }
+        return r;
     }
 }

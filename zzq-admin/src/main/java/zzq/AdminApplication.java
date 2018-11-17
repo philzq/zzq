@@ -2,6 +2,7 @@ package zzq;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 〈功能简述〉<br>
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create 2018/11/17 0017
  */
 @SpringBootApplication
+@EnableTransactionManagement
 public class AdminApplication {
 
     public static void main(String[] args){
