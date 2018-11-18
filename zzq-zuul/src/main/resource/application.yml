@@ -2,14 +2,10 @@ spring:
   application:
     name: zuul
   redis:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: -1s
-        min-idle: 0
-        max-idle: 8
+    database: 0
+
 server:
   port: 8666
 eureka:

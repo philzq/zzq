@@ -17,5 +17,5 @@ import zzq.utils.R;
 public interface UserService {
 
     @RequestMapping("findOne")
-    R findOne(User user);
+    R findOne(String username);
 }
