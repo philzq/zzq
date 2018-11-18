@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zzq-common</artifactId>
-    <packaging>pom</packaging>
     <name>zzq-common</name>
+
+    <properties>
+        <!--解决打包需要main函数问题，直接指向WebappsApiBidMain-->
+        <start-class>com.xx.webapps.api.main.WebappsApiBidMain</start-class>
+    </properties>
 </project>

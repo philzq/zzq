@@ -11,12 +11,4 @@
     <artifactId>zzq-eureka</artifactId>
     <packaging>jar</packaging>
     <name>zzq-eureka</name>
-
-    <dependencies>
-        <!--增加eureka-server的依赖-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-        </dependency>
-    </dependencies>
 </project>

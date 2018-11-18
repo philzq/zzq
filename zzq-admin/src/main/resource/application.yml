@@ -2,7 +2,6 @@ server:
   port: 8088
   servlet:
     context-path: /admin
-
 eureka:
   client:
     service-url:
@@ -10,6 +9,21 @@ eureka:
 
 # DATABASE CONFIG
 spring:
+  application:
+    name: admin
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1s
+        min-idle: 0
+        max-idle: 8
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
   datasource:
     name: zzq_admin
     type: com.zaxxer.hikari.HikariDataSource
@@ -23,6 +37,7 @@ spring:
       connection-timeout: 30000 #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
       idle-timeout: 600000 #一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
       max-lifetime: 1800000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟
+
 
 #mybatis
 mybatis-plus:
@@ -52,3 +67,5 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+
