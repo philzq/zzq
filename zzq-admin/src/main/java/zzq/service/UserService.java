@@ -15,11 +15,5 @@ import zzq.utils.R;
 @Transactional(readOnly = true)
 public interface UserService extends IService<User> {
 
-    /**
-     * 查询所有的用户
-     * @param user
-     * @return
-     */
-    R findOne(User user);
 
 }

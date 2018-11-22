@@ -1,7 +1,9 @@
 package zzq.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import zzq.entity.User;
@@ -22,11 +24,11 @@ public class UserController {
     @Autowired
     UserService us;
 
-    @RequestMapping("findOne")
-    public R findOne(User user) {
-        R r = null;
+    @RequestMapping("findByUsername")
+    public R findByUsername(String username) {
+        R r = new R();
         try {
-            r = us.findOne(user);
+            r.put("user",us.getOne(new QueryWrapper<User>().eq("username",username)));
         }catch (Exception e){
             e.printStackTrace();
             return R.error("操作失败");

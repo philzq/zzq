@@ -19,10 +19,4 @@ import zzq.utils.R;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    @Override
-    public R findOne(User user) {
-        R r = new R();
-        r.put("user",getOne(new QueryWrapper(user)));
-        return r;
-    }
 }
