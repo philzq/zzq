@@ -1,7 +1,9 @@
 package zzq.rpc;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import zzq.entity.User;
 import zzq.utils.R;
 
 /**
@@ -15,6 +17,6 @@ import zzq.utils.R;
 @RequestMapping("admin/user")
 public interface UserService {
 
-    @RequestMapping("findOne")
-    R findOne(String username);
+    @RequestMapping("findByUsername")
+    R findByUsername(String username);
 }
