@@ -18,12 +18,8 @@ public class Group extends SuperEntity{
     private String name;
     //父级
     private String parentId;
-    //路径
-    private String path;
-    //类型
+    //类型1部门2角色
     private String type;
-    //组类型
-    private String groupType;
     //描述
     private String description;
 }

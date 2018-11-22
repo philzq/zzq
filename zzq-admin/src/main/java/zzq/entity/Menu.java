@@ -28,8 +28,6 @@ public class Menu extends SuperEntity{
     private Integer orderNum;
     //描述
     private String description;
-    //菜单上下级关系
-    private String path;
     //启用禁用
     private String enabled;
     //是否显示
