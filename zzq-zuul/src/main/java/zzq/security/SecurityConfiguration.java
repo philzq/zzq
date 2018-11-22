@@ -57,6 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().authorizeRequests()
                 .anyRequest().authenticated()
+                .and().authorizeRequests().antMatchers("/oauth/**").permitAll()
                 //自定义登录页面
                 .and().formLogin().loginPage("/login")
                 //设置默认登录成功跳转页面
