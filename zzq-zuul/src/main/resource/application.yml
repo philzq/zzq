@@ -13,8 +13,13 @@ eureka:
     service-url:
       defaultZone: http://localhost:8888/eureka/
 
+
 zuul:
   routes:
     back:
       path: /admin/**
       serviceId: admin
+
+feign:
+  hystrix:
+    enabled: true

@@ -2,7 +2,7 @@ package zzq;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @create 2018/11/17 0017
  */
 @SpringBootApplication
-@EnableEurekaServer
+@EnableEurekaClient
 @EnableFeignClients
 @EnableZuulProxy
 public class ZuulApplication {
