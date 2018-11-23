@@ -25,14 +25,36 @@ public class UserController {
     UserService us;
 
     @RequestMapping("findByUsername")
-    public R findByUsername(String username) {
+    public R findByUsername(String username){
         R r = new R();
         try {
             r.put("user",us.getOne(new QueryWrapper<User>().eq("username",username)));
+            return r;
         }catch (Exception e){
             e.printStackTrace();
-            return R.error("操作失败");
+            return R.error();
         }
-        return r;
+    }
+
+    @RequestMapping("add")
+    public R insertOrUpdate(User user){
+        try {
+            user.insertOrUpdate();
+            return R.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error();
+        }
+    }
+
+    @RequestMapping("delete")
+    public R delete(User user){
+        try {
+            user.deleteById();
+            return R.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error();
+        }
     }
 }

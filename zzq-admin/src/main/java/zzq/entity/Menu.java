@@ -3,6 +3,8 @@ package zzq.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 〈功能简述〉<br>
  * 〈菜单〉
@@ -10,7 +12,7 @@ import lombok.Data;
  * @author zhouzhiqiang
  * @create 2018/11/17 0017
  */
-@TableName("zzq_menu")
+@TableName("system_menu")
 @Data
 public class Menu extends SuperEntity{
 
@@ -32,4 +34,8 @@ public class Menu extends SuperEntity{
     private String enabled;
     //是否显示
     private String showed;
+    //创建时间
+    private Date createTime;
+    //修改时间
+    private Date updateTime;
 }

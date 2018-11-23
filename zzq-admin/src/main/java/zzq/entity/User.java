@@ -12,7 +12,7 @@ import java.util.Date;
  * @author zhouzhiqiang
  * @create 2018/11/17 0017
  */
-@TableName("zzq_user")
+@TableName("system_user")
 @Data
 public class User extends SuperEntity{
 
@@ -38,4 +38,8 @@ public class User extends SuperEntity{
     private String status;
     //描述
     private String description;
+    //创建时间
+    private Date createTime;
+    //修改时间
+    private Date updateTime;
 }

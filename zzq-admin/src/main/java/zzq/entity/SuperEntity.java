@@ -15,22 +15,6 @@ public class SuperEntity<T extends Model> extends Model<T> {
 
     //主键id
     private String id;
-    //创建时间
-    private Date crtTime;
-    //创建人id
-    private String crtUser;
-    //创建人名字
-    private String crtName;
-    //创建人ip
-    private String crtHost;
-    //修改时间
-    private Date updTime;
-    //修改人id
-    private String updUser;
-    //修改人名字
-    private String updName;
-    //修改人ip
-    private String updHost;
 
     @Override
     protected Serializable pkVal() {
