@@ -6,12 +6,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import zzq.security.entity.BaseUserDetailService;
 
 /**
@@ -50,27 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().authorizeRequests()
-                .anyRequest().authenticated()
-                .and().authorizeRequests().antMatchers("/oauth/**").permitAll()
-                //自定义登录页面
-                .and().formLogin().loginPage("/login")
-                //设置默认登录成功跳转页面
-                .defaultSuccessUrl("/index").failureUrl("/login?error").permitAll()
-                //.and()
-                //开启cookie保存用户数据
-                //.rememberMe()
-                //设置cookie有效期
-                //.tokenValiditySeconds(60 * 60 * 24 * 7)
-                //设置cookie的私钥
-                //.key("")
-                .and()
-                .logout()
-                //默认注销行为为logout，可以通过下面的方式来修改
-                .logoutUrl("/custom-logout")
-                //设置注销成功后跳转页面，默认是跳转到登录页面
-                .logoutSuccessUrl("/")
-                .permitAll();
+    protected void configure(HttpSecurity http) throws Exception{
+        super.configure(http);
+        http.csrf().disable();
         }
+
     }

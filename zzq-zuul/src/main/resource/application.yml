@@ -5,6 +5,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 0
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
 
 server:
   port: 8666
@@ -19,6 +23,7 @@ zuul:
     back:
       path: /admin/**
       serviceId: admin
+
 
 feign:
   hystrix:
