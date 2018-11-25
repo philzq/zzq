@@ -41,7 +41,7 @@ public class UserController {
         user.setId(UUID.randomUUID().toString());
         user.setStatus("0");
         user.setCreateTime(new Date());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword("{bcrypt}"+new BCryptPasswordEncoder().encode(user.getPassword()));
         user.insert();
         return R.ok();
     }
