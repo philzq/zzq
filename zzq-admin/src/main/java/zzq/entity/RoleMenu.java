@@ -3,6 +3,8 @@ package zzq.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 〈功能简述〉<br>
  * 〈角色菜单中间表〉
@@ -15,7 +17,9 @@ import lombok.Data;
 public class RoleMenu extends SuperEntity{
 
     //角色ID
+    @NotNull
     private String roleId;
     //菜单id
+    @NotNull
     private String menuId;
 }

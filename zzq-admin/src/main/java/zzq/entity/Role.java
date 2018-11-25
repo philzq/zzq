@@ -3,6 +3,7 @@ package zzq.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,6 +18,7 @@ import java.util.Date;
 public class Role extends SuperEntity{
 
     //角色名字
+    @NotNull
     private String name;
     //备注
     private String remark;

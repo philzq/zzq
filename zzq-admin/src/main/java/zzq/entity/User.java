@@ -2,7 +2,9 @@ package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,8 +19,10 @@ import java.util.Date;
 public class User extends SuperEntity{
 
     //登录名
+    @NotNull
     private String username;
     //密码
+    @NotNull
     private String password;
     //用户名
     private String name;
