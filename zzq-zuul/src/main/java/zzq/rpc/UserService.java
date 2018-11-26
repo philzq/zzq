@@ -16,6 +16,6 @@ import zzq.utils.R;
 @FeignClient(value = "admin",fallback = UserServiceHystric.class)
 public interface UserService {
 
-    @RequestMapping("admin/user/findByUsername")
+    @RequestMapping("admin/users")
     R findByUsername(@RequestParam("username") String username);
 }

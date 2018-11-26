@@ -37,7 +37,8 @@ public class BaseUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Map<String,String> userMap = (Map)us.findByUsername(username).get("user");
+        R r = us.findByUsername(username);
+        Map<String,String> userMap = (Map)((List)r.get("user")).get(0);
         List<GrantedAuthority> authoritys = AuthorityUtils.createAuthorityList();
         authoritys.add(new SimpleGrantedAuthority("user"));
         return new User(userMap.get("username"),userMap.get("password"),authoritys);
