@@ -2,12 +2,11 @@ package zzq.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zzq.entity.User;
 import zzq.service.UserService;
 import zzq.utils.R;
@@ -23,20 +22,19 @@ import java.util.UUID;
  * @create 2018/11/17 0017
  */
 @RestController
-@RequestMapping("user")
 public class UserController {
 
     @Autowired
     UserService us;
 
-    @RequestMapping("findByUsername")
-    public R findByUsername(String username) {
+    @GetMapping("users")
+    public R findAll(User user) {
         R r = new R();
-        r.put("user", us.getOne(new QueryWrapper<User>().eq("username", username)));
+        r.put("user", user.selectList(new QueryWrapper(user)));
         return r;
     }
 
-    @RequestMapping("add")
+    @PostMapping("user")
     public R add(@Validated User user) {
         user.setId(UUID.randomUUID().toString());
         user.setStatus("0");
@@ -46,13 +44,13 @@ public class UserController {
         return R.ok();
     }
 
-    @RequestMapping("delete")
+    @DeleteMapping("user")
     public R delete(User user) {
         user.deleteById();
         return R.ok();
     }
 
-    @RequestMapping("update")
+    @PutMapping("user")
     public R update(User user){
         user.updateById();
         return R.ok();

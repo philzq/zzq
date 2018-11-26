@@ -1,8 +1,7 @@
 package zzq.controller;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zzq.entity.Role;
 import zzq.utils.R;
 
@@ -17,10 +16,9 @@ import java.util.UUID;
  * @create 2018-11-25
  */
 @RestController
-@RequestMapping("role")
 public class RoleController {
 
-    @RequestMapping("add")
+    @PostMapping("role")
     public R add(@Validated Role role) {
         role.setId(UUID.randomUUID().toString());
         role.setCreateTime(new Date());
@@ -28,13 +26,13 @@ public class RoleController {
         return R.ok();
     }
 
-    @RequestMapping("delete")
+    @DeleteMapping("role")
     public R delete(Role role) {
         role.deleteById();
         return R.ok();
     }
 
-    @RequestMapping("update")
+    @PutMapping("role")
     public R update(@Validated Role role){
         role.updateById();
         return R.ok();

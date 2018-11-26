@@ -13,4 +13,5 @@ import zzq.entity.Role;
  */
 @Transactional(readOnly = true)
 public interface RoleService extends IService<Role> {
+
 }

@@ -1,8 +1,7 @@
 package zzq.controller;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zzq.entity.Menu;
 import zzq.utils.R;
 
@@ -17,10 +16,9 @@ import java.util.UUID;
  * @create 2018-11-25
  */
 @RestController
-@RequestMapping("menu")
 public class MenuController {
 
-    @RequestMapping("add")
+    @PostMapping("menu")
     public R add(@Validated Menu menu) {
         menu.setId(UUID.randomUUID().toString());
         menu.setCreateTime(new Date());
@@ -29,13 +27,13 @@ public class MenuController {
         return R.ok();
     }
 
-    @RequestMapping("delete")
+    @DeleteMapping("menu")
     public R delete(Menu menu) {
         menu.deleteById();
         return R.ok();
     }
 
-    @RequestMapping("update")
+    @PutMapping("menu")
     public R update(@Validated Menu menu){
         menu.updateById();
         return R.ok();

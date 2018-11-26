@@ -1,8 +1,7 @@
 package zzq.controller;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zzq.entity.RoleMenu;
 import zzq.utils.R;
 
@@ -16,23 +15,22 @@ import java.util.UUID;
  * @create 2018-11-25
  */
 @RestController
-@RequestMapping("rolemenu")
 public class RoleMenuController {
 
-    @RequestMapping("add")
+    @PostMapping("rolemenu")
     public R add(@Validated RoleMenu roleMenu) {
         roleMenu.setId(UUID.randomUUID().toString());
         roleMenu.insert();
         return R.ok();
     }
 
-    @RequestMapping("delete")
+    @DeleteMapping("rolemenu")
     public R delete(RoleMenu roleMenu) {
         roleMenu.deleteById();
         return R.ok();
     }
 
-    @RequestMapping("update")
+    @PutMapping("rolemenu")
     public R update(@Validated RoleMenu roleMenu){
         roleMenu.updateById();
         return R.ok();
