@@ -1,6 +1,7 @@
 package zzq.rpc;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import zzq.rpc.impl.UserServiceHystric;
@@ -16,6 +17,6 @@ import zzq.utils.R;
 @FeignClient(value = "admin",fallback = UserServiceHystric.class)
 public interface UserService {
 
-    @RequestMapping("admin/users")
-    R findByUsername(@RequestParam("username") String username);
+    @RequestMapping("admin/users/{username}")
+    R findByUsername(@PathVariable("username") String username);
 }
