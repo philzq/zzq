@@ -41,3 +41,5 @@ client模式：
 `http://localhost:8080/order/1?access_token=56465b41-429d-436c-ad8d-613d476ff322`
 同上的响应
 `order id : 1`
+
+http://localhost:8666/oauth/token?client_id=client1&grant_type=authorization_code&code=1oCj8e&redirect_uri=http:localhost:8088/admin/users

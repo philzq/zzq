@@ -1,6 +1,7 @@
 package zzq.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
@@ -11,7 +12,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+
+import javax.sql.DataSource;
 
 /**
  * 〈功能简述〉<br>
@@ -32,32 +39,35 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
 
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean // 声明TokenStore实现
+    public JdbcTokenStore jdbcTokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
+    @Bean
+    public ClientDetailsService clientDetails() {
+        return new JdbcClientDetailsService(dataSource);
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // password 方案：支持多种编码，通过密码的前缀区分编码方式
-        String finalSecret = "{bcrypt}"+new BCryptPasswordEncoder().encode("123456");
-        //配置两个客户端,一个用于password认证一个用于client认证
-        clients.inMemory().withClient("client_1")
-                .resourceIds(DEMO_RESOURCE_ID)
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("select")
-                .authorities("oauth2")
-                .secret(finalSecret)
-                .and().withClient("client_2")
-                .resourceIds(DEMO_RESOURCE_ID)
-                .authorizedGrantTypes("password", "refresh_token")
-                .scopes("select")
-                .authorities("oauth2")
-                .secret(finalSecret);
+        //这个地方指的是从jdbc查出数据来存储
+        clients.withClientDetails(clientDetails());
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .tokenStore(new RedisTokenStore(redisConnectionFactory))
+                .tokenStore(jdbcTokenStore())
                 .authenticationManager(authenticationManager)
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-                .pathMapping("/oauth/confirm_access","/custom/confirm_access");
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        //获取令牌的是否从jdbc查 显然 这里是的
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        endpoints.tokenServices(tokenServices);
     }
 
     @Override

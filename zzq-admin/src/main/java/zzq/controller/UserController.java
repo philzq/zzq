@@ -34,6 +34,13 @@ public class UserController {
         return r;
     }
 
+    @GetMapping("users/{username}")
+    public R findByUsername(@PathVariable("username") String username){
+        R r = new R();
+        r.put("user", us.getOne(new QueryWrapper<>(new User()).eq("username",username)));
+        return r;
+    }
+
     @PostMapping("user")
     public R add(@Validated User user) {
         user.setId(UUID.randomUUID().toString());
