@@ -42,4 +42,7 @@ client模式：
 同上的响应
 `order id : 1`
 
-http://localhost:8666/oauth/token?client_id=client1&grant_type=authorization_code&code=1oCj8e&redirect_uri=http:localhost:8088/admin/users
+
+http://localhost:8666/oauth/authorize?response_type=code&client_id=client1&redirect_uri=https://www.baidu.com
+
+http://localhost:8666/oauth/token?code=OFuqG8&client_id=client1&client_secret=123456&grant_type=authorization_code&redirect_uri=https://www.baidu.com
