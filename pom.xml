@@ -29,6 +29,7 @@
         <java.version>1.8</java.version>
         <mysql-connector-java.version>8.0.13</mysql-connector-java.version>
         <spring-cloud.version>Greenwich.M1</spring-cloud.version>
+        <springfox-swagger2-version>2.9.2</springfox-swagger2-version>
     </properties>
 
     <dependencyManagement>
@@ -79,6 +80,17 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+        <!--swagger2-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger2-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger2-version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -92,6 +104,15 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>aliyunPublic</id>
+            <name>aliyunPublic</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
