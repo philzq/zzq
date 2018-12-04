@@ -2,6 +2,8 @@ package zzq.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import zzq.security.entity.BaseUserDetailService;
 
 /**
@@ -47,9 +50,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        super.configure(http);
-        http.csrf().disable();
-        }
-
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/","/home","/login").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/login")
+                .failureHandler((req,resp,auth)->{
+                    resp.sendRedirect("/login?error");
+                })
+                .successHandler((req, resp, auth) -> {
+                    resp.sendRedirect("/home");
+                })
+                .and().logout().logoutUrl("/logout")
+                .logoutSuccessHandler((req, resp, auth) -> {
+                    resp.sendRedirect("Referer");
+                })
+                .and().csrf().disable();
     }
+
+}
