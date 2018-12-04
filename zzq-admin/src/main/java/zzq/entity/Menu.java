@@ -1,6 +1,8 @@
 package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,33 +17,45 @@ import java.util.Date;
  */
 @TableName("system_menu")
 @Data
+@ApiModel(description = "菜单实体类")
 public class Menu extends SuperEntity{
 
-    //标题
     @NotNull
+    @ApiModelProperty("标题")
     private String title;
-    //父级节点
+
     @NotNull
+    @ApiModelProperty("父级节点")
     private String parentId;
-    //权限标识
+
+    @ApiModelProperty("权限标识")
     private String permission;
-    //资源路径
+
     @NotNull
+    @ApiModelProperty("资源路径")
     private String href;
-    //图标
+
+    @ApiModelProperty("图标")
     private String icon;
-    //排序
+
+    @NotNull
+    @ApiModelProperty("排序")
     private Integer orderNum;
-    //描述
+
     @NotNull
+    @ApiModelProperty("描述")
     private String description;
-    //启用禁用
+
+    @ApiModelProperty("启用禁用0禁用1启用")
     private String enabled;
-    //是否显示
+
     @NotNull
+    @ApiModelProperty("是否显示0不显示1显示")
     private String showed;
-    //创建时间
+
+    @ApiModelProperty("创建时间")
     private Date createTime;
-    //修改时间
+
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 }

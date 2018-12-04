@@ -1,6 +1,8 @@
 package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -14,12 +16,14 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @TableName("system_user_role")
+@ApiModel(description = "用户角色中间表")
 public class UserRole extends SuperEntity{
 
-    //用户id
     @NotNull
+    @ApiModelProperty(value = "用户id")
     private String userId;
-    //角色id
+
     @NotNull
+    @ApiModelProperty(value = "角色id")
     private String roleId;
 }

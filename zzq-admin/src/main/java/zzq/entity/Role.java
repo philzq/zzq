@@ -1,7 +1,11 @@
 package zzq.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -15,15 +19,19 @@ import java.util.Date;
  */
 @TableName("system_role")
 @Data
+@ApiModel(description = "角色实体类")
 public class Role extends SuperEntity{
 
-    //角色名字
     @NotNull
+    @ApiModelProperty(value = "角色名字")
     private String name;
-    //备注
+
+    @ApiModelProperty(value = "备注")
     private String remark;
-    //创建时间
+
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
-    //修改时间
+
+    @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 }

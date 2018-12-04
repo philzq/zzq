@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 public class SuperEntity<T extends Model> extends Model<T> {
 
-    //主键id
+    @ApiModelProperty(value = "主键id")
     private String id;
 
     @Override
