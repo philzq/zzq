@@ -67,3 +67,5 @@ mybatis-plus:
     cache-enabled: false
 
 
+logging:
+  config: classpath:logback.xml
