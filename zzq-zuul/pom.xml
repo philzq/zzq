@@ -29,19 +29,19 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <!--<exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>org.springframework.security.oauth</groupId>
                     <artifactId>spring-security-oauth2</artifactId>
                 </exclusion>
-            </exclusions>-->
+            </exclusions>
         </dependency>
         <!--解决使用RedisTokenStore依赖问题引起的启动报错问题-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.3.RELEASE</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
