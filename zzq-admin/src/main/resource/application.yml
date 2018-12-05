@@ -66,6 +66,3 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-
-logging:
-  config: classpath:logback.xml
