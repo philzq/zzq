@@ -64,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 })
                 .and().logout().logoutUrl("/logout")
                 .logoutSuccessHandler((req, resp, auth) -> {
-                    resp.sendRedirect("Referer");
+                    resp.sendRedirect("/login");
                 })
                 .and().csrf().disable();
     }
