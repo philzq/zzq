@@ -27,7 +27,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       jdbc-url: jdbc:mysql://localhost:3306/zzq_admin?characterEncoding=UTF-8&allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: root
       minimum-idle: 10 #连接池中允许的最小连接数
