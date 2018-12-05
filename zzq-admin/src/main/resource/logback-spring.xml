@@ -33,8 +33,6 @@
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${LOG_PATH}/${APP_DIR}/log_error.log</file>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 归档的日志文件的路径，例如今天是2017-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。
@@ -63,8 +61,6 @@
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEWARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${LOG_PATH}/${APP_DIR}/log_warn.log</file>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 归档的日志文件的路径，例如今天是2017-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。
@@ -93,8 +89,6 @@
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${LOG_PATH}/${APP_DIR}/log_info.log</file>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 归档的日志文件的路径，例如今天是2017-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。
@@ -123,8 +117,6 @@
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEDEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${LOG_PATH}/${APP_DIR}/log_debug.log</file>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 归档的日志文件的路径，例如今天是2017-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。
@@ -165,8 +157,10 @@
     <logger name="java.sql.Statement" level="debug" />
     <logger name="java.sql.PreparedStatement" level="debug" />
     <logger name="java.sql.ResultSet" level="debug" />
-
     <logger name="org.springframework" level="WARN" />
+
+    <!--sql 打印-->
+    <logger name="zzq.mapper" level="DEBUG" />
 
     <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
     <root level="INFO">
