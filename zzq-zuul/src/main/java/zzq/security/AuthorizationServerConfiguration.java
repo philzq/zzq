@@ -47,12 +47,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private DataSource dataSource;
 
-    // 声明TokenStore实现
-    /*@Bean
-    public JdbcTokenStore jdbcTokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }*/
-
     @Bean
     public ClientDetailsService clientDetails() {
         return new JdbcClientDetailsService(dataSource);
@@ -71,10 +65,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(accessTokenConverter())
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
-        /*DefaultTokenServices tokenServices = new DefaultTokenServices();
-        //获取令牌的是否从jdbc查 显然 这里是的
-        tokenServices.setTokenStore(endpoints.getTokenStore());
-        endpoints.tokenServices(tokenServices);*/
     }
 
     @Override
