@@ -68,18 +68,4 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-security:
-  oauth2:
-    client:
-      client-id: client1
-      client-secret: 123456
-      access-token-uri: http://10.40.110.183:8666/oauth/token
-      user-authorization-uri: http://10.40.110.183:8666/oauth/authorize
-      scope: read
-      use-current-uri: false
-      registered-redirect-uri: https://www.baidu.com
-    resource:
-      prefer-token-info: false
-      user-info-uri: http://10.40.110.183:8666/auth/user
-
 
