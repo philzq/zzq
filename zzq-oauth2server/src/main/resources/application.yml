@@ -18,34 +18,11 @@ spring:
     password: root
 
 server:
-  port: 8666
+  port: 7777
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8888/eureka/
-
-
-zuul:
-  routes:
-    back:
-      path: /admin/**
-      serviceId: admin
-
-
 feign:
   hystrix:
     enabled: true
-
-security:
-  oauth2:
-    client:
-      client-id: client1
-      client-secret: 123456
-      access-token-uri: http://localhost:8666/oauth/token
-      user-authorization-uri: http://localhost:8666/oauth/authorize
-      scope: read
-      use-current-uri: false
-      registered-redirect-uri: https://www.baidu.com
-    resource:
-      prefer-token-info: false
-      user-info-uri: http://localhost:8666/auth/user

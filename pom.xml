@@ -11,6 +11,8 @@
         <module>zzq-eureka</module>
         <module>zzq-zuul</module>
         <module>zzq-common</module>
+        <module>zzq-oauth2server</module>
+        <module>zzq-resource</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -30,6 +32,7 @@
         <mysql-connector-java.version>8.0.13</mysql-connector-java.version>
         <spring-cloud.version>Greenwich.M1</spring-cloud.version>
         <springfox-swagger2-version>2.9.2</springfox-swagger2-version>
+        <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +43,12 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- mybatis-plus begin -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -12,10 +12,6 @@
     <packaging>jar</packaging>
     <name>zzq-admin</name>
 
-    <properties>
-        <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>zzq</groupId>
@@ -26,7 +22,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
     </dependencies>
 </project>
