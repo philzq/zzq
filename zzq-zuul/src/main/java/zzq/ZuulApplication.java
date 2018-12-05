@@ -15,7 +15,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@EnableFeignClients
 @EnableZuulProxy
 public class ZuulApplication {
 

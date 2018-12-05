@@ -1,37 +1,25 @@
 spring:
   application:
     name: zuul
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-  thymeleaf:
-    cache: false
-    suffix: .html
-    prefix: classpath:/templates/
-  datasource:
-    name: zzq_oauth2
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/zzq_oauth2?characterEncoding=UTF-8&allowMultiQueries=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 8666
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8888/eureka/
-
-
 zuul:
   routes:
-    back:
+    admin:
       path: /admin/**
       serviceId: admin
-
-
+    oauth2:
+      path: /oauth2/**
+      serviceId: aouth2
+    resource:
+      path: /resource/**
+      serviceId: resource
 feign:
   hystrix:
     enabled: true
@@ -41,11 +29,11 @@ security:
     client:
       client-id: client1
       client-secret: 123456
-      access-token-uri: http://localhost:8666/oauth/token
-      user-authorization-uri: http://localhost:8666/oauth/authorize
+      access-token-uri: http://localhost:${server.port}/oauth2/oauth/token
+      user-authorization-uri: http://localhost:${server.port}/oauth2/oauth/authorize
       scope: read
       use-current-uri: false
       registered-redirect-uri: https://www.baidu.com
     resource:
       prefer-token-info: false
-      user-info-uri: http://localhost:8666/auth/user
+      user-info-uri: http://localhost:${server.port}/oauth2/user
