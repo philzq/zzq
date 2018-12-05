@@ -108,6 +108,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration><!--确保打包时候资源文件被打包-->
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
     </build>
