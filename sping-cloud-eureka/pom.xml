@@ -11,4 +11,11 @@
     <artifactId>zzq-eureka</artifactId>
     <packaging>jar</packaging>
     <name>zzq-eureka</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+    </dependencies>
 </project>
