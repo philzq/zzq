@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -21,6 +23,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,16 +85,20 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
              */
             @Override
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-                String userName = authentication.getUserAuthentication().getName();
 
-                System.out.println(">>>"+userName);
-
+                Authentication userAuthentication = authentication.getUserAuthentication();
+                String userName = null;
+                Collection<GrantedAuthority> roles = null;
+                if(userAuthentication != null){//grant_type为client_credentials不存在用户信息，容错处理
+                    userName = authentication.getUserAuthentication().getName();
+                    User user = (User) authentication.getUserAuthentication().getPrincipal();
+                    roles = user.getAuthorities();
+                }
                 //登录时候放进去的一些用户信息
-                User user = (User) authentication.getUserAuthentication().getPrincipal();
                 /** 自定义一些token屬性 ***/
                 final Map<String, Object> additionalInformation = new HashMap<>();
                 additionalInformation.put("userName", userName);
-                additionalInformation.put("roles", user.getAuthorities());
+                additionalInformation.put("roles", roles);
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
                 OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
                 return enhancedToken;
