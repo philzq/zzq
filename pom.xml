@@ -11,8 +11,6 @@
         <module>zzq-eureka</module>
         <module>zzq-zuul</module>
         <module>zzq-common</module>
-        <module>zzq-oauth2</module>
-        <module>zzq-resource</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>

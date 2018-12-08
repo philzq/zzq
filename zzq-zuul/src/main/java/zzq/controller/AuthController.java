@@ -15,7 +15,7 @@ import java.security.Principal;
 @RestController
 public class AuthController {
 
-    @GetMapping("user")
+    @GetMapping("auth/user")
     public Principal getUser(Principal principal){
         return principal;
     }

@@ -27,39 +27,6 @@ import java.util.Map;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-    /**
-     * JWT token Converter
-     * @return
-     */
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter() {
-            /***
-             *  增強token的方法,自訂義一些token返回的信息
-             */
-            @Override
-            public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-                String userName = authentication.getUserAuthentication().getName();
-
-                System.out.println(">>>"+userName);
-
-                //登录时候放进去的一些用户信息
-                User user = (User) authentication.getUserAuthentication().getPrincipal();
-                /** 自定义一些token屬性 ***/
-                final Map<String, Object> additionalInformation = new HashMap<>();
-                additionalInformation.put("userName", userName);
-                additionalInformation.put("roles", user.getAuthorities());
-                ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
-                OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
-                return enhancedToken;
-            }
-
-        };
-        //测试时，资源服务器使用相同的字符串得到一个对称加密的效果，生产时候使用RSA非对称加密方式
-        accessTokenConverter.setSigningKey("123");
-        return accessTokenConverter;
-    }
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         // 如果关闭 stateless，则 accessToken 使用时的 session id 会被记录，后续请求不携带 accessToken 也可以正常响应
