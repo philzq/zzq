@@ -8,8 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>zzq-admin</module>
-        <module>zzq-eureka</module>
-        <module>zzq-zuul</module>
+        <module>sping-cloud-eureka</module>
+        <module>spring-cloud-zuul</module>
         <module>zzq-common</module>
     </modules>
     <packaging>pom</packaging>
