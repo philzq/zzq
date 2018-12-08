@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 23/11/2018 21:49:18
+ Date: 08/12/2018 17:38:42
 */
 
 SET NAMES utf8mb4;
@@ -40,24 +40,7 @@ CREATE TABLE `system_menu`  (
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
-INSERT INTO `system_menu` VALUES ('1', '用户管理', '5', NULL, '/admin/user', 'fa fa-user', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('10', 'Spring-Boot监控', '9', NULL, 'http://localhost:8764', 'fa fa-line-chart', 0, '', NULL, NULL, NULL, '2017-07-25 19:38:11');
-INSERT INTO `system_menu` VALUES ('11', 'Hystrix监控', '9', NULL, 'http://localhost:8764/hystrix', 'fa fa-bar-chart', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('13', '权限管理系统', '-1', NULL, '', 'fa fa-terminal', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('14', '内容管理系统', '-1', NULL, '', 'fa-newspaper-o', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('17', '文章管理', '20', NULL, '/admin/blog/article', 'fa fa-book', 0, '', NULL, NULL, NULL, '2017-07-15 23:45:24');
-INSERT INTO `system_menu` VALUES ('18', '评论管理', '20', NULL, '', '', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('20', '文章评论管理', '14', NULL, '', 'fa fa-bookmark', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('21', '数据字典', '5', NULL, '', 'fa fa-book', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('22', '服务端api文档', '13', NULL, '', 'fa fa-folder', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('23', 'Admin Rest API', '22', NULL, '/back/swagger-ui.html', 'fa fa-file-code-o', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('24', 'Admin Druid数据监控', '9', NULL, '/back/druid/datasource.html', 'fa fa-line-chart', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('27', '操作日志', '5', NULL, '/admin/gateLog', 'fa fa-book', 0, '', NULL, NULL, '2017-07-01 00:00:00', NULL);
-INSERT INTO `system_menu` VALUES ('5', '基础配置管理', '13', NULL, '', 'fa fa-cog fa-spin', 0, '用户', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('6', '菜单管理', '5', NULL, '/admin/menu', 'fa fa-list', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('7', '角色组管理', '5', NULL, '/admin/group', 'fa fa-users', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('8', '角色类型管理', '5', NULL, '/admin/groupType', 'fa fa-address-card-o', 0, '', NULL, NULL, NULL, NULL);
-INSERT INTO `system_menu` VALUES ('9', '系统监控', '13', NULL, '', 'fa fa-area-chart', 0, '', NULL, NULL, NULL, NULL);
+INSERT INTO `system_menu` VALUES ('5a7a3fee-5e7f-4e9d-ba0a-1029540dfb3f', '用户管理', '0', 'user', 'https://www.csdn.net/gather_24/MtjaMgwsMTg5Ny1ibG9n.html', NULL, 0, '用户管理模块', '0', '0', '2018-11-25 05:52:19', NULL);
 
 -- ----------------------------
 -- Table structure for system_role
@@ -73,6 +56,11 @@ CREATE TABLE `system_role`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of system_role
+-- ----------------------------
+INSERT INTO `system_role` VALUES ('36feb184-4acb-4cd3-8e8c-8c30a2b2191e', 'admin', NULL, '2018-11-25 05:44:08', NULL);
+
+-- ----------------------------
 -- Table structure for system_role_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `system_role_menu`;
@@ -82,6 +70,11 @@ CREATE TABLE `system_role_menu`  (
   `menu_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of system_role_menu
+-- ----------------------------
+INSERT INTO `system_role_menu` VALUES ('ff22ee05-6bd5-4239-90ed-ca744ea17774', '36feb184-4acb-4cd3-8e8c-8c30a2b2191e', '5a7a3fee-5e7f-4e9d-ba0a-1029540dfb3f');
 
 -- ----------------------------
 -- Table structure for system_user
@@ -108,9 +101,7 @@ CREATE TABLE `system_user`  (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES ('1', 'admin', '$2a$12$S/yLlj9kzi5Dgsz97H4rAekxrPlk/10eXp1lUJcAVAx.2M9tOpWie', 'Mr.AG', '', NULL, '', NULL, '', '男', NULL, '微服务架构师', NULL, '2017-07-25 14:54:21');
-INSERT INTO `system_user` VALUES ('2', 'admin1', '$2a$12$zWe6knO6rGp15UVfdWTTxu.Ykt.k3QnD5FPoj6a1cnL63csHY2A1S', '测试账户', '', NULL, '', NULL, '', '男', NULL, '', NULL, '2017-07-15 19:18:07');
-INSERT INTO `system_user` VALUES ('4', 'admin2', '$2a$12$S/yLlj9kzi5Dgsz97H4rAekxrPlk/10eXp1lUJcAVAx.2M9tOpWie', 'Mr.AG(博主)', '', NULL, '', NULL, '', '男', NULL, '', NULL, '2017-08-28 08:50:04');
+INSERT INTO `system_user` VALUES ('4c5e19fd-2d5f-41ae-9c37-c486712df4d6', 'admin', '{bcrypt}$2a$10$YpGRURtFtm3dq8aeZudyo.ajD0ACz3MtXtzvctX46W0YGsWKqSOwe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2018-11-25 05:45:29', NULL);
 
 -- ----------------------------
 -- Table structure for system_user_role
@@ -122,5 +113,10 @@ CREATE TABLE `system_user_role`  (
   `role_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色中间表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of system_user_role
+-- ----------------------------
+INSERT INTO `system_user_role` VALUES ('a41292ac-2e69-4f6f-9234-881916e972c5', '4c5e19fd-2d5f-41ae-9c37-c486712df4d6', '36feb184-4acb-4cd3-8e8c-8c30a2b2191e');
 
 SET FOREIGN_KEY_CHECKS = 1;

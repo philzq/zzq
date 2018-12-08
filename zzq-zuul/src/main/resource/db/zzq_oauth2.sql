@@ -11,7 +11,7 @@
  Target Server Version : 80013
  File Encoding         : 65001
 
- Date: 05/12/2018 18:30:01
+ Date: 08/12/2018 17:39:27
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,6 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('client1', 'admin', '{bcrypt}$2a$10$z10bMvPR.w64V3ULGmgDkOwY/Tj0MzpulxbdD9Um6glkT5.bw6DW6', 'read', 'authorization_code', 'https://www.baidu.com', 'ROLE_CLIENT', 3600, NULL, NULL, NULL);
+INSERT INTO `oauth_client_details` VALUES ('client1', 'admin', '{bcrypt}$2a$10$z10bMvPR.w64V3ULGmgDkOwY/Tj0MzpulxbdD9Um6glkT5.bw6DW6', 'read', 'authorization_code,password,client_credentials,implicit', 'https://www.baidu.com', 'ROLE_CLIENT', 3600, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
