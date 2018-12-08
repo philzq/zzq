@@ -21,7 +21,7 @@
     <contextName>admin</contextName>
     <property name="LOG_PATH" value="../logs" />
     <!--设置系统日志目录-->
-    <property name="APP_DIR" value="spring-cloud-zuul" />
+    <property name="APP_DIR" value="spring-boot-admin" />
 
     <!-- 不带彩色的日志在控制台输出时候的设置 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

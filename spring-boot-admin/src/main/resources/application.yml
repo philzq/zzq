@@ -1,0 +1,22 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: spring-boot-admin
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+

@@ -11,3 +11,12 @@ eureka:
     fetch-registry: false #为true时，可以启动，但报异常：Cannot execute request on any known server
     service-url:
       defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

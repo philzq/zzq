@@ -68,4 +68,13 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
 

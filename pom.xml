@@ -11,6 +11,7 @@
         <module>sping-cloud-eureka</module>
         <module>spring-cloud-zuul</module>
         <module>zzq-common</module>
+        <module>spring-boot-admin</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -31,6 +32,7 @@
         <spring-cloud.version>Greenwich.M1</spring-cloud.version>
         <springfox-swagger2-version>2.9.2</springfox-swagger2-version>
         <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
+        <spring-boot-admin.version>2.1.0</spring-boot-admin.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +41,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -53,6 +62,14 @@
 
     <dependencies>
         <!--spring cloud-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
