@@ -1,5 +1,5 @@
 ## 环境
-IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis <br> 
+IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br> 
 ## 技术栈
 springboot-2.1.0+spring-boot-admin+spring-boot-quartz+actuator+... <br> 
 springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix+security+oauth2+... <br> 
