@@ -33,3 +33,20 @@ spring:
 mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
   type-aliases-package: zzq.entity
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #配置这个将监控所有的信息
+  endpoint:
+    health:
+      show-details: ALWAYS
