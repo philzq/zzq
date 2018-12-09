@@ -8,15 +8,15 @@ import org.quartz.JobExecutionException;
   
 public class HelloJob implements BaseJob {  
   
-    private static Logger _log = LoggerFactory.getLogger(HelloJob.class);  
+    private static Logger logger = LoggerFactory.getLogger(HelloJob.class);
      
     public HelloJob() {  
           
     }  
      
     public void execute(JobExecutionContext context)  
-        throws JobExecutionException {  
-        _log.error("Hello Job执行时间: " + new Date());  
+        throws JobExecutionException {
+        logger.info("Hello Job执行时间: " + new Date());
           
     }  
 }  

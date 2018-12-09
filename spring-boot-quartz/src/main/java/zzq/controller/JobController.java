@@ -27,14 +27,15 @@ public class JobController
 	@Qualifier("Scheduler")
 	private Scheduler scheduler;
 	
-	private static Logger log = LoggerFactory.getLogger(JobController.class);  
+	private static Logger logger = LoggerFactory.getLogger(JobController.class);
 	
 
 	@PostMapping(value="/addjob")
 	public void addjob(@RequestParam(value="jobClassName")String jobClassName, 
 			@RequestParam(value="jobGroupName")String jobGroupName, 
 			@RequestParam(value="cronExpression")String cronExpression) throws Exception
-	{			
+	{
+		logger.info("新增任务"+jobClassName);
 		addJob(jobClassName, jobGroupName, cronExpression);
 	}
 	
@@ -65,7 +66,8 @@ public class JobController
 
 	@PostMapping(value="/pausejob")
 	public void pausejob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception
-	{			
+	{
+		logger.info("暂停任务"+jobClassName);
 		jobPause(jobClassName, jobGroupName);
 	}
 	
@@ -77,7 +79,8 @@ public class JobController
 
 	@PostMapping(value="/resumejob")
 	public void resumejob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception
-	{			
+	{
+		logger.info("回复任务"+jobClassName);
 		jobresume(jobClassName, jobGroupName);
 	}
 	
@@ -91,7 +94,8 @@ public class JobController
 	public void rescheduleJob(@RequestParam(value="jobClassName")String jobClassName, 
 			@RequestParam(value="jobGroupName")String jobGroupName,
 			@RequestParam(value="cronExpression")String cronExpression) throws Exception
-	{			
+	{
+		logger.info("更新任务"+jobClassName);
 		jobreschedule(jobClassName, jobGroupName, cronExpression);
 	}
 	
@@ -118,7 +122,8 @@ public class JobController
 	
 	@PostMapping(value="/deletejob")
 	public void deletejob(@RequestParam(value="jobClassName")String jobClassName, @RequestParam(value="jobGroupName")String jobGroupName) throws Exception
-	{			
+	{
+		logger.info("删除任务"+jobClassName);
 		jobdelete(jobClassName, jobGroupName);
 	}
 	
@@ -132,7 +137,8 @@ public class JobController
 	
 	@GetMapping(value="/queryjob")
 	public Map<String, Object> queryjob(@RequestParam(value="pageNum")Integer pageNum, @RequestParam(value="pageSize")Integer pageSize) 
-	{			
+	{
+		logger.info("查询任务");
 		PageInfo<JobAndTrigger> jobAndTrigger = iJobAndTriggerService.getJobAndTriggerDetails(pageNum, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("JobAndTrigger", jobAndTrigger);

@@ -10,7 +10,8 @@
 				qrtz_triggers.TRIGGER_NAME triggerName,
 				qrtz_triggers.TRIGGER_GROUP triggerGroup,
 				qrtz_cron_triggers.CRON_EXPRESSION cronExpression,
-				qrtz_cron_triggers.TIME_ZONE_ID timeZoneId
+				qrtz_cron_triggers.TIME_ZONE_ID timeZoneId,
+				qrtz_triggers.TRIGGER_STATE triggerState
 			FROM
 				qrtz_job_details
 			JOIN qrtz_triggers

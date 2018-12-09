@@ -2,16 +2,28 @@ package zzq.entity;
 
 import java.math.BigInteger;
 
+/**
+ * 任务触发器结合实体类
+ */
 public class JobAndTrigger {
+	//任务名
 	private String jobName;
+	//任务组
 	private String jobGroup;
+	//任务执行类名
 	private String jobClassName;
+	//触发器名称
 	private String triggerName;
+	//触发器所在组
 	private String triggerGroup;
 	private BigInteger repeatInterval;
 	private BigInteger timesTriggered;
+	//表达式
 	private String cronExpression;
+	//时区
 	private String timeZoneId;
+	//触发器状态
+	private String triggerState;
 
 	public String getJobName() {
 		return jobName;
@@ -83,5 +95,13 @@ public class JobAndTrigger {
 
 	public void setTimeZoneId(String timeZoneId) {
 		this.timeZoneId = timeZoneId;
+	}
+
+	public String getTriggerState() {
+		return triggerState;
+	}
+
+	public void setTriggerState(String triggerState) {
+		this.triggerState = triggerState;
 	}
 }
