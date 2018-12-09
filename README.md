@@ -18,7 +18,7 @@ swagger2-2.9.2 <br>
 服务监控中心
 #### 6、spring-boot-quartz
 定时任务
-## 功能点介绍
+## 主要功能点介绍
 #### 1、Spring cloud Scurity Oauth2 权限验证
 OAuth2四个重要角色 https://blog.csdn.net/qq_33594101/article/details/84895775 <br> 
 OAuth2四中授权模式 https://blog.csdn.net/qq_33594101/article/details/84896767 <br> 
