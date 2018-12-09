@@ -2,12 +2,22 @@
 IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis <br> 
 ## 技术栈
 springboot-2.1.0+spring-boot-admin+spring-boot-quartz <br> 
-springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix <br> 
+springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix+security+oauth2 <br> 
 mybatis-plus-3.0.5 <br> 
 swagger2-2.9.2 <br> 
 ## 模块介绍
-
-    
+#### zzq-admin
+用户管理模块
+#### sping-cloud-eureka
+服务注册中心
+#### spring-cloud-zuul
+网关
+#### zzq-common
+公共部分模块封装
+#### spring-boot-admin
+应用监控中心
+#### spring-boot-quartz
+定时任务
 ## 功能点介绍
 #### 1、Spring cloud Scurity Oauth2 权限验证
 OAuth2四个重要角色 https://blog.csdn.net/qq_33594101/article/details/84895775 <br> 
@@ -20,3 +30,4 @@ SpringBootAdmin应用监控基于eureka搭建 https://blog.csdn.net/qq_33594101/
 swagger2常用注解使用 https://blog.csdn.net/qq_33594101/article/details/84797771 <br> 
 springboot2整合swagger2构建强大的RESTful API文档 https://blog.csdn.net/qq_33594101/article/details/84797551 <br> 
 ## 后期扩展功能点
+
