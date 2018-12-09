@@ -6,7 +6,7 @@ springboot-2.1.0+spring-boot-admin+spring-boot-quartz
 springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix
 mybatis-plus-3.0.5
 swagger2-2.9.2
-
+    
 功能点介绍
 1、Spring cloud Scurity Oauth2 权限验证
 
