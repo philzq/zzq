@@ -15,7 +15,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "*" #配置这个将监控所有的信息
   endpoint:
     health:
       show-details: ALWAYS
