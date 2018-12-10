@@ -30,4 +30,4 @@ SpringBootAdmin应用监控基于eureka搭建 https://blog.csdn.net/qq_33594101/
 swagger2常用注解使用 https://blog.csdn.net/qq_33594101/article/details/84797771 <br> 
 springboot2整合swagger2构建强大的RESTful API文档 https://blog.csdn.net/qq_33594101/article/details/84797551 <br> 
 ## 后期扩展功能点
-
+后期将扩展基于react的服务可视化操作管理页面
