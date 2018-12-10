@@ -3,7 +3,7 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 ## 技术栈
 springboot-2.1.0+spring-boot-admin+spring-boot-quartz+actuator+... <br> 
 springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix+security+oauth2+... <br> 
-mybatis-plus-3.0.5 <br> 
+mybatis-plus-3.0.5+mybatis <br> 
 swagger2-2.9.2 <br> 
 ## 模块介绍
 #### 1、zzq-admin
