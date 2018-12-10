@@ -6,18 +6,15 @@ springcloud-Greenwich.M1+eureka+zuul+fegin+hystrix+security+oauth2+... <br>
 mybatis-plus-3.0.5+mybatis <br> 
 swagger2-2.9.2 <br> 
 ## 模块介绍
-#### 1、zzq-admin
-用户资源管理模块
-#### 2、sping-cloud-eureka
-服务注册中心
-#### 3、spring-cloud-zuul
-网关
-#### 4、zzq-common
-公共部分模块封装
-#### 5、spring-boot-admin
-服务监控中心
-#### 6、spring-boot-quartz
-定时任务
+| 项目 | 端口 |描述 |
+| ------ | ------ | ------ |
+| zzq-admin | 8088 | 用户资源管理模块 |
+| sping-cloud-eureka  | 8888 | 服务注册中心  |
+| spring-cloud-zuul  | 8666 | 网关 |
+| zzq-common | 0 | 公共部分模块封装|
+| spring-boot-admin | 9999 | 服务监控中心|
+| spring-boot-quartz | 8777 | 定时任务|
+
 ## 主要功能点介绍
 #### 1、Spring cloud Scurity Oauth2 权限验证
 OAuth2四个重要角色 https://blog.csdn.net/qq_33594101/article/details/84895775 <br> 
