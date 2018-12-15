@@ -10,11 +10,7 @@ public class HelloJob implements BaseJob {
   
     private static Logger logger = LoggerFactory.getLogger(HelloJob.class);
      
-    public HelloJob() {  
-          
-    }  
-     
-    public void execute(JobExecutionContext context)  
+    public void execute(JobExecutionContext context)
         throws JobExecutionException {
         logger.info("Hello Job执行时间: " + new Date());
           

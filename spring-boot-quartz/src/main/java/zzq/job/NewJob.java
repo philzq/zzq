@@ -10,11 +10,7 @@ public class NewJob implements BaseJob {
   
     private static Logger logger = LoggerFactory.getLogger(NewJob.class);
      
-    public NewJob() {  
-          
-    }  
-     
-    public void execute(JobExecutionContext context)  
+    public void execute(JobExecutionContext context)
         throws JobExecutionException {
         logger.info("New Job执行时间: " + new Date());
           
