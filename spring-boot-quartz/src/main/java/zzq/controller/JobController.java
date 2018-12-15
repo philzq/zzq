@@ -1,13 +1,12 @@
 package zzq.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-import zzq.entity.JobAndTrigger;
 import zzq.job.BaseJob;
 import zzq.service.IJobAndTriggerService;
 
@@ -136,10 +135,10 @@ public class JobController
 	
 	
 	@GetMapping(value="/queryjob")
-	public Map<String, Object> queryjob(@RequestParam(value="pageNum")Integer pageNum, @RequestParam(value="pageSize")Integer pageSize) 
+	public Map<String, Object> queryjob(Page page)
 	{
 		logger.info("查询任务");
-		PageInfo<JobAndTrigger> jobAndTrigger = iJobAndTriggerService.getJobAndTriggerDetails(pageNum, pageSize);
+		Page jobAndTrigger = iJobAndTriggerService.getJobAndTriggerDetails(page);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("JobAndTrigger", jobAndTrigger);
 		map.put("number", jobAndTrigger.getTotal());

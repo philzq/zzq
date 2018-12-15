@@ -24,6 +24,16 @@ public class JobAndTrigger {
 	private String timeZoneId;
 	//触发器状态
 	private String triggerState;
+	//执行节点id
+	private String entryId;
+
+	public String getEntryId() {
+		return entryId;
+	}
+
+	public void setEntryId(String entryId) {
+		this.entryId = entryId;
+	}
 
 	public String getJobName() {
 		return jobName;

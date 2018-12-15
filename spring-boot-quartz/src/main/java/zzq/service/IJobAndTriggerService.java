@@ -1,9 +1,8 @@
 package zzq.service;
 
 
-import com.github.pagehelper.PageInfo;
-import zzq.entity.JobAndTrigger;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 public interface IJobAndTriggerService {
-	public PageInfo<JobAndTrigger> getJobAndTriggerDetails(int pageNum, int pageSize);
+	Page getJobAndTriggerDetails(Page page);
 }

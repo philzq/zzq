@@ -54,6 +54,13 @@
 		      label="任务类名"
 		      sortable>
 		    </el-table-column>
+
+			  <el-table-column
+					  prop="entryId"
+					  label="执行任务节点"
+					  sortable
+					  show-overflow-tooltip>
+			  </el-table-column>
 		    
    		    <el-table-column
 		      prop="triggerName"
@@ -205,9 +212,9 @@
 		    	
 		        //从服务器读取数据
 				loadData: function(pageNum, pageSize){					
-					this.$http.get('job/queryjob?' + 'pageNum=' +  pageNum + '&pageSize=' + pageSize).then(function(res){
+					this.$http.get('job/queryjob?' + 'current=' +  pageNum + '&size=' + pageSize).then(function(res){
 						console.log(res)
-                		this.tableData = res.body.JobAndTrigger.list;
+                		this.tableData = res.body.JobAndTrigger.records;
                 		this.totalCount = res.body.number;
                 	},function(){
                   		console.log('failed');
