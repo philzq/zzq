@@ -20,6 +20,7 @@
 			and qrtz_fired_triggers.TRIGGER_GROUP = qrtz_triggers.TRIGGER_GROUP
 			JOIN qrtz_cron_triggers on qrtz_triggers.TRIGGER_NAME = qrtz_cron_triggers.TRIGGER_NAME
 			AND qrtz_triggers.TRIGGER_GROUP = qrtz_cron_triggers.TRIGGER_GROUP
+			order by triggerState asc,entryId
     </select>
     
 </mapper>
