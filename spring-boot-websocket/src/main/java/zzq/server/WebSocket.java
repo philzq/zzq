@@ -52,9 +52,9 @@ public class WebSocket {
             CopyOnWriteArraySet websocketSet = new CopyOnWriteArraySet();
             websocketSet.add(this);
             webSocketMap.put(username, websocketSet);
+            addOnlineCount();           //在线数加1
+            System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
         }
-        addOnlineCount();           //在线数加1
-        System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
         Map<String, Object> messageMap = new ConcurrentHashMap<>();
         messageMap.put("type", 0);
         messageMap.put("message", username + "加入！当前在线人数为" + getOnlineCount());
@@ -69,8 +69,17 @@ public class WebSocket {
     public void onClose() {
         if (StringUtils.isNotEmpty(this.username)) {
             webSocketMap.get(username).remove(this);//删除链接
-            subOnlineCount();           //在线数减1
-            System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+            if(webSocketMap.get(username).size()==0){
+                webSocketMap.remove(username);
+                subOnlineCount(); //在线数减1
+                System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+                //刷新用户列表
+                Map<String, Object> messageMap = new ConcurrentHashMap<>();
+                messageMap.put("type", 0);
+                messageMap.put("message", username + "退出！当前在线人数为" + getOnlineCount());
+                messageMap.put("users", webSocketMap.keySet());
+                sendMessageAll(JSONUtil.toJsonStr(messageMap));
+            }
         }
     }
 
