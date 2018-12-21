@@ -1,0 +1,10 @@
+server:
+  port: 8084
+
+spring:
+  resources:
+    static-locations: classpath:/static/
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
