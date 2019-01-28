@@ -155,5 +155,50 @@
         </repository>
     </repositories>
 
+    <profiles>
+        <!-- 默认开发环境 -->
+        <profile>
+            <!--id唯一，不能有重复的-->
+            <id>dev</id>
+            <!--配置-->
+            <properties>
+                <!-- 环境标识，需要与配置文件的名称相对应 -->
+                <profileActive>dev</profileActive>
+            </properties>
+            <activation>
+                <!--
+                     默认环境，如果设置了这个，则项目运行默认
+                     使用这个profile的配置
+                -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>pro</id>
+            <properties>
+                <profileActive>pro</profileActive>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>application*.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>      <!-- 根据打包时激活的profile来记载对应的配置文件 -->
+                    <include>application.yml</include>
+                    <include>application-${profileActive}.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
 
 </project>
