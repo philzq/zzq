@@ -22,4 +22,9 @@ public class IndexController {
         request.setAttribute("username",username);
         return "websocket";
     }
+
+    @GetMapping("/subscribeWebsocket")
+    public String  subscribeWebsocket(){
+        return "subscribeWebsocket";
+    }
 }
