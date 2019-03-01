@@ -12,8 +12,8 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 | spring-boot-websocket | 8084 | websocket|
 ## 功能点介绍
 + zzq-admin <br> 
-  1. zzq-admin
-  2. zzq-admin
+  - zzq-admin
+  - zzq-admin
 + sping-cloud-eureka <br> 
 + spring-cloud-zuul <br> 
 + sping-cloud-eureka <br> 
