@@ -12,15 +12,29 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 | spring-boot-websocket | 8084 | websocket|
 ## 功能点介绍
 + zzq-admin <br> 
-  - zzq-admin
-  - zzq-admin
+  - admin用户管理
+  - mybatis-plus使用
+  - swagger使用
+  - rest风格
 + sping-cloud-eureka <br> 
+  - eureka服务注册中心
 + spring-cloud-zuul <br> 
-+ sping-cloud-eureka <br> 
+  - zuul网关
+  - Spring cloud Scurity Oauth2 权限验证
+  - feign使用
+  - Hystric使用
 + zzq-common <br> 
+  - zzq-admin
+  - zzq-admin
+  - zzq-admin
+  - zzq-admin
 + spring-boot-admin <br> 
+  - 集成eureka监控服务状态
 + spring-boot-quartz <br> 
+  - 可视化监控与管理定时任务
 + spring-boot-websocket <br> 
+  - redis消息订阅
+  - websocket实时通信
 
 ## 主要功能点介绍
 ### 1、Spring cloud Scurity Oauth2 权限验证
