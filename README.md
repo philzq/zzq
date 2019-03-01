@@ -11,15 +11,16 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 | spring-boot-quartz | 8777 | 定时任务|
 | spring-boot-websocket | 8084 | websocket|
 ## 功能点介绍
-+ zzq-admin
-  zzq-admin
-+ sping-cloud-eureka
-+ spring-cloud-zuul
-+ sping-cloud-eureka
-+ zzq-common
-+ spring-boot-admin
-+ spring-boot-quartz
-+ spring-boot-websocket
++ zzq-admin <br> 
+  1. zzq-admin
+  2. zzq-admin
++ sping-cloud-eureka <br> 
++ spring-cloud-zuul <br> 
++ sping-cloud-eureka <br> 
++ zzq-common <br> 
++ spring-boot-admin <br> 
++ spring-boot-quartz <br> 
++ spring-boot-websocket <br> 
 
 ## 主要功能点介绍
 ### 1、Spring cloud Scurity Oauth2 权限验证
