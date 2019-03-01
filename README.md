@@ -9,6 +9,7 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 | zzq-common | 0 | 公共部分模块封装|
 | spring-boot-admin | 9999 | 服务监控中心|
 | spring-boot-quartz | 8777 | 定时任务|
+| spring-boot-websocket | 8084 | websocket|
 
 ## 主要功能点介绍
 ### 1、Spring cloud Scurity Oauth2 权限验证
