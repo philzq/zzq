@@ -12,7 +12,7 @@ IntelliJ IDEA 2018.2.5+jdk8+mysql-8.0.13+redis+maven+git <br>
 | spring-boot-websocket | 8084 | websocket|
 ## 知识点介绍
 + zzq
-  - Maven多环境配置
+  - Maven多环境部署配置
   - Maven聚合继承
   - Maven远程仓库配置
   - Maven打包配置
