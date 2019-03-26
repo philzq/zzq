@@ -50,4 +50,3 @@ SpringBootAdmin应用监控基于eureka搭建 https://blog.csdn.net/qq_33594101/
 swagger2常用注解使用 https://blog.csdn.net/qq_33594101/article/details/84797771 <br> 
 springboot2整合swagger2构建强大的RESTful API文档 https://blog.csdn.net/qq_33594101/article/details/84797551 <br> 
 ### 5.spring-boot-websocket前后端实时通信，业务订阅
-## 后期扩展功能点
