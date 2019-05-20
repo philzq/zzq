@@ -6,8 +6,10 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/zh-TW'
+import Bus from "./assets/js/bus";
 
 Vue.use(ElementUI, { locale ,size: 'small', zIndex: 3000 });
+Vue.use(Bus);
 
 Vue.config.productionTip = false
 
