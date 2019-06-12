@@ -1,0 +1,16 @@
+spring:
+  rabbitmq:
+    first:
+      host: 110.10.10.110
+      port: 6666
+      username: zzq
+      password: zzq
+      virtual-host: first
+    second:
+      host: 111.11.11.111
+      port: 6666
+      username: zzq
+      password: zzq
+      virtual-host: second
+server:
+  port: 6666
