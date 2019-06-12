@@ -1,0 +1,50 @@
+<html>
+  <body>
+  <form id="form">
+    姓名：<input type="text" id="name"><br/>
+    年齡：<input type="text" id="age">
+  </form>
+  <script>
+    let person = {
+      _data : {
+        name : "",
+        age : ""
+      }
+    };
+
+    let form = document.querySelector("#form");
+
+    for(let key in person._data){
+      bind(person,key)
+    }
+
+    function bind(object,key){
+      let dom = document.querySelector("#"+key)
+      Object.defineProperty(object,key,{
+        get() {
+          console.log(key + "備獲取了");
+          return object._data[key]
+        },
+        set(v) {
+          console.log(key + "被修改為"+v,person);
+          dom.value = v;
+          object._data[key] = v;
+        }
+      })
+    }
+
+    form.addEventListener("input",(e) =>{
+      let value = e.target.value;
+      let name = e.target.getAttribute("id");
+      person[name] = value;
+    });
+
+    function init(){
+      person["name"] = "zzq";
+      person["age"] = "100";
+    }
+    init();
+  </script>
+  </body>
+</html>
+
