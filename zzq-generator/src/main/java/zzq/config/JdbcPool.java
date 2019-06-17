@@ -25,11 +25,11 @@ public class JdbcPool {
     //driverClassName无需指定，除非系统无法自动识别
     private static String driverClassName="com.mysql.cj.jdbc.Driver";
     //database address
-    private static String  jdbcUrl="jdbc:mysql://172.18.21.167:3306/generalorderdb?useUnicode=true&characterEncoding=UTF-8";
+    private static String  jdbcUrl="***";
     //useName 用户名
-    private static String username="root";
+    private static String username="***";
     //password
-    private static String  password="wingontravel@123";
+    private static String  password="***";
     //连接只读数据库时配置为true， 保证安全 -->
     private static boolean readOnly=false;
     //等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
@@ -206,8 +206,7 @@ public class JdbcPool {
 
     public static void main(String[] args){
         JdbcPool jdbcPool=new JdbcPool();
-        ResultSet rs=jdbcPool.excuteQuery("select table_name, engine, table_comment tableComment, create_time createTime from information_schema.tables\n" +
-                "where table_schema = (select database()) and table_name = ?","orderlog");
+        ResultSet rs=jdbcPool.excuteQuery("");
         List result=jdbcPool.getResult(rs);
         System.out.println(result.toString());
         jdbcPool.freeConnection();
