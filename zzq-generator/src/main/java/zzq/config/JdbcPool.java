@@ -1,7 +1,9 @@
 package zzq.config;
 
-import cn.hutool.json.JSONUtil;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,49 +20,31 @@ import java.util.Map;
  */
 public class JdbcPool {
 
-    static Logger logger = LogManager.getLogger();
-    Connection connection = null;
+    private static Logger logger = LogManager.getLogger();
+    private Connection connection = null;
 
-    //-- Hikari Datasource -->
-    //driverClassName无需指定，除非系统无法自动识别
-    private static String driverClassName="com.mysql.cj.jdbc.Driver";
-    //database address
-    private static String  jdbcUrl="***";
-    //useName 用户名
-    private static String username="***";
-    //password
-    private static String  password="***";
-    //连接只读数据库时配置为true， 保证安全 -->
-    private static boolean readOnly=false;
-    //等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
-    private static int connectionTimeout=30000;
-    // 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
-    private static int idleTimeout=600000;
-    //一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->
-    private static int maxLifetime=1800000;
-    // 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
-    private static int maximumPoolSize=10;
-    static  HikariDataSource hikariDataSource = new HikariDataSource();
+    private static  HikariDataSource hikariDataSource = new HikariDataSource();
 
     static {
+        Configuration config = getJdbcConfig();
         //driverClassName无需指定，除非系统无法自动识别
-        hikariDataSource.setDriverClassName(driverClassName);
+        hikariDataSource.setDriverClassName(config.getString("driverClassName"));
         //database address
-        hikariDataSource.setJdbcUrl(jdbcUrl);
+        hikariDataSource.setJdbcUrl(config.getString("jdbcUrl"));
         //useName 用户名
-        hikariDataSource.setUsername(username);
+        hikariDataSource.setUsername(config.getString("username"));
         //password
-        hikariDataSource.setPassword(password);
+        hikariDataSource.setPassword(config.getString("password"));
         //连接只读数据库时配置为true， 保证安全 -->
-        hikariDataSource.setReadOnly(readOnly);
+        hikariDataSource.setReadOnly(config.getBoolean("readOnly"));
         //等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
-        hikariDataSource.setConnectionTimeout(connectionTimeout);
+        hikariDataSource.setConnectionTimeout(config.getLong("connectionTimeout"));
         // 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
-        hikariDataSource.setIdleTimeout(idleTimeout);
+        hikariDataSource.setIdleTimeout(config.getLong("idleTimeout"));
         //一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->
-        hikariDataSource.setMaximumPoolSize(maxLifetime);
+        hikariDataSource.setMaximumPoolSize(config.getInt("maxLifetime"));
         // 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
-        hikariDataSource.setMaximumPoolSize(maximumPoolSize);
+        hikariDataSource.setMaximumPoolSize(config.getInt("maximumPoolSize"));
     }
 
     /**
@@ -202,6 +186,17 @@ public class JdbcPool {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * 获取配置信息
+     */
+    public static Configuration getJdbcConfig(){
+        try {
+            return new PropertiesConfiguration("jdbc.properties");
+        } catch (ConfigurationException e) {
+            throw new RuntimeException("获取配置文件失败");
+        }
     }
 
     public static void main(String[] args){
