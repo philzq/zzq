@@ -131,7 +131,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
                 }
-                outputStream = new FileOutputStream(file);
+                outputStream = new FileOutputStream(file,false);
                 //添加到zip
                 IOUtils.write(sw.toString(), outputStream, "UTF-8");
                 IOUtils.closeQuietly(sw);
