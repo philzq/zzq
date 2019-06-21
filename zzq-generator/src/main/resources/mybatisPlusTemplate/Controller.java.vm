@@ -1,0 +1,88 @@
+package ${package}.controller;
+
+import java.util.Arrays;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.alibaba.fastjson.JSON;
+
+import ${mainPath}.entity.Result;
+import ${package}.entity.${className}DBEntity;
+import ${package}.service.${className}Service;
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+@RestController
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    /**
+     * 列表
+     */
+    @GetMapping("${pathName}s")
+    public Result list(Page<${className}DBEntity> page,${className}DBEntity ${classname}){
+        return Result.ok().put("page", ${classname}Service.page(page,new QueryWrapper<>(${classname})));
+    }
+
+
+    /**
+     * 信息
+     */
+    @GetMapping("/${pathName}/{${pk.attrname}}")
+    public Result info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+        ${className}DBEntity ${classname} = ${classname}Service.getById(${pk.attrname});
+        return Result.ok().put("${classname}", ${classname});
+    }
+
+    /**
+     * 保存
+     */
+    @PostMapping("${pathName}")
+    public Result save(@RequestBody ${className}DBEntity ${classname}){
+        ${classname}Service.save(${classname});
+        return Result.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @PutMapping("${pathName}")
+    public Result update(@RequestBody ${className}DBEntity ${classname}){
+        ${classname}Service.updateById(${classname});
+        return Result.ok();
+    }
+
+    /**
+     * 批量修改
+     */
+    @PutMapping("${pathName}s")
+    public Result updateBatch(@RequestBody String ${classname}s){
+        ${classname}Service.updateBatchById(JSON.parseArray(${classname}s,${className}DBEntity.class));
+        return Result.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("${pathName}/{${pk.attrname}}")
+    public Result delete(@PathVariable ${pk.attrType} ${pk.attrname}){
+        ${classname}Service.removeById(${pk.attrname});
+        return Result.ok();
+    }
+
+    /**
+     * 批量删除
+     */
+    @DeleteMapping("${pathName}s")
+    public Result deleteBatch(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+        ${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
+        return Result.ok();
+    }
+
+}

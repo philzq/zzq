@@ -23,10 +23,11 @@ public class JdbcPool {
     private static Logger logger = LogManager.getLogger();
     private Connection connection = null;
 
+    private static Configuration config = getJdbcConfig();
+
     private static  HikariDataSource hikariDataSource = new HikariDataSource();
 
     static {
-        Configuration config = getJdbcConfig();
         //driverClassName无需指定，除非系统无法自动识别
         hikariDataSource.setDriverClassName(config.getString("driverClassName"));
         //database address
@@ -198,14 +199,5 @@ public class JdbcPool {
             throw new RuntimeException("获取配置文件失败");
         }
     }
-
-    public static void main(String[] args){
-        JdbcPool jdbcPool=new JdbcPool();
-        ResultSet rs=jdbcPool.excuteQuery("");
-        List result=jdbcPool.getResult(rs);
-        System.out.println(result.toString());
-        jdbcPool.freeConnection();
-    }
-
 }
 

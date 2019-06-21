@@ -17,25 +17,28 @@ import zzq.service.TableService;
 import zzq.utils.DateUtils;
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public class GeneratorServiceImpl implements GeneratorService {
 
+    //配置信息
+    private static Configuration config = getConfig();
+
     @Override
     public void generateCode() {
-
         TableService tableService = new TableServiceImpl();
         ColumnService columnService = new ColumnServiceImpl();
-        List<Map<String,Object>> tables = tableService.queryTables();
-        if(tables!=null && !tables.isEmpty()){
-            tables.forEach(p->{
-                String tableName = p.get("tableName")+"";
+        List<Map<String, Object>> tables = tableService.queryTables();
+        if (tables != null && !tables.isEmpty()) {
+            tables.forEach(p -> {
+                String tableName = p.get("tableName") + "";
                 //查询表信息
                 Map<String, Object> table = tableService.queryTable(tableName);
                 //查询列信息
                 List<Map<String, Object>> columns = columnService.queryColumns(tableName);
                 //生成代碼並放入指定文件
-                generatorCode(table,columns);
+                generatorCode(table, columns);
             });
         }
     }
@@ -43,15 +46,13 @@ public class GeneratorServiceImpl implements GeneratorService {
     /**
      * 生成代码
      */
-    public static void generatorCode(Map<String, Object> table,
-                                     List<Map<String, Object>> columns){
-        //配置信息
-        Configuration config = getConfig();
+    private static void generatorCode(Map<String, Object> table,
+                                      List<Map<String, Object>> columns) {
         boolean hasBigDecimal = false;
         //表信息
         TableEntity tableEntity = new TableEntity();
-        tableEntity.setTableName(table.get("tableName")+"");
-        tableEntity.setComments(table.get("tableComment")+"");
+        tableEntity.setTableName(table.get("tableName") + "");
+        tableEntity.setComments(table.get("tableComment") + "");
         //表名转换成Java类名
         String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix"));
         tableEntity.setClassName(className);
@@ -59,26 +60,26 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         //列信息
         List<ColumnEntity> columsList = new ArrayList<>();
-        for(Map<String, Object> column : columns){
+        for (Map<String, Object> column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
-            columnEntity.setColumnName(column.get("columnName")+"");
-            columnEntity.setDataType(column.get("dataType")+"");
-            columnEntity.setComments(column.get("columnComment")+"");
-            columnEntity.setExtra(column.get("extra")+"");
+            columnEntity.setColumnName(column.get("columnName") + "");
+            columnEntity.setDataType(column.get("dataType") + "");
+            columnEntity.setComments(column.get("columnComment") + "");
+            columnEntity.setExtra(column.get("extra") + "");
 
             //列名转换成Java属性名
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setAttrName(attrName);
-            columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
+            columnEntity.setAttrname(convertColumnName(column.get("columnName") + ""));
 
             //列的数据类型，转换成Java类型
             String attrType = config.getString(columnEntity.getDataType(), "unknowType");
             columnEntity.setAttrType(attrType);
-            if (!hasBigDecimal && attrType.equals("BigDecimal" )) {
+            if (!hasBigDecimal && attrType.equals("BigDecimal")) {
                 hasBigDecimal = true;
             }
             //是否主键
-            if("PRI".equalsIgnoreCase(column.get("columnKey")+"") && tableEntity.getPk() == null){
+            if ("PRI".equalsIgnoreCase(column.get("columnKey") + "") && tableEntity.getPk() == null) {
                 tableEntity.setPk(columnEntity);
             }
 
@@ -87,7 +88,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         tableEntity.setColumns(columsList);
 
         //没主键，则第一个字段为主键
-        if(tableEntity.getPk() == null){
+        if (tableEntity.getPk() == null) {
             tableEntity.setPk(tableEntity.getColumns().get(0));
         }
 
@@ -108,9 +109,9 @@ public class GeneratorServiceImpl implements GeneratorService {
         map.put("pathName", tableEntity.getClassname().toLowerCase());
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
+        map.put("package", config.getString("package"));
         map.put("mainPath", mainPath);
-        map.put("package", config.getString("package" ));
-        map.put("moduleName", config.getString("moduleName" ));
+        map.put("moduleName", config.getString("moduleName"));
         map.put("author", config.getString("author"));
         map.put("email", config.getString("email"));
         map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
@@ -118,31 +119,30 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         //获取模板列表
         List<String> templates = getTemplates();
-        for(String template : templates){
+        for (String template : templates) {
             //渲染模板
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
             OutputStream outputStream = null;
             try {
-                String fileName = getFileName(template, tableEntity.getClassName(), config.getString("package"), config.getString("moduleName"));
+                String fileName = getFileName(config.getString("entityModuleName"), template, tableEntity.getClassName(), config.getString("package"), config.getString("moduleName"));
                 File file = new File(fileName);
-                if(!file.exists()){
+                if (!file.exists()) {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
                 }
-                outputStream = new FileOutputStream(file,false);
+                outputStream = new FileOutputStream(file, false);
                 //添加到zip
                 IOUtils.write(sw.toString(), outputStream, "UTF-8");
                 IOUtils.closeQuietly(sw);
             } catch (IOException e) {
                 throw new RuntimeException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
-            }finally {
-                if (outputStream != null){
+            } finally {
+                if (outputStream != null) {
                     try {
-                        //onnection的实现类（代理类）自己会调用hikariPool.evictConnection(cn) ,将此连接回收到pool中
                         outputStream.close();
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -151,35 +151,48 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     /**
+     * 首字母变小写
+     *
+     * @param columnName
+     * @return
+     */
+    private static String convertColumnName(String columnName) {
+        if (Character.isLowerCase(columnName.charAt(0)))
+            return columnName;
+        else
+            return (new StringBuilder()).append(Character.toLowerCase(columnName.charAt(0))).append(columnName.substring(1)).toString();
+    }
+
+    /**
      * 获取配置信息
      */
-    public static Configuration getConfig(){
+    private static Configuration getConfig() {
         try {
             return new PropertiesConfiguration("generator.properties");
         } catch (ConfigurationException e) {
-            throw new RuntimeException("获取配置文件失败");
+            throw new RuntimeException("获取配置文件generator.properties失败");
         }
     }
 
-    public static List<String> getTemplates(){
+    private static List<String> getTemplates() {
+        URL url = GeneratorServiceImpl.class.getClassLoader().getResource(config.getString("templatePath"));
+        if(url == null){
+            throw new RuntimeException("模板文件不存在");
+        }
+        File templateFile = new File(url.getPath());
         List<String> templates = new ArrayList<String>();
-        templates.add("template/Entity.java.vm");
-        templates.add("template/Dao.java.vm");
-        templates.add("template/Dao.xml.vm");
-        templates.add("template/Service.java.vm");
-        templates.add("template/ServiceImpl.java.vm");
-        templates.add("template/Controller.java.vm");
-        templates.add("template/list.html.vm");
-        templates.add("template/list.js.vm");
-        templates.add("template/menu.sql.vm");
+        String[] list = templateFile.list();
+        for(String file : list){
+            templates.add(config.getString("templatePath")+"/"+file);
+        }
         return templates;
     }
 
     /**
      * 表名转换成Java类名
      */
-    public static String tableToJava(String tableName, String tablePrefix) {
-        if(StringUtils.isNotBlank(tablePrefix)){
+    private static String tableToJava(String tableName, String tablePrefix) {
+        if (StringUtils.isNotBlank(tablePrefix)) {
             tableName = tableName.replace(tablePrefix, "");
         }
         return columnToJava(tableName);
@@ -188,57 +201,45 @@ public class GeneratorServiceImpl implements GeneratorService {
     /**
      * 列名转换成Java属性名
      */
-    public static String columnToJava(String columnName) {
+    private static String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, String className, String packageName, String moduleName) {
-        String packagePath = "main" + File.separator + "java" + File.separator;
+    private static String getFileName(String entityModuleName, String template, String className, String packageName, String moduleName) {
+        String packagePath = moduleName + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        String resourcePath = moduleName + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
+        String entityModulePath = entityModuleName + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
-            packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
+            packagePath += packageName.replace(".", File.separator) + File.separator;
+            entityModulePath += packageName.replace(".", File.separator) + File.separator;
         }
 
-        if (template.contains("Entity.java.vm" )) {
-            return packagePath + "entity" + File.separator + className + "Entity.java";
+        if (template.contains("Entity.java.vm")) {
+            return entityModulePath + File.separator + "entity" + File.separator + className + "DBEntity.java";
         }
 
-        if (template.contains("Dao.java.vm" )) {
+        if (template.contains("Dao.java.vm")) {
             return packagePath + "dao" + File.separator + className + "Dao.java";
         }
 
-        if (template.contains("Service.java.vm" )) {
+        if (template.contains("Service.java.vm")) {
             return packagePath + "service" + File.separator + className + "Service.java";
         }
 
-        if (template.contains("ServiceImpl.java.vm" )) {
+        if (template.contains("ServiceImpl.java.vm")) {
             return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
         }
 
-        if (template.contains("Controller.java.vm" )) {
+        if (template.contains("Controller.java.vm")) {
             return packagePath + "controller" + File.separator + className + "Controller.java";
         }
 
-        if (template.contains("Dao.xml.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Dao.xml";
+        if (template.contains("Dao.xml.vm")) {
+            return resourcePath + "mapper" + File.separator + className + "Dao.xml";
         }
-
-        if (template.contains("list.html.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
-                    + "modules" + File.separator + moduleName + File.separator + className.toLowerCase() + ".html";
-        }
-
-        if (template.contains("list.js.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "statics" + File.separator + "js" + File.separator
-                    + "modules" + File.separator + moduleName + File.separator + className.toLowerCase() + ".js";
-        }
-
-        if (template.contains("menu.sql.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "sql" + File.separator + moduleName + File.separator+className.toLowerCase() + "_menu.sql";
-        }
-
         return null;
     }
 }

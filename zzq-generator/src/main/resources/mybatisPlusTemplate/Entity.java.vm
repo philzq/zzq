@@ -1,6 +1,7 @@
-package ${package}.${moduleName}.entity;
+package ${package}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -12,14 +13,12 @@ import java.util.Date;
 
 /**
  * ${comments}
- * 
- * @author ${author}
- * @email ${email}
+ *
  * @date ${datetime}
  */
 @Data
 @TableName("${tableName}")
-public class ${className}Entity implements Serializable {
+public class ${className}DBEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
@@ -27,7 +26,9 @@ public class ${className}Entity implements Serializable {
 	 * $column.comments
 	 */
 	#if($column.columnName == $pk.columnName)
-@TableId
+@TableId("$column.columnName")
+	#else
+@TableField("$column.columnName")
 	#end
 private $column.attrType $column.attrname;
 #end

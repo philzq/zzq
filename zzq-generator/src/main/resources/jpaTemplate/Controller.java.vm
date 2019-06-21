@@ -1,0 +1,76 @@
+package ${package}.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
+import com.alibaba.fastjson.JSON;
+
+import ${mainPath}.entity.Result;
+import ${package}.entity.${className}DBEntity;
+import ${package}.service.${className}Service;
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+@RestController
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    /**
+     * 列表
+     */
+    @GetMapping("${pathName}s")
+    public Result list(){
+        PageRequest pageRequest = PageRequest.of(1, 3);
+        return Result.ok().put("page", ${classname}Service.findAll(pageRequest));
+    }
+
+
+    /**
+     * 信息
+     */
+    @GetMapping("/${pathName}/{${pk.attrname}}")
+    public Result info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+        return Result.ok().put("${classname}",${classname}Service.getOne(${pk.attrname}));
+    }
+
+    /**
+     * 保存
+     */
+    @PostMapping("${pathName}")
+    public Result save(@RequestBody ${className}DBEntity ${classname}){
+        ${classname}Service.save(${classname});
+        return Result.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @PutMapping("${pathName}")
+    public Result update(@RequestBody ${className}DBEntity ${classname}){
+        ${classname}Service.save(${classname});
+        return Result.ok();
+    }
+
+    /**
+     * 批量修改
+     */
+    @PutMapping("${pathName}s")
+    public Result updateBatch(@RequestBody String ${classname}s){
+        ${classname}Service.saveAll(JSON.parseArray(${classname}s,${className}DBEntity.class));
+        return Result.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("${pathName}/{${pk.attrname}}")
+    public Result delete(@PathVariable ${pk.attrType} ${pk.attrname}){
+        ${classname}Service.deleteById(${pk.attrname});
+        return Result.ok();
+    }
+
+}
