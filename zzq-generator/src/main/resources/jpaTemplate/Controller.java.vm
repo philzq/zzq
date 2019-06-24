@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSON;
 
 import ${mainPath}.entity.Result;
 import ${package}.entity.${className}DBEntity;
-import ${package}.service.${className}Service;
+import ${package}.dao.${className}Dao;
 
 /**
  * ${comments}
@@ -17,7 +17,7 @@ import ${package}.service.${className}Service;
 @RestController
 public class ${className}Controller {
     @Autowired
-    private ${className}Service ${classname}Service;
+    private ${className}Dao ${classname}Dao;
 
     /**
      * 列表
@@ -25,7 +25,7 @@ public class ${className}Controller {
     @GetMapping("${pathName}s")
     public Result list(){
         PageRequest pageRequest = PageRequest.of(1, 3);
-        return Result.ok().put("page", ${classname}Service.findAll(pageRequest));
+        return Result.ok().put("page", ${classname}Dao.findAll(pageRequest));
     }
 
 
@@ -34,7 +34,7 @@ public class ${className}Controller {
      */
     @GetMapping("/${pathName}/{${pk.attrname}}")
     public Result info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-        return Result.ok().put("${classname}",${classname}Service.getOne(${pk.attrname}));
+        return Result.ok().put("${classname}",${classname}Dao.getOne(${pk.attrname}));
     }
 
     /**
@@ -42,7 +42,7 @@ public class ${className}Controller {
      */
     @PostMapping("${pathName}")
     public Result save(@RequestBody ${className}DBEntity ${classname}){
-        ${classname}Service.save(${classname});
+        ${classname}Dao.save(${classname});
         return Result.ok();
     }
 
@@ -51,7 +51,7 @@ public class ${className}Controller {
      */
     @PutMapping("${pathName}")
     public Result update(@RequestBody ${className}DBEntity ${classname}){
-        ${classname}Service.save(${classname});
+        ${classname}Dao.save(${classname});
         return Result.ok();
     }
 
@@ -60,7 +60,7 @@ public class ${className}Controller {
      */
     @PutMapping("${pathName}s")
     public Result updateBatch(@RequestBody String ${classname}s){
-        ${classname}Service.saveAll(JSON.parseArray(${classname}s,${className}DBEntity.class));
+        ${classname}Dao.saveAll(JSON.parseArray(${classname}s,${className}DBEntity.class));
         return Result.ok();
     }
 
@@ -69,7 +69,7 @@ public class ${className}Controller {
      */
     @DeleteMapping("${pathName}/{${pk.attrname}}")
     public Result delete(@PathVariable ${pk.attrType} ${pk.attrname}){
-        ${classname}Service.deleteById(${pk.attrname});
+        ${classname}Dao.deleteById(${pk.attrname});
         return Result.ok();
     }
 

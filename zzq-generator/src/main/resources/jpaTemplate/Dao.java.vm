@@ -1,13 +1,13 @@
 package ${package}.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ${package}.entity.${className}DBEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * ${comments}
  *
  * @date ${datetime}
  */
-public interface ${className}Dao extends BaseMapper<${className}DBEntity> {
+public interface ${className}Dao extends JpaRepository<${className}DBEntity, ${pk.attrType}> {
 	
 }

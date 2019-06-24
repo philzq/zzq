@@ -1,14 +1,11 @@
 package ${package}.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ${package}.entity.${className}DBEntity;
-
 /**
  * ${comments}
  *
  * @date ${datetime}
  */
-public interface ${className}Service extends JpaRepository<${className}DBEntity, ${pk.attrType}> {
+public interface ${className}Service{
 
 }
 

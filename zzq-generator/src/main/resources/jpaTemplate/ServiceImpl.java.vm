@@ -1,0 +1,11 @@
+package ${package}.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import ${package}.service.${className}Service;
+
+
+@Service
+public class ${className}ServiceImpl implements ${className}Service {
+
+}
