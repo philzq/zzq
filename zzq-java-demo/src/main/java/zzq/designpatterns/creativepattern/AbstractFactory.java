@@ -14,6 +14,8 @@ package zzq.designpatterns.creativepattern;
  * 当增加一个新的产品族时不需要修改原代码，满足开闭原则。
  *
  * 其缺点是：当产品族中需要增加一个新的产品时，所有的工厂类都需要进行修改。
+ *
+ * 总结：该模式将多态的思想进行的细微的转变，用函数名区分对应的产品而不是通过对象来区分产品
  */
 public class AbstractFactory {
 }
