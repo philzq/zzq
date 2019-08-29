@@ -8,6 +8,8 @@ package zzq.designpatterns.structuralpattern;
  * 其主要缺点是：
  * 为了使对象可以共享，需要将一些不能共享的状态外部化，这将增加程序的复杂性。
  * 读取享元模式的外部状态会使得运行时间稍微变长。
+ *
+ * 总结：这个比较好玩，一个数组的所有对象都是同一个对象
  */
 public class Flyweight {
 }
