@@ -11,6 +11,8 @@ package zzq.designpatterns.structuralpattern;
  * 外观（Facade）模式的主要缺点如下。
  * 不能很好地限制客户使用子系统类。
  * 增加新的子系统可能需要修改外观类或客户端的源代码，违背了“开闭原则”。
+ *
+ * 总结：类似于微服务，统一入口网关，而不是一个一个的单独去访问底层服务
  */
 public class Facade {
 }
