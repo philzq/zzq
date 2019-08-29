@@ -8,6 +8,8 @@ package zzq.designpatterns.structuralpattern;
  * 其实现细节对客户透明。
  *
  * 缺点是：由于聚合关系建立在抽象层，要求开发者针对抽象化进行设计与编程，这增加了系统的理解与设计难度。
+ *
+ * 总结:高内聚低耦合设计很重要
  */
 public class Bridge {
 }
