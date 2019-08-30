@@ -10,7 +10,7 @@ package zzq.designpatterns.behavioralpattern;
  * 方便实现 Undo 和 Redo 操作。命令模式可以与后面介绍的备忘录模式结合，实现命令的撤销与恢复。
  * <p>
  * 其缺点是：可能产生大量具体命令类。因为计对每一个具体操作都需要设计一个具体命令类，这将增加系统的复杂性。
- *
+ * <p>
  * 总结：调用者与接收者通过命令对象间接沟通，就类似于中间件，负载均衡等
  */
 public class CommandPattern {
@@ -35,7 +35,7 @@ public class CommandPattern {
 
     //抽象命令
     interface Command {
-        public abstract void execute();
+        void execute();
     }
 
     //具体命令
