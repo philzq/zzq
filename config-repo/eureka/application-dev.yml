@@ -10,4 +10,4 @@ eureka:
     registerWithEureka: false  #false:不作为一个客户端注册到注册中心
     fetch-registry: false #为true时，可以启动，但报异常：Cannot execute request on any known server
     service-url:
-      defaultZone: http://localhost:9999/eureka/
+      defaultZone: http://localhost:9997/eureka/
