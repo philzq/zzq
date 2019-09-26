@@ -19,11 +19,14 @@ public class CacheUtils {
 
     private static Logger logger = LoggerFactory.getLogger(CacheUtils.class);
 
-    @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    public CacheUtils(RedisTemplate redisTemplate, StringRedisTemplate stringRedisTemplate) {
+        this.redisTemplate = redisTemplate;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * 将参数中的字符串值设置为键的值，不设置过期时间

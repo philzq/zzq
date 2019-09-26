@@ -15,4 +15,12 @@
         <!--解决打包需要main函数问题，直接指向WebappsApiBidMain-->
         <start-class>com.xx.webapps.api.main.WebappsApiBidMain</start-class>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 </project>

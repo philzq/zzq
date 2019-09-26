@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import zzq.utils.CacheUtils;
 
 /**
@@ -22,8 +24,8 @@ public class SpringBootWebsocketApplication {
 
     @Bean
     @Lazy
-    public CacheUtils cacheUtils(){
-        return new CacheUtils();
+    public CacheUtils cacheUtils(RedisTemplate redisTemplate, StringRedisTemplate stringRedisTemplate){
+        return new CacheUtils(redisTemplate,stringRedisTemplate);
     }
 }
 
