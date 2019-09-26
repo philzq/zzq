@@ -11,13 +11,14 @@
         <module>zzq-common</module>
         <module>zzq-generator</module>
         <module>zzq-java-demo</module>
-        <module>sping-cloud-eureka</module>
+        <module>spring-cloud-eureka</module>
         <module>spring-cloud-zuul</module>
         <module>spring-boot-admin</module>
         <module>spring-boot-quartz</module>
         <module>spring-boot-websocket</module>
         <module>spring-boot-cache-caffeine</module>
         <module>spring-boot-ribbitmq</module>
+        <module>spring-cloud-config-server</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
