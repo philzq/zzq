@@ -15,3 +15,17 @@ spring:
           username:                                             # git仓库的账号（公开仓库无需账号信息）
           password:                                             # git仓库的密码（公开仓库无需账号信息）
           default-label: master                             #git默认分支
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
