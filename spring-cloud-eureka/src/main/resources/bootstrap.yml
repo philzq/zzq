@@ -1,8 +1,10 @@
 spring:
   application:
-    name: config-client-test
+    name: eureka
   cloud:
     config:
-      env: default # optional
-      label: master # optional
-      uri: http://localhost:8899 # optional
+      label: master # optional 对应分支名
+      uri: http://localhost:8899 # optional 对应Config Server开放的地址
+      profile: dev  #对应环境名
+
+
