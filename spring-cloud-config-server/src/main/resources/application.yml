@@ -1,18 +1,17 @@
 server:
   port: 8899
 spring:
+  application:
+    name: configserver
+  profiles:
+    active: git #设置使用本地配置(默认是git,可以设置：subversion(SVN)，native(本地))
   cloud:
     config:
       server:
+        #如下是GIT配置
         git:
-          uri: https://github.com/18770911080/zzq
-          search-paths: config-repo
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+          uri: https://github.com/18770911080/zzq    # 配置git仓库的地址（最后不需要带/，否则会出现：No custom http config found for URL: XXX）
+          search-paths: config-repo                             # git仓库地址下的相对搜索地址（可用使用通配符），可以配置多个，用,分割。可以{application}实现按应用查配置
+          username:                                             # git仓库的账号（公开仓库无需账号信息）
+          password:                                             # git仓库的密码（公开仓库无需账号信息）
+          default-label: master                             #git默认分支
