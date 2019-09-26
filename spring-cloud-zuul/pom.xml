@@ -5,12 +5,12 @@
     <parent>
         <artifactId>zzq</artifactId>
         <groupId>zzq</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zzq-zuul</artifactId>
+    <artifactId>spring-cloud-zuul</artifactId>
     <packaging>jar</packaging>
-    <name>zzq-zuul</name>
+    <name>spring-cloud-zuul</name>
 
     <dependencies>
         <dependency>

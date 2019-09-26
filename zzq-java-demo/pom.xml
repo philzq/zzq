@@ -3,22 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>zzq</groupId>
         <artifactId>zzq</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>zzq</groupId>
+        <version>${revision}</version>
     </parent>
     <artifactId>zzq-java-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>zzq-java-demo</name>
     <description>Demo project for Spring Boot</description>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

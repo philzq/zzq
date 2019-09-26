@@ -2,18 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>zzq</groupId>
     <artifactId>zzq</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
+
     <modules>
         <module>zzq-admin</module>
+        <module>zzq-common</module>
+        <module>zzq-generator</module>
+        <module>zzq-java-demo</module>
         <module>sping-cloud-eureka</module>
         <module>spring-cloud-zuul</module>
-        <module>zzq-common</module>
         <module>spring-boot-admin</module>
         <module>spring-boot-quartz</module>
         <module>spring-boot-websocket</module>
+        <module>spring-boot-cache-caffeine</module>
+        <module>spring-boot-ribbitmq</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -22,16 +26,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.0.RELEASE</version>
+        <version>2.1.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
+        <revision>0.0.1-SNAPSHOT</revision>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
         <mysql-connector-java.version>8.0.13</mysql-connector-java.version>
-        <spring-cloud.version>Greenwich.M1</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
         <springfox-swagger2-version>2.9.2</springfox-swagger2-version>
         <mybatis-plus-boot-starter.version>3.0.5</mybatis-plus-boot-starter.version>
         <spring-boot-admin.version>2.1.0</spring-boot-admin.version>
