@@ -5,4 +5,14 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/18770911080/zzq/config-repo
+          uri: https://github.com/18770911080/zzq
+          search-paths: config-repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
