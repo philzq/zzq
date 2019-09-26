@@ -2,7 +2,6 @@ package zzq.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -15,15 +14,15 @@ import java.util.concurrent.TimeUnit;
  * Date: 2018/11/26
  * Description:
  */
-public class CacheUtils {
+public class RedisUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(CacheUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(RedisUtils.class);
 
     private RedisTemplate redisTemplate;
 
     private StringRedisTemplate stringRedisTemplate;
 
-    public CacheUtils(RedisTemplate redisTemplate, StringRedisTemplate stringRedisTemplate) {
+    public RedisUtils(RedisTemplate redisTemplate, StringRedisTemplate stringRedisTemplate) {
         this.redisTemplate = redisTemplate;
         this.stringRedisTemplate = stringRedisTemplate;
     }

@@ -109,7 +109,7 @@ public class SubscribeWebSocket {
             case "SUB"://订阅业务
                 this.service.add(service);
                 //控制初始化推送一次数据
-                ApplicationStartup.cacheUtils.sendChannelMess(service,this.session.getId());
+                ApplicationStartup.redisUtils.sendChannelMess(service,this.session.getId());
                 sendMessage(JSONUtil.toJsonStr(new SubscribeResponse("SUB&"+service)));
                 break;
             case "UN_SUB"://取消订阅

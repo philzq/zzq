@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import zzq.utils.CacheUtils;
+import zzq.annotation.EnableRedisUtils;
+import zzq.utils.RedisUtils;
 
 /**
  * 〈功能简述〉<br>
@@ -16,16 +17,11 @@ import zzq.utils.CacheUtils;
  * @create 2018-12-21
  */
 @SpringBootApplication
+@EnableRedisUtils
 public class SpringBootWebsocketApplication {
     
     public static void main(String[] args){
         SpringApplication.run(SpringBootWebsocketApplication.class,args);
-    }
-
-    @Bean
-    @Lazy
-    public CacheUtils cacheUtils(RedisTemplate redisTemplate, StringRedisTemplate stringRedisTemplate){
-        return new CacheUtils(redisTemplate,stringRedisTemplate);
     }
 }
 

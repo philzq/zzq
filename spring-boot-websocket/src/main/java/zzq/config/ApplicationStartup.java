@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import zzq.utils.CacheUtils;
+import zzq.utils.RedisUtils;
 
 /**
  * 〈功能简述〉<br>
@@ -15,15 +15,15 @@ import zzq.utils.CacheUtils;
 @Component
 public class ApplicationStartup implements ApplicationRunner {
 
-    public static CacheUtils cacheUtils = null;
+    public static RedisUtils redisUtils = null;
 
     @Autowired
-    private CacheUtils cacheUtil;
+    private RedisUtils cacheUtil;
 
     @Override
     public void run(ApplicationArguments args) {
-        if(ApplicationStartup.cacheUtils == null){
-            ApplicationStartup.cacheUtils = cacheUtil;
+        if(ApplicationStartup.redisUtils == null){
+            ApplicationStartup.redisUtils = cacheUtil;
         }
     }
 }
