@@ -51,6 +51,9 @@ public class SumNContinuousPositiveSequence {
     }
 
     public static void main(String[] args){
-        System.out.println(sumNContinuousPositiveSequence(30).toString());
+        long start = System.currentTimeMillis();
+        System.out.println(sumNContinuousPositiveSequence(100000000).toString());
+        long end = System.currentTimeMillis();
+        System.out.println("耗时:"+(end-start)+"毫秒");
     }
 }
