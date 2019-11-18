@@ -19,6 +19,7 @@
         <module>spring-boot-cache-caffeine</module>
         <module>spring-boot-ribbitmq</module>
         <module>spring-cloud-config-server</module>
+        <module>simple-mybatis</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -48,6 +49,8 @@
         <commons.codec.version>1.10</commons.codec.version>
         <commons.configuration.version>1.10</commons.configuration.version>
         <commons.io.version>2.5</commons.io.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <mariadb-java-client.version>2.5.1</mariadb-java-client.version>
     </properties>
 
     <dependencyManagement>
@@ -135,6 +138,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>${mariadb-java-client.version}</version>
+        </dependency>
+
         <!--连接池-->
         <!-- https://mvnrepository.com/artifact/hikari-cp/hikari-cp -->
         <dependency>
@@ -161,6 +172,12 @@
             <version>${hutool.version}</version>
         </dependency>
 
+        <!-- 读取xml文件 -->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
     </dependencies>
 
     <repositories>
