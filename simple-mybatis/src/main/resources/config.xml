@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
 	<property name="driverClassName">org.mariadb.jdbc.Driver</property>
-	<property name="url">jdbc:mysql://172.18.21.188:3306/frbsdb?useUnicode=true&amp;characterEncoding=UTF-8</property>
+	<property name="url">jdbc:mariadb://172.18.21.188:3306/frbsdb?useUnicode=true&amp;characterEncoding=UTF-8</property>
 	<property name="username">fitpbs</property>
 	<property name="password">fitpbs2019dev</property>
 </database>
