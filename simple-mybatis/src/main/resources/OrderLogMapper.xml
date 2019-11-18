@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper nameSpace="zzq.simple.mybatis.mapper.OrderLogMapper">
+    <select id="getOrderLogs" resultType ="zzq.simple.mybatis.entity.OrderLog">
+        SELECT * FROM `OrderLog`
+    </select>>
+</mapper>
