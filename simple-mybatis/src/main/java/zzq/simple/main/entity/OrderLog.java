@@ -1,4 +1,4 @@
-package zzq.simple.mybatis.entity;
+package zzq.simple.main.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package zzq.simple.mybatis.mapper;
+package zzq.simple.main.mapper;
 
-import zzq.simple.mybatis.entity.OrderLog;
+import zzq.simple.main.entity.OrderLog;
 
 import java.util.List;
 

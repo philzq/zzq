@@ -1,6 +1,7 @@
-package zzq.simple.mybatis.sqlSession;
+package zzq.simple.mybatis.executor;
 
-import zzq.simple.mybatis.entity.OrderLog;
+import zzq.simple.main.entity.OrderLog;
+import zzq.simple.mybatis.transaction.JdbcTransaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,13 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyExcutor implements Excutor {
+public class Executor{
 
-    private MyConfiguration xmlConfiguration = new MyConfiguration();
+    private JdbcTransaction jdbcTransaction;
 
-    @Override
-    public <T> T query(String sql, Object parameter) {
-        Connection connection = getConnection();
+    public Executor(JdbcTransaction jdbcTransaction) {
+        this.jdbcTransaction = jdbcTransaction;
+    }
+
+    public <T> T query(String sql) throws SQLException{
+        return this.query(sql,null);
+    }
+
+    public <T> T query(String sql, Object parameter) throws SQLException{
+        Connection connection = jdbcTransaction.getConnection();
         ResultSet set = null;
         PreparedStatement pre = null;
         try {
@@ -51,16 +59,6 @@ public class MyExcutor implements Excutor {
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
-        }
-        return null;
-    }
-
-    private Connection getConnection() {
-        try {
-            Connection connection = xmlConfiguration.build("config.xml");
-            return connection;
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
