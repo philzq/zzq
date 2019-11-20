@@ -29,22 +29,36 @@ public class SqlSession{
   public <T> T selectOne(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.mockSelectOne(ms,parameter);
+      return executor.selectOne(ms,parameter);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }
-  }
-
-  public <E> List<E> selectList(String statement) {
-    return this.selectList(statement, null);
   }
 
   public <E> List<E> selectList(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.mockSelectList(ms,parameter);
+      return executor.selectList(ms,parameter);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }
   }
+
+    public <T> T mockSelectOne(String statement, Object parameter) {
+        try {
+            MappedStatement ms = configuration.getMappedStatement(statement);
+            return executor.mockSelectOne(ms,parameter);
+        } catch (Exception e) {
+            throw new RuntimeException("Error querying database.  Cause: " + e, e);
+        }
+    }
+
+    public <E> List<E> mockSelectList(String statement, Object parameter) {
+        try {
+            MappedStatement ms = configuration.getMappedStatement(statement);
+            return executor.mockSelectList(ms,parameter);
+        } catch (Exception e) {
+            throw new RuntimeException("Error querying database.  Cause: " + e, e);
+        }
+    }
 }

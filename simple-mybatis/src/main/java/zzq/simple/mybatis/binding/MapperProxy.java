@@ -26,7 +26,7 @@ public class MapperProxy<T> implements InvocationHandler{
         String statement = method.getDeclaringClass().getName() + "." + method.getName();
         ParamNameResolver paramNameResolver = new ParamNameResolver(configuration, method);
         Object params = paramNameResolver.getNamedParams(args);
-        return this.sqlsession.selectOne(statement,params);
+        return this.sqlsession.mockSelectOne(statement,params);
 	}
 	
 
