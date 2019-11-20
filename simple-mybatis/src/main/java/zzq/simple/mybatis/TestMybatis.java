@@ -1,23 +1,13 @@
 package zzq.simple.mybatis;
 
-import org.mariadb.jdbc.MariaDbDataSource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import zzq.simple.main.entity.OrderLog;
 import zzq.simple.main.mapper.OrderLogMapper;
-import zzq.simple.mybatis.annotation.MapperScan;
-import zzq.simple.mybatis.executor.Executor;
-import zzq.simple.mybatis.mapper.ClassPathMapperScanner;
-import zzq.simple.mybatis.sqlSession.Configuration;
 import zzq.simple.mybatis.sqlSession.SqlSession;
 import zzq.simple.mybatis.sqlSession.SqlSessionFactory;
 import zzq.simple.mybatis.sqlSession.SqlSessionFactoryBuilder;
-import zzq.simple.mybatis.transaction.JdbcTransaction;
-import zzq.simple.mybatis.xml.XMLConfigBuilder;
 
 import java.util.ResourceBundle;
 
-@MapperScan("zzq.simple.main.mapper")
 public class TestMybatis {
 
     public static void main(String[] args) {

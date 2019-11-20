@@ -41,10 +41,7 @@ public class XMLConfigBuilder {
             JdbcTransaction jdbcTransaction = new JdbcTransaction(mariaDbDataSource);
             Environment env = new Environment(this.environment,jdbcTransaction,mariaDbDataSource);
             configuration.setEnvironment(env);
-            //加载接口
-            ClassPathMapperScanner classPathMapperScanner = new ClassPathMapperScanner(configuration);
-            classPathMapperScanner.doScanMapper();
-            //加载mapper.xml
+            //加载mapper.xml，同时生成对应接口的代理实例
             Resource[] mapperLocations = new PathMatchingResourcePatternResolver()
                     .getResources(resourceBundle.getString("mapperLocation"));
             readMapper(mapperLocations,configuration);
@@ -79,6 +76,8 @@ public class XMLConfigBuilder {
                 mappedStatement.setSql(parseSql);
                 configuration.addMappedStatement(nameSpace+"."+funcName,mappedStatement);
             }
+            //加载接口,生成代理对象
+            configuration.addMapper(Class.forName(nameSpace));
         }
     }
 }
