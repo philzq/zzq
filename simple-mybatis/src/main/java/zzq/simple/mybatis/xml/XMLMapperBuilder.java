@@ -37,11 +37,13 @@ public class XMLMapperBuilder {
                 String sqltype = e.getName().trim();
                 String funcName = e.attributeValue("id").trim();
                 String sql = e.getText().trim();
+                GenericTokenParser genericTokenParser = new GenericTokenParser("#{", "}");
+                String parseSql = genericTokenParser.parse(sql);
                 String resultType = e.attributeValue("resultType").trim();
                 mappedStatement.setSqltype(sqltype);
                 mappedStatement.setFuncName(funcName);
                 mappedStatement.setResultType(resultType);
-                mappedStatement.setSql(sql);
+                mappedStatement.setSql(parseSql);
                 configuration.addMappedStatement(nameSpace+"."+funcName,mappedStatement);
             }
         }

@@ -27,14 +27,11 @@ public class SqlSession{
   }
 
   public <T> T selectOne(String statement, Object parameter) {
-    // Popular vote was to return null on 0 results and throw exception on too many.
-    List<T> list = this.selectList(statement, parameter);
-    if (list.size() > 1) {
-      return list.get(0);
-    } else if (list.size() > 1) {
-      throw new RuntimeException("Expected one result (or null) to be returned by selectOne(), but found: " + list.size());
-    } else {
-      return null;
+    try {
+      MappedStatement ms = configuration.getMappedStatement(statement);
+      return executor.selectOne(ms,parameter);
+    } catch (Exception e) {
+      throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }
   }
 
@@ -45,7 +42,7 @@ public class SqlSession{
   public <E> List<E> selectList(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.query(ms);
+      return executor.selectList(ms,parameter);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }

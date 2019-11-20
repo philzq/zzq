@@ -43,9 +43,12 @@ public class TestMybatis {
 
         //获取代理对象
         OrderLogMapper orderLogMapper = configuration.getMapperRegistry().getMapper(OrderLogMapper.class, sqlSession);
-        List<OrderLog> orderLogs = orderLogMapper.getOrderLogs();
-        //打印结果
-        System.out.println(orderLogs);
+        //获取所有日志
+//        List<OrderLog> orderLogs = orderLogMapper.getOrderLogs();
+//        System.out.println(orderLogs);
+        //根据日期id获取指定的日志
+        OrderLog orderLog = orderLogMapper.getOrderLogByLogID(40L);
+        System.out.println(orderLog);
     }
 
 }

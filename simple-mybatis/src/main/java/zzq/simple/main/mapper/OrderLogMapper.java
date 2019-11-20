@@ -7,4 +7,6 @@ import java.util.List;
 public interface OrderLogMapper {
 
     List<OrderLog> getOrderLogs();
+
+    OrderLog getOrderLogByLogID(Long logID);
 }

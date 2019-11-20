@@ -20,11 +20,19 @@ public class Executor{
         this.jdbcTransaction = jdbcTransaction;
     }
 
-    public <T> T query(MappedStatement mappedStatement) throws SQLException{
-        return this.query(mappedStatement,null);
+    public <T> T selectOne(MappedStatement mappedStatement, Object parameter) throws Exception{
+        // Popular vote was to return null on 0 results and throw exception on too many.
+        List<T> list = this.selectList(mappedStatement, parameter);
+        if (list.size() == 1) {
+            return list.get(0);
+        } else if (list.size() > 1) {
+            throw new RuntimeException("Expected one result (or null) to be returned by selectOne(), but found: " + list.size());
+        } else {
+            return null;
+        }
     }
 
-    public <T> T query(MappedStatement mappedStatement, Object parameter) throws SQLException{
+    public <T> List<T> selectList(MappedStatement mappedStatement, Object parameter) throws SQLException{
         Connection connection = jdbcTransaction.getConnection();
         ResultSet set = null;
         PreparedStatement pre = null;
@@ -62,7 +70,7 @@ public class Executor{
                     e.getStackTrace();
                 }
             }
-            return (T) list;
+            return (List<T>) list;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
