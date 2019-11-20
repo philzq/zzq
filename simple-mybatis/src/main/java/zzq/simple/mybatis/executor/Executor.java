@@ -1,8 +1,10 @@
 package zzq.simple.mybatis.executor;
 
 import zzq.simple.main.entity.OrderLog;
+import zzq.simple.mybatis.config.MappedStatement;
 import zzq.simple.mybatis.transaction.JdbcTransaction;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,30 +21,49 @@ public class Executor{
         this.jdbcTransaction = jdbcTransaction;
     }
 
-    public <T> T query(String sql) throws SQLException{
-        return this.query(sql,null);
+    public <T> T query(MappedStatement mappedStatement) throws SQLException{
+        return this.query(mappedStatement,null);
     }
 
-    public <T> T query(String sql, Object parameter) throws SQLException{
+    public <T> T query(MappedStatement mappedStatement, Object parameter) throws SQLException{
         Connection connection = jdbcTransaction.getConnection();
         ResultSet set = null;
         PreparedStatement pre = null;
         try {
-            pre = connection.prepareStatement(sql);
+            pre = connection.prepareStatement(mappedStatement.getSql());
             if(parameter!=null){
                 //设置参数
                 pre.setString(1, parameter.toString());
             }
             set = pre.executeQuery();
-            List<OrderLog> orderLogs = new ArrayList<>();
+            List<Object> list = new ArrayList<>();
             //遍历结果集
             while (set.next()) {
-                OrderLog orderLog = OrderLog.builder()
-                        .logID(set.getLong(1))
-                        .build();
-                orderLogs.add(orderLog);
+                String resultType = mappedStatement.getResultType();
+                Object object = null;
+                try {
+                    object = Class.forName(resultType).getConstructor().newInstance();
+                    Field[] fields = object.getClass().getDeclaredFields();
+                    if(fields!=null){
+                        for(Field field : fields){
+                            field.setAccessible(true);
+                            String fieldValue = null;
+                            try {
+                                fieldValue = set.getString(field.getName());
+                            }catch (Exception e){
+                                e.getStackTrace();
+                            }
+                            if(fieldValue!=null){
+                                field.set(object,Long.valueOf(fieldValue));
+                            }
+                        }
+                    }
+                    list.add(object);
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
             }
-            return (T) orderLogs;
+            return (T) list;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -62,4 +83,5 @@ public class Executor{
         }
         return null;
     }
+
 }

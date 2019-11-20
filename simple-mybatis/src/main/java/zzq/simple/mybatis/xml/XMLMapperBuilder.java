@@ -40,17 +40,7 @@ public class XMLMapperBuilder {
                 String resultType = e.attributeValue("resultType").trim();
                 mappedStatement.setSqltype(sqltype);
                 mappedStatement.setFuncName(funcName);
-                Object newInstance=null;
-                try {
-                    newInstance = Class.forName(resultType).newInstance();
-                } catch (InstantiationException e1) {
-                    e1.printStackTrace();
-                } catch (IllegalAccessException e1) {
-                    e1.printStackTrace();
-                } catch (ClassNotFoundException e1) {
-                    e1.printStackTrace();
-                }
-                mappedStatement.setResultType(newInstance);
+                mappedStatement.setResultType(resultType);
                 mappedStatement.setSql(sql);
                 configuration.addMappedStatement(nameSpace+"."+funcName,mappedStatement);
             }

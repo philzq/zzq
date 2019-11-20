@@ -45,7 +45,7 @@ public class SqlSession{
   public <E> List<E> selectList(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.query(ms.getSql());
+      return executor.query(ms);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }

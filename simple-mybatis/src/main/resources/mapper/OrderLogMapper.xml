@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapper nameSpace="zzq.simple.main.mapper.OrderLogMapper">
     <select id="getOrderLogs" resultType ="zzq.simple.main.entity.OrderLog">
-        SELECT * FROM `OrderLog`
+        SELECT logID FROM `OrderLog`
     </select>>
 </mapper>
