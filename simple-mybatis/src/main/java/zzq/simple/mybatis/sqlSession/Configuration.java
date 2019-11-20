@@ -31,6 +31,16 @@ public class Configuration {
             .conflictMessageProducer((savedValue, targetValue) ->
                     ". please check " + savedValue.getResource() + " and " + targetValue.getResource());
 
+    private Environment environment;
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
     public MappedStatement getMappedStatement(String statement) {
         return mappedStatements.get(statement);
     }

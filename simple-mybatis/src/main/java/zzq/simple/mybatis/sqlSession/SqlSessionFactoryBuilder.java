@@ -1,7 +1,9 @@
 package zzq.simple.mybatis.sqlSession;
 
 
-import java.util.Properties;
+import zzq.simple.mybatis.xml.XMLConfigBuilder;
+
+import java.util.ResourceBundle;
 
 /**
  * Builds {@link SqlSession} instances.
@@ -10,13 +12,16 @@ import java.util.Properties;
  */
 public class SqlSessionFactoryBuilder {
   /**
-   * 加载全局配置，塑造SqlSessionFactory，此处只加载数据源配置
-   * @param properties
+   * 加载全局配置，塑造SqlSessionFactory
    * @return
    */
-  public SqlSessionFactory build(Properties properties) {
-    //利用数据源配置，塑造SqlSessionFactory对象
-    return new SqlSessionFactory();
+  public SqlSessionFactory build(ResourceBundle resourceBundle){
+    XMLConfigBuilder xmlConfigBuilder = new XMLConfigBuilder(resourceBundle);
+    return build(xmlConfigBuilder.parse());
+  }
+
+  public SqlSessionFactory build(Configuration config) {
+    return new SqlSessionFactory(config);
   }
 
 }
