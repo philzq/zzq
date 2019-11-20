@@ -61,4 +61,8 @@ public class SqlSession{
             throw new RuntimeException("Error querying database.  Cause: " + e, e);
         }
     }
+
+    public <T> T getMapper(Class<T> type) {
+        return configuration.getMapper(type, this);
+    }
 }

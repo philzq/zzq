@@ -29,20 +29,23 @@ public class TestMybatis {
         mariaDbDataSource.setUserName(resourceBundle.getString("jdbc.userName"));
         mariaDbDataSource.setPassword(resourceBundle.getString("jdbc.passWord"));
         JdbcTransaction jdbcTransaction = new JdbcTransaction(mariaDbDataSource);
+
         //加载接口
         ClassPathMapperScanner classPathMapperScanner = new ClassPathMapperScanner(configuration);
         classPathMapperScanner.doScanMapper();
+
         //加载mapper.xml
         XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configuration);
         Resource[] mapperLocations = new PathMatchingResourcePatternResolver()
                 .getResources(resourceBundle.getString("mapperLocation"));
         xmlMapperBuilder.readMapper(mapperLocations);
 
-        //创建sql会话
+        //创建SqlSession实例
         SqlSession sqlSession = new SqlSession(configuration,new Executor(jdbcTransaction));
 
-        //获取代理对象
-        OrderLogMapper orderLogMapper = configuration.getMapperRegistry().getMapper(OrderLogMapper.class, sqlSession);
+        //获取代理Mapper对象
+        OrderLogMapper orderLogMapper = sqlSession.getMapper(OrderLogMapper.class);
+
         //根据日期id获取指定的日志
         OrderLog orderLog = orderLogMapper.getOrderLogByLogID(9000L);
         System.out.println(orderLog);
