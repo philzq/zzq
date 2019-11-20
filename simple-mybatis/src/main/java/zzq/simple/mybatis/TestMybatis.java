@@ -13,7 +13,6 @@ import zzq.simple.mybatis.sqlSession.SqlSession;
 import zzq.simple.mybatis.transaction.JdbcTransaction;
 import zzq.simple.mybatis.xml.XMLMapperBuilder;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 @MapperScan("zzq.simple.main.mapper")
@@ -39,6 +38,7 @@ public class TestMybatis {
                 .getResources(resourceBundle.getString("mapperLocation"));
         xmlMapperBuilder.readMapper(mapperLocations);
 
+        //创建sql会话
         SqlSession sqlSession = new SqlSession(configuration,new Executor(jdbcTransaction));
 
         //获取代理对象
