@@ -27,4 +27,8 @@ public class SqlSessionFactory {
         Executor executor = new Executor(jdbcTransaction);
         return new SqlSession(configuration, executor);
     }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 }

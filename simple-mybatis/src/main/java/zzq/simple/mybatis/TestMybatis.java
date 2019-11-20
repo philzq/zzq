@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 @MapperScan("zzq.simple.main.mapper")
 public class TestMybatis {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("mybatis-config");
         //获取SqlSessionFactory实例
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceBundle);
