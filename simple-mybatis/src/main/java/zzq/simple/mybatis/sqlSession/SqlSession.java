@@ -29,7 +29,7 @@ public class SqlSession{
   public <T> T selectOne(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.selectOne(ms,parameter);
+      return executor.mockSelectOne(ms,parameter);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }
@@ -42,7 +42,7 @@ public class SqlSession{
   public <E> List<E> selectList(String statement, Object parameter) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      return executor.selectList(ms,parameter);
+      return executor.mockSelectList(ms,parameter);
     } catch (Exception e) {
       throw new RuntimeException("Error querying database.  Cause: " + e, e);
     }

@@ -1,5 +1,6 @@
 package zzq.simple.mybatis.executor;
 
+import zzq.simple.main.entity.OrderLog;
 import zzq.simple.mybatis.config.MappedStatement;
 import zzq.simple.mybatis.transaction.JdbcTransaction;
 
@@ -89,6 +90,24 @@ public class Executor{
             }
         }
         return null;
+    }
+
+    public <T> T mockSelectOne(MappedStatement mappedStatement, Object parameter){
+        OrderLog orderLog = OrderLog.builder()
+                .logID((Long) parameter)
+                .build();
+        return (T)orderLog;
+    }
+
+    public <T> List<T> mockSelectList(MappedStatement mappedStatement, Object parameter){
+        List<Object> list = new ArrayList<>();
+        for(long i=0;i<10;i++){
+            OrderLog orderLog = OrderLog.builder()
+                    .logID(i)
+                    .build();
+            list.add(orderLog);
+        }
+        return (List<T>)list;
     }
 
 }
