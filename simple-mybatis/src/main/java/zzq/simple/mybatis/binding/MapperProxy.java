@@ -1,6 +1,5 @@
 package zzq.simple.mybatis.binding;
 
-import zzq.simple.mybatis.config.MappedStatement;
 import zzq.simple.mybatis.sqlSession.Configuration;
 import zzq.simple.mybatis.sqlSession.SqlSession;
 

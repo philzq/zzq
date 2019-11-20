@@ -1,6 +1,5 @@
 package zzq.simple.mybatis.executor;
 
-import zzq.simple.main.entity.OrderLog;
 import zzq.simple.mybatis.config.MappedStatement;
 import zzq.simple.mybatis.transaction.JdbcTransaction;
 
