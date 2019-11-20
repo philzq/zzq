@@ -1,6 +1,6 @@
 package zzq.simple.mybatis.mapper;
 
-import zzq.simple.mybatis.TestMybatis;
+import zzq.simple.mybatis.SimpleMybatis;
 import zzq.simple.mybatis.annotation.MapperScan;
 import zzq.simple.mybatis.common.Restarter;
 import zzq.simple.mybatis.sqlSession.Configuration;
@@ -43,7 +43,7 @@ public class ClassPathMapperScanner {
      * @param packageName: 需要扫描的包名
      */
     private void doScanner(String packageName) throws Exception{
-        URL url = TestMybatis.class.getClassLoader().getResource(packageName.replaceAll("\\.", "/"));
+        URL url = SimpleMybatis.class.getClassLoader().getResource(packageName.replaceAll("\\.", "/"));
         if(url==null){
             return;
         }

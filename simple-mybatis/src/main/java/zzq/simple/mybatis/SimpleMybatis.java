@@ -8,7 +8,7 @@ import zzq.simple.mybatis.sqlSession.SqlSessionFactoryBuilder;
 
 import java.util.ResourceBundle;
 
-public class TestMybatis {
+public class SimpleMybatis {
 
     public static void main(String[] args) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("mybatis-config");
