@@ -13,4 +13,11 @@ public class OrderLog {
     public void setLogID(Long logID) {
         this.logID = logID;
     }
+
+    @Override
+    public String toString() {
+        return "OrderLog{" +
+                "logID=" + logID +
+                '}';
+    }
 }
