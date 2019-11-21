@@ -93,18 +93,16 @@ public class Executor{
     }
 
     public <T> T mockSelectOne(MappedStatement mappedStatement, Object parameter){
-        OrderLog orderLog = OrderLog.builder()
-                .logID((Long) parameter)
-                .build();
+        OrderLog orderLog = new OrderLog();
+        orderLog.setLogID((Long) parameter);
         return (T)orderLog;
     }
 
     public <T> List<T> mockSelectList(MappedStatement mappedStatement, Object parameter){
         List<Object> list = new ArrayList<>();
         for(long i=0;i<10;i++){
-            OrderLog orderLog = OrderLog.builder()
-                    .logID(i)
-                    .build();
+            OrderLog orderLog = new OrderLog();
+            orderLog.setLogID(i);
             list.add(orderLog);
         }
         return (List<T>)list;
