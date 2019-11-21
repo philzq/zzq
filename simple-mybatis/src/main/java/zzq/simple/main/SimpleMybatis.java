@@ -1,4 +1,4 @@
-package zzq.simple.mybatis;
+package zzq.simple.main;
 
 import zzq.simple.main.entity.OrderLog;
 import zzq.simple.main.mapper.OrderLogMapper;
