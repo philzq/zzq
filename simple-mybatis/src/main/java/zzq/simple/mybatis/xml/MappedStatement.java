@@ -1,4 +1,4 @@
-package zzq.simple.mybatis.config;
+package zzq.simple.mybatis.xml;
 
 public class MappedStatement {
     private String resource; //资源地址

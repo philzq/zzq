@@ -1,6 +1,6 @@
 package zzq.simple.mybatis.sqlSession;
 
-import zzq.simple.mybatis.config.MappedStatement;
+import zzq.simple.mybatis.xml.MappedStatement;
 import zzq.simple.mybatis.executor.Executor;
 
 import java.util.List;

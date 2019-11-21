@@ -4,7 +4,6 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.mariadb.jdbc.MariaDbDataSource;
-import zzq.simple.mybatis.config.MappedStatement;
 import zzq.simple.mybatis.sqlSession.Configuration;
 import zzq.simple.mybatis.sqlSession.Environment;
 import zzq.simple.mybatis.transaction.JdbcTransaction;

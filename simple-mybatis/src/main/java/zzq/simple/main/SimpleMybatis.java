@@ -19,7 +19,7 @@ public class SimpleMybatis {
         //获取代理Mapper对象
         OrderLogMapper orderLogMapper = sqlSession.getMapper(OrderLogMapper.class);
         //根据日期id获取指定的日志
-        OrderLog orderLog = orderLogMapper.getOrderLogByLogID(9000L);
+        OrderLog orderLog = orderLogMapper.getOrderLogByLogID(2550L);
         System.out.println(orderLog);
     }
 

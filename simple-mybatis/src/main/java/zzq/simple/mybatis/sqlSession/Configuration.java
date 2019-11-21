@@ -1,7 +1,7 @@
 package zzq.simple.mybatis.sqlSession;
 
 import zzq.simple.mybatis.binding.MapperRegistry;
-import zzq.simple.mybatis.config.MappedStatement;
+import zzq.simple.mybatis.xml.MappedStatement;
 
 import java.util.HashMap;
 import java.util.HashSet;
