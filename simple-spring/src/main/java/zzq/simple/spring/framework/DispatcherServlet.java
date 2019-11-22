@@ -12,9 +12,7 @@ import zzq.simple.spring.framework.helper.RequestHelper;
 import zzq.simple.spring.framework.util.ReflectionUtil;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
