@@ -22,6 +22,7 @@ public class Ioc {
         BEAN_MAP.put(OrderLogMapper.class,new MapperProxyFactory<OrderLogMapper>(OrderLogMapper.class).newInstance());
         BEAN_MAP.put(OrderLogService.class, ReflectionUtil.newInstance(OrderLogService.class));
 
+        //处理依赖注入
         for (Map.Entry<Class<?>, Object> beanEntry : BEAN_MAP.entrySet()) {
             //bean的class类
             Class<?> beanClass = beanEntry.getKey();
