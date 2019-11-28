@@ -14,6 +14,7 @@ public class MapperProxy<T> implements InvocationHandler{
 
     @Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Exception{
+        logger.info("---------------------执行DB操作开始------------------------------");
         // hashCode()、toString()、equals()等方法，调用原生方法
         if (Object.class.equals(method.getDeclaringClass())) {
             return method.invoke(this, args);
@@ -46,6 +47,7 @@ public class MapperProxy<T> implements InvocationHandler{
 
         // ============== Step 4: 将DB结果转为实体 ==============
         //注:此处mock的数据，不用处理结果集
+        logger.info("---------------------执行DB操作结束------------------------------");
         return result;
 	}
 	
