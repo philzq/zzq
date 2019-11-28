@@ -20,14 +20,15 @@ public class ApplicationContext {
     public static final Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>, Object>();
 
     static {
-        logger.info("初始化容器");
-        logger.info("加载Mapper接口到容器中");
+        logger.info("----------------初始化容器开始--------------");
+        logger.info("根据启动类上的MapperScan注解的包路径值,加载该包下所有的Mapper接口到容器中");
         doScanMapper();
-        logger.info("加载包涵Service注解的类到容器中");
+        logger.info("加载启动类当前包下所有包涵Service注解的类到容器中");
         doScanService();
         //处理依赖注入
-        logger.info("处理依赖注入");
+        logger.info("处理依赖注入--动态为容器中对象，包涵Autowired注解的属性赋值");
         doDependencyInjection();
+        logger.info("----------------初始化容器结束--------------");
     }
 
     /**
