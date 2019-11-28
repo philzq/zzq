@@ -21,6 +21,7 @@
         <module>spring-cloud-config-server</module>
         <module>simple-mybatis</module>
         <module>simple-spring</module>
+        <module>simple-spring-mybatis</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
