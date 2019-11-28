@@ -18,7 +18,7 @@ public class Ioc {
     public static final Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>, Object>();
 
     static {
-        //想容器中注入两个对象
+        //向容器中手动注入两个对象
         BEAN_MAP.put(OrderLogMapper.class,new MapperProxyFactory<OrderLogMapper>(OrderLogMapper.class).newInstance());
         BEAN_MAP.put(OrderLogService.class, ReflectionUtil.newInstance(OrderLogService.class));
 
