@@ -36,7 +36,6 @@ public class MapperProxy<T> implements InvocationHandler{
             if(params.length==1){
                 paramName = sql.substring(sql.indexOf("#{")+2, sql.indexOf("}"));
             }
-            System.out.println(paramName);
             logger.info("参数类型:{} 参数名称:{}  参数值:{}", param.getType(), paramName, args[i]);
             sql = sql.replace("#{" + paramName + "}", args[i].toString());
         }
