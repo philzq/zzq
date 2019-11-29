@@ -25,6 +25,7 @@ public class CountOne {
         int length = (n + "").length();
         int[] sumNum = new int[length];
 
+        //初始化sumNum
         getNum(length,sumNum);
 
         return getSum(n,sumNum);
@@ -39,12 +40,12 @@ public class CountOne {
     private int getSum(int n, int[] sumNum) {
         int length = (n + "").length();
         int count = sumNum[length-2];
+
         int first = pow(length-1);
         int high = div(n);
-        int nextN = removeHigh(n);
+        int nextN = removeHigh(n,length);
         if(high>1){
-            count += sumNum[length-2]*(high-1);
-            count += first;
+            count += sumNum[length-2]*(high-1)+first;
         }else{
             if(high==1){
                 count += nextN+1;
@@ -61,7 +62,7 @@ public class CountOne {
     }
 
     /**
-     * 记录每位数1的个数，个位数1个，十位数20个...
+     * 记录每位数1的个数，个位数1个，十位数20个...，初始化sumNum
      * @param length
      */
     private void getNum(int length,int[] sumNum) {
@@ -105,8 +106,7 @@ public class CountOne {
      * @param n
      * @return
      */
-    public int removeHigh(int n){
-        int length = (n+"").length();
+    public int removeHigh(int n,int length){
         int pow = pow(length - 1);
         return n%pow;
     }
@@ -115,7 +115,7 @@ public class CountOne {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        System.out.println(new CountOne().countDigitOne(1000));
+        System.out.println(new CountOne().countDigitOne(222222222));
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
