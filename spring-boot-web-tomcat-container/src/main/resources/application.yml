@@ -1,0 +1,4 @@
+server:
+  port: 8281
+  servlet:
+    context-path: '/tomcat'
