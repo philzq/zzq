@@ -1,4 +1,4 @@
-package zzq.spring.boot.web.container;
+package zzq.spring.boot.web.jetty.container;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class SpringBootWebContainerApplication {
+public class SpringBootWebJettyContainer {
 
     public static void main(String[] args){
-        SpringApplication.run(SpringBootWebContainerApplication.class,args);
+        SpringApplication.run(SpringBootWebJettyContainer.class,args);
     }
 
     @GetMapping("getTestStr")
     public String getTestStr() throws Exception{
         Thread.sleep(500);
-        return "Undertow";
+        return "Tomcat";
     }
 }

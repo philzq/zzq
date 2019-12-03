@@ -1,0 +1,8 @@
+server:
+  jetty:
+    acceptors: 2 # acceptor线程数
+    max-http-post-size: 0 # put或post方法最大字节数
+    selectors: 4 # selector线程数
+  servlet:
+    context-path: '/jetty'
+  port: 8280

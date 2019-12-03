@@ -24,6 +24,7 @@
         <module>simple-spring-mybatis</module>
         <module>spring-boot-web-undertow-container</module>
         <module>spring-boot-web-tomcat-container</module>
+        <module>spring-boot-web-jetty-container</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
