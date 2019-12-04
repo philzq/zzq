@@ -16,6 +16,6 @@ public class SpringBootWebJettyContainer {
     @GetMapping("getTestStr")
     public String getTestStr() throws Exception{
         Thread.sleep(50);
-        return "jetty";
+        return "Container";
     }
 }

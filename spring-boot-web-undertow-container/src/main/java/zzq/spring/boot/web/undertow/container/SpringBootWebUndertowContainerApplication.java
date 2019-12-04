@@ -16,6 +16,6 @@ public class SpringBootWebUndertowContainerApplication {
     @GetMapping("getTestStr")
     public String getTestStr() throws Exception{
         Thread.sleep(50);
-        return "Undertow";
+        return "Container";
     }
 }

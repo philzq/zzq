@@ -4,6 +4,8 @@ server:
   undertow:
     accesslog:
       enabled: false
+    io-threads: 2
+    worker-threads: 4
   port: 8282
   servlet:
     context-path: '/undertow'
