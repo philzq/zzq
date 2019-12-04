@@ -15,7 +15,7 @@ public class SpringBootWebTomcatContainer {
 
     @GetMapping("getTestStr")
     public String getTestStr() throws Exception{
-        Thread.sleep(500);
+        Thread.sleep(50);
         return "Tomcat";
     }
 }
