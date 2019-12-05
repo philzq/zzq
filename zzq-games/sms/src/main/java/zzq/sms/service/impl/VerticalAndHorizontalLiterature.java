@@ -53,8 +53,7 @@ public class VerticalAndHorizontalLiterature implements SMSBombing {
                 .execute()
                 .bodyStream();
 
-        //File imageFile = FileWriter.create(new File("img.jpg")).writeFromStream(imgStream);
-        File imageFile = new File("D:\\Users\\zhiqiangzhou\\Desktop\\passimg.jpg");
+        File imageFile = FileWriter.create(new File("img.jpg")).writeFromStream(imgStream);
 
         ITesseract iTesseract = new Tesseract();  // JNA Interface Mapping
 
