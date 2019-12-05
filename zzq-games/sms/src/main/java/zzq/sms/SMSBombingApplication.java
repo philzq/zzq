@@ -10,7 +10,7 @@ import zzq.sms.service.impl.VerticalAndHorizontalLiterature;
 public class SMSBombingApplication {
 
     public static void main(String[] args) {
-        String phone = "18770911080";
+        String phone = "";
         SMSBombing smsBombing = new VerticalAndHorizontalLiterature();
         smsBombing.sendSms(phone);
     }
