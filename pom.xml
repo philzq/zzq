@@ -25,6 +25,7 @@
         <module>spring-boot-web-undertow-container</module>
         <module>spring-boot-web-tomcat-container</module>
         <module>spring-boot-web-jetty-container</module>
+        <module>zzq-games</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -58,6 +59,7 @@
         <mariadb-java-client.version>2.5.1</mariadb-java-client.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <tess4j.version>4.4.1</tess4j.version>
     </properties>
 
     <dependencyManagement>
@@ -109,6 +111,13 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+            <dependency>
+                <groupId>net.sourceforge.tess4j</groupId>
+                <artifactId>tess4j</artifactId>
+                <version>${tess4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
