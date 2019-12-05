@@ -6,12 +6,20 @@ import cn.hutool.json.JSONUtil;
 import zzq.game.sms.service.SMSBombing;
 
 /**
- * 纵横文学登录短信验证码
+ * 纵横文学
  */
 public class VerticalAndHorizontalLiterature implements SMSBombing {
 
     @Override
     public void sendSms(String phone) {
+        sendLoginSms(phone);
+    }
+
+    /**
+     * 纵横文学登录短信验证码
+     * @param phone
+     */
+    private void sendLoginSms(String phone) {
         String TK = null;
         String captKey = null;
 
