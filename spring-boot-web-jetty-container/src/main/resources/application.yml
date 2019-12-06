@@ -6,3 +6,22 @@ server:
   servlet:
     context-path: '/jetty'
   port: 8280
+spring:
+  application:
+    name: spring-boot-web-jetty-container
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #配置这个将监控所有的信息
+  endpoint:
+    health:
+      show-details: ALWAYS

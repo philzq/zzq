@@ -2,3 +2,23 @@ server:
   port: 8281
   servlet:
     context-path: '/tomcat'
+
+spring:
+  application:
+    name: spring-boot-web-tomcat-container
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #配置这个将监控所有的信息
+  endpoint:
+    health:
+      show-details: ALWAYS

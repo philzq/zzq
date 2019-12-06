@@ -9,9 +9,23 @@ server:
   port: 8282
   servlet:
     context-path: '/undertow'
-# 指定工作者线程的 I/0 线程数，默认为 2 或者 CPU 的个数
-#server.undertow.io-threads=
-# 指定工作者线程个数，默认为 I/O 线程个数的 8 倍
-#server.undertow.worker-threads=
-# 设置 HTTP POST 内容的最大长度，默认不做限制
-#server.undertow.max-http-post-size=0
+
+spring:
+  application:
+    name: spring-boot-web-undertow-container
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #配置这个将监控所有的信息
+  endpoint:
+    health:
+      show-details: ALWAYS
