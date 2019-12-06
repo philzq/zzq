@@ -26,6 +26,7 @@
         <module>spring-boot-web-tomcat-container</module>
         <module>spring-boot-web-jetty-container</module>
         <module>zzq-games</module>
+        <module>spring-boot-webflux</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>

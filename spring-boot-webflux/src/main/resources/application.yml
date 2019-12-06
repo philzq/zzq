@@ -1,0 +1,32 @@
+server:
+  port: 8283
+  servlet:
+    context-path: '/webflux'
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 50
+
+spring:
+  application:
+    name: spring-boot-webflux
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    metadata-map:
+      management:
+        context-path: /webflux/actuator
+    health-check-url: http://localhost:${server.port}/webflux/actuator/health
+    status-page-url: http://localhost:${server.port}/webflux/actuator/info
+    home-page-url: http://localhost:${server.port}/
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #配置这个将监控所有的信息
+  endpoint:
+    health:
+      show-details: ALWAYS
