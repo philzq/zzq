@@ -3,6 +3,8 @@ server:
     acceptors: 2 # acceptor线程数
     max-http-post-size: 0 # put或post方法最大字节数
     selectors: 4 # selector线程数
+
+
   servlet:
     context-path: '/jetty'
   port: 8280
@@ -12,7 +14,12 @@ spring:
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
-    health-check-url-path: /actuator/health
+    metadata-map:
+      management:
+        context-path: /jetty/actuator
+    health-check-url: http://localhost:${server.port}/jetty/actuator/health
+    status-page-url: http://localhost:${server.port}/jetty/actuator/info
+    home-page-url: http://localhost:${server.port}/
   client:
     service-url:
       defaultZone: http://localhost:8888/eureka/

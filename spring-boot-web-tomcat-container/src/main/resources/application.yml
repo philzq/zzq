@@ -2,6 +2,9 @@ server:
   port: 8281
   servlet:
     context-path: '/tomcat'
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 50
 
 spring:
   application:
@@ -9,7 +12,12 @@ spring:
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
-    health-check-url-path: /actuator/health
+    metadata-map:
+      management:
+        context-path: /tomcat/actuator
+    health-check-url: http://localhost:${server.port}/tomcat/actuator/health
+    status-page-url: http://localhost:${server.port}/tomcat/actuator/info
+    home-page-url: http://localhost:${server.port}/
   client:
     service-url:
       defaultZone: http://localhost:8888/eureka/
