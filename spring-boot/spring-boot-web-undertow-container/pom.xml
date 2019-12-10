@@ -35,9 +35,31 @@
 
     <build>
         <plugins>
+            <!--=====================================================================-->
+            <!--============================== 打包相关 =================================-->
+            <!--=====================================================================-->
+            <!--      Step 1: 编译完成后改manifest及排除配置等文件      -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+
+            <!--      Step 2: springboot重新打包下，加上自己的东西      -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!--      Step 3: 复制依赖的jar  到目标路径：lib    -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+
+            <!--      Step 4: 复制各种资源文件 到目标路径：resource/lib、config      -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
