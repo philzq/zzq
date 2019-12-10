@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>zzq</artifactId>
+        <groupId>zzq</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spring-boot</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-boot-admin</module>
+        <module>spring-boot-quartz</module>
+        <module>spring-boot-websocket</module>
+        <module>spring-boot-cache-caffeine</module>
+        <module>spring-boot-ribbitmq</module>
+        <module>spring-boot-web-undertow-container</module>
+        <module>spring-boot-web-tomcat-container</module>
+        <module>spring-boot-web-jetty-container</module>
+        <module>spring-boot-webflux</module>
+    </modules>
+</project>

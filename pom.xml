@@ -7,26 +7,11 @@
     <version>${revision}</version>
 
     <modules>
-        <module>zzq-admin</module>
-        <module>zzq-common</module>
-        <module>zzq-generator</module>
-        <module>zzq-java-demo</module>
-        <module>spring-cloud-eureka</module>
-        <module>spring-cloud-zuul</module>
-        <module>spring-boot-admin</module>
-        <module>spring-boot-quartz</module>
-        <module>spring-boot-websocket</module>
-        <module>spring-boot-cache-caffeine</module>
-        <module>spring-boot-ribbitmq</module>
-        <module>spring-cloud-config-server</module>
-        <module>simple-mybatis</module>
-        <module>simple-spring</module>
-        <module>simple-spring-mybatis</module>
-        <module>spring-boot-web-undertow-container</module>
-        <module>spring-boot-web-tomcat-container</module>
-        <module>spring-boot-web-jetty-container</module>
-        <module>zzq-games</module>
-        <module>spring-boot-webflux</module>
+        <module>spring-boot</module>
+        <module>spring-cloud</module>
+        <module>zzq-micro-service</module>
+        <module>zzq-web</module>
+        <module>zzq-simple-framework</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
