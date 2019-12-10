@@ -8,7 +8,6 @@
         <version>${revision}</version>
     </parent>
     <artifactId>spring-boot-cache-caffeine</artifactId>
-    <name>zzq</name>
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
