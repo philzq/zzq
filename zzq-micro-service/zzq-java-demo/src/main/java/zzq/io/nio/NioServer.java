@@ -27,7 +27,7 @@ public class NioServer{
         serverSocket.bind(new InetSocketAddress(8080));
         System.out.println("listening on port 8080");
 
-        this.selector = Selector.open();;
+        this.selector = Selector.open();
 
         // 绑定channel的accept
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
