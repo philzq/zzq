@@ -1,4 +1,4 @@
-package zzq.io.nio;
+package zzq.io.nio.demo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
