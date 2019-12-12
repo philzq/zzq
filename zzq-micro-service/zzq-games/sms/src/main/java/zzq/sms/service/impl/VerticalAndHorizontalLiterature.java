@@ -29,6 +29,7 @@ public class VerticalAndHorizontalLiterature implements SMSBombing {
         String body = HttpRequest.post("https://passport.zongheng.com/sendloginsms.do")
                 .body(sendloginsmsParams)
                 .execute().body();
+        System.out.println(body);
     }
 
     /**
