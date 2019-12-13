@@ -15,6 +15,7 @@
         <module>simple-mybatis</module>
         <module>simple-spring</module>
         <module>simple-spring-mybatis</module>
+        <module>nio-http-server</module>
     </modules>
 
 
