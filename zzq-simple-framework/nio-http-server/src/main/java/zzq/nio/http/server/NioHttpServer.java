@@ -6,7 +6,7 @@ import zzq.nio.http.server.server.NioServer;
  * CloudHttpServer
  *
  */
-public class CloudHttpServer {
+public class NioHttpServer {
 
     /**
      * 启动服务器
