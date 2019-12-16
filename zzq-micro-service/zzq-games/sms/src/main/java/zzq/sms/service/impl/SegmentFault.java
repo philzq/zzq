@@ -13,7 +13,7 @@ public class SegmentFault implements SMSBombing {
     }
 
     /**
-     * 登录短信验证码
+     * 登录短信验证码（60秒一次）
      * @param phone
      */
     private void sendLoginSms(String phone) {
