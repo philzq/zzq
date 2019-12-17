@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: '/tomcat'
   tomcat:
-    max-threads: 200
+    max-threads: 50
     min-spare-threads: 50
 
 spring:

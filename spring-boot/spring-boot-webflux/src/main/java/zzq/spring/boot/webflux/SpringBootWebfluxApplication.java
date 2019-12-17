@@ -41,7 +41,7 @@ public class SpringBootWebfluxApplication {
 
     @GetMapping("/getTestStr")
     public Mono<String> getTestStr() throws Exception{   // 【改】返回类型为Mono<String>
-        Thread.sleep(50);
+        Thread.sleep(3000);
         return Mono.just("Welcome to reactive world ~");     // 【改】使用Mono.just生成响应式数据
     }
 }
