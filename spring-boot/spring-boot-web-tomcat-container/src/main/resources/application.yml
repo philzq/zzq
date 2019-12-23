@@ -26,7 +26,7 @@ server:
     max-swallow-size: 2MB #要吞咽的请求正文的最大数量。
     port-header: 'X-Forwarded-Port' #用于覆盖原始端口值的HTTP头的名称。
     protocol-header: 'X-Forwarded-Proto' #包含传入协议的头文件，通常命名为“X-Forwarded-Proto”。
-    protocol-header-https-value: http #协议标头的值，指示传入请求是否使用SSL。
+    protocol-header-https-value: https #协议标头的值，指示传入请求是否使用SSL。
     redirect-context-root: true #是否应通过在路径中附加/来重定向对上下文根的请求。
     remote-ip-header: 'X-FORWARDED-FOR'  #从中提取远程IP的HTTP头的名称。例如，`X-FORWARDED-FOR`。
     resource:
