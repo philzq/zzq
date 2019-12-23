@@ -1,7 +1,4 @@
 server:
-  port: 8281
-  servlet:
-    context-path: '/tomcat'
   tomcat:
     max-threads: 100  # 处理请求任务的最大线程数
     min-spare-threads: 50 # 处理请求任务的最小线程数
@@ -35,6 +32,9 @@ server:
     uri-encoding: utf-8 #用于解码URI的字符编码。
     use-relative-redirects: true #通过调用sendRedirect生成的HTTP 1.1和更高版本的位置标头是使用相对还是绝对重定向。
 
+  port: 8281
+  servlet:
+    context-path: '/tomcat'
 spring:
   application:
     name: spring-boot-web-tomcat-container
