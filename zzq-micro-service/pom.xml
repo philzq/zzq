@@ -17,6 +17,7 @@
         <module>zzq-generator</module>
         <module>zzq-java-demo</module>
         <module>zzq-games</module>
+        <module>zzq-ocr</module>
     </modules>
 
 
