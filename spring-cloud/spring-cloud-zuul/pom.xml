@@ -16,7 +16,6 @@
         <dependency>
             <groupId>zzq</groupId>
             <artifactId>zzq-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

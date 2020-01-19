@@ -105,6 +105,12 @@
                 <artifactId>tess4j</artifactId>
                 <version>${tess4j.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>zzq</groupId>
+                <artifactId>zzq-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
