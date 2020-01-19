@@ -21,5 +21,6 @@
         <module>spring-boot-web-tomcat-container</module>
         <module>spring-boot-web-jetty-container</module>
         <module>spring-boot-webflux</module>
+        <module>spring-boot-test</module>
     </modules>
 </project>

@@ -1,0 +1,11 @@
+server:
+  port: 8230
+  servlet:
+    context-path: '/test'
+  tomcat:
+    max-threads: 50
+    min-spare-threads: 50
+
+spring:
+  application:
+    name: spring-boot-test

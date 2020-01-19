@@ -1,8 +1,8 @@
 server:
   tomcat:
-    max-threads: 200  # 处理请求任务的最大线程数
-    min-spare-threads: 10 # 处理请求任务的最小线程数
-    max-connections: 10000  # 最多可以有多少个socket连接到tomcat上
+    max-threads: 100000000  # 处理请求任务的最大线程数
+    min-spare-threads: 100 # 处理请求任务的最小线程数
+    max-connections: 100000000  # 最多可以有多少个socket连接到tomcat上
     accept-count: 100 # 当所有可能的请求处理线程都在使用时，传入连接请求的最大队列长度。
     accesslog:
       directory: 'logs' #创建日志文件的目录。可以绝对或相对于Tomcat基础目录。
