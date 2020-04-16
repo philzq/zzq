@@ -46,6 +46,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <tess4j.version>4.4.1</tess4j.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -318,6 +319,42 @@
                                     </resource>
                                 </resources>
                                 <outputDirectory>${project.build.directory}/resources</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!--测试代码覆盖率-->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-unit-test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <!-- Sets the path to the file which contains the execution data. -->
+
+                                <dataFile>${project.build.directory}/target/jacoco.exec</dataFile>
+                                <!-- Sets the output directory for the code coverage report. -->
+                                <outputDirectory>${project.build.directory}/target/jacoco-reports</outputDirectory>
                             </configuration>
                         </execution>
                     </executions>
