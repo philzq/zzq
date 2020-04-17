@@ -48,7 +48,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
 
-            <!--测试代码覆盖率-->
+            <!--jacoco 单元测试覆盖率-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
