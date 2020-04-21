@@ -12,6 +12,7 @@
         <module>zzq-micro-service</module>
         <module>zzq-web</module>
         <module>zzq-simple-framework</module>
+        <module>zzq-demo</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
