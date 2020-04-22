@@ -1,4 +1,4 @@
-package zzq.springboot.sonarqubejacoco;
+package zzq.springboot.sonarqubejacocojmockit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

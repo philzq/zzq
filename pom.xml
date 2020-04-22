@@ -47,7 +47,8 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <tess4j.version>4.4.1</tess4j.version>
-        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <jacoco.version>0.8.5</jacoco.version>
+        <jmockit.version>1.49</jmockit.version>
     </properties>
 
     <dependencyManagement>
@@ -203,6 +204,13 @@
             <version>${commons-collections4.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>${jmockit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <repositories>
@@ -325,11 +333,21 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <argLine>
+                            -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar
+                            -javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}/jacoco.exec
+                        </argLine>
+                    </configuration>
+                </plugin>
+
                 <!--jacoco 单元测试覆盖率-->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
+                    <version>${jacoco.version}</version>
                     <executions>
                         <execution>
                             <id>prepare-agent</id>

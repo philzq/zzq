@@ -22,6 +22,6 @@
         <module>spring-boot-web-jetty-container</module>
         <module>spring-boot-webflux</module>
         <module>spring-boot-test</module>
-        <module>spring-boot-sonarqube-jacoco</module>
+        <module>spring-boot-sonarqube-jacoco-jmockit</module>
     </modules>
 </project>

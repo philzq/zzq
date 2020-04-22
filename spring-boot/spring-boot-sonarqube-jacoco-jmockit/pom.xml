@@ -9,7 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-sonarqube-jacoco</artifactId>
+    <artifactId>spring-boot-sonarqube-jacoco-jmockit</artifactId>
+
+    <properties>
+        <!--由于官方修补的漏洞https://github.com/jmockit/jmockit1/issues/664没有合并代码并发布新版本，
+        影响到jacoco与jmockit整合,所以此处暂用jdk1.8-->
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencies>
         <dependency>
