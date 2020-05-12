@@ -23,5 +23,6 @@
         <module>spring-boot-webflux</module>
         <module>spring-boot-test</module>
         <module>spring-boot-sonarqube-jacoco-jmockit</module>
+        <module>spring-boot-sonarqube-jacoco-jmockit-aggregate</module>
     </modules>
 </project>
