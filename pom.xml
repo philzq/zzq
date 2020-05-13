@@ -13,6 +13,7 @@
         <module>zzq-web</module>
         <module>zzq-simple-framework</module>
         <module>zzq-demo</module>
+        <module>zzq-maven-plugins</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
@@ -49,6 +50,7 @@
         <tess4j.version>4.4.1</tess4j.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jmockit.version>1.49</jmockit.version>
+        <jmockit-auto-ut-maven-plugin.version>0.0.1-SNAPSHOT</jmockit-auto-ut-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -364,6 +366,12 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>zzq</groupId>
+                    <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
+                    <version>${jmockit-auto-ut-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -59,6 +59,11 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>zzq</groupId>
+                <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

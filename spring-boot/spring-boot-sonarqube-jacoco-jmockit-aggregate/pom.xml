@@ -11,6 +11,11 @@
 
     <artifactId>spring-boot-sonarqube-jacoco-jmockit-aggregate</artifactId>
 
+    <properties>
+        <!--解决打包需要main函数问题，直接指向WebappsApiBidMain-->
+        <start-class>com.xx.webapps.api.main.WebappsApiBidMain</start-class>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>zzq</groupId>
