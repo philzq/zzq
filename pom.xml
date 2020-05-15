@@ -51,6 +51,7 @@
         <jacoco.version>0.8.5</jacoco.version>
         <jmockit.version>1.49</jmockit.version>
         <jmockit-auto-ut-maven-plugin.version>0.0.1-SNAPSHOT</jmockit-auto-ut-maven-plugin.version>
+        <flatten-maven-plugin.version>1.2.2</flatten-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -212,7 +213,6 @@
             <version>${jmockit.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <repositories>
@@ -375,6 +375,45 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <!-- Flatten and simplify our own POM for install/deploy -->
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <pomElements>
+                                <parent>expand</parent>
+                                <name>keep</name>
+                                <description>keep</description>
+                                <url>expand</url>
+                                <properties>keep</properties>
+                                <pluginManagement>keep</pluginManagement>
+                                <dependencyManagement>keep</dependencyManagement>
+                                <build>keep</build>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 
