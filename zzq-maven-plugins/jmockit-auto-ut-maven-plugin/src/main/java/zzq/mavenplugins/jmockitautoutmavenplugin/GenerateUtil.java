@@ -1,7 +1,18 @@
 package zzq.mavenplugins.jmockitautoutmavenplugin;
 
+import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.expr.ExprEditor;
+import javassist.expr.MethodCall;
+import zzq.mavenplugins.jmockitautoutmavenplugin.config.GenerateConfiguration;
+
 import java.io.File;
-import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class GenerateUtil {
 
@@ -48,13 +59,36 @@ public class GenerateUtil {
                         String sourcePkg = getPkg(sourceDirectory, file);
                         String mockPkg = getPkg(testSourceDirectory, unitMockFile);
                         String testPkg = getPkg(testSourceDirectory, unitTestFile);
-
+                        GenerateConfiguration configuration = GenerateConfiguration.getInstance();
+                        ClassPool pool = ClassPool.getDefault();
                         Class<?> sourceClass = Class.forName(sourcePkg);
-                        Method[] methods = sourceClass.getDeclaredMethods();
+                        CtClass ctClass = pool.getCtClass(sourceClass.getPackage().getName());
+                        CtMethod[] methods = ctClass.getDeclaredMethods();
                         if(methods != null){
-                            for(int i=0; i< methods.length;i++){
-                                System.out.println(sourceClass.getName()+":"+methods[i].getName());
+                            for(int i=0;i<methods.length;i++){
+                                CtMethod ctMethod = methods[i];
+                                System.out.println("******"+ctMethod.getName()+"******");
+                                Map<CtMethod,Set<CtMethod>> methodSetMap = new HashMap<>();
+                                final Set<CtMethod> ctMethods = new HashSet<>();
+                                ctMethod.instrument(new ExprEditor(){
+                                    @Override
+                                    public void edit(MethodCall m) throws CannotCompileException {
+                                        System.out.println("className:"+m.getClassName()+",methodName:"+m.getMethodName());
+                                        try {
+                                            CtMethod method = m.getMethod();
+                                            ctMethods.add(method);
+                                        }catch (Exception e){
+                                            System.out.println(e.getStackTrace());
+                                        }
+                                    }
+                                });
+                                methodSetMap.put(ctMethod,ctMethods);
+                                configuration.addClassMethodDependency(ctClass,methodSetMap);
                             }
+                        }
+                        for (CtClass ctClass1 : configuration.getMethodDependency().keySet()) {
+                            System.out.println("packageName" + ctClass1.getPackageName());
+                            System.out.println("name" + ctClass1.getName());
                         }
                     }catch (Exception e){
                         e.printStackTrace();
