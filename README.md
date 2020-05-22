@@ -1,7 +1,7 @@
 ## 项目描述
 该项目主要用于记录JavaWeb相关技术,以项目的形式记录技术的点点滴滴<br>
 
-CSDN博客地址: https://me.csdn.net/qq_33594101
+CSDN博客地址: https://philzq.blog.csdn.net/
 
 ## 模块介绍
 模块     | 描述
