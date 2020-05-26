@@ -56,13 +56,10 @@ public class GenerateUtil {
                     }
                     //根据源文件生成Test,Mock文件
                     try {
-                        String sourcePkg = getPkg(sourceDirectory, file);
-                        String mockPkg = getPkg(testSourceDirectory, unitMockFile);
-                        String testPkg = getPkg(testSourceDirectory, unitTestFile);
+                        String sourceClassPath = getClassPath(sourceDirectory, file);
                         GenerateConfiguration configuration = GenerateConfiguration.getInstance();
                         ClassPool pool = ClassPool.getDefault();
-                        Class<?> sourceClass = Class.forName(sourcePkg);
-                        CtClass ctClass = pool.getCtClass(sourceClass.getPackage().getName());
+                        CtClass ctClass = pool.getCtClass(sourceClassPath);
                         CtMethod[] methods = ctClass.getDeclaredMethods();
                         if(methods != null){
                             for(int i=0;i<methods.length;i++){
@@ -87,7 +84,6 @@ public class GenerateUtil {
                             }
                         }
                         for (CtClass ctClass1 : configuration.getMethodDependency().keySet()) {
-                            System.out.println("packageName" + ctClass1.getPackageName());
                             System.out.println("name" + ctClass1.getName());
                         }
                     }catch (Exception e){
@@ -102,12 +98,17 @@ public class GenerateUtil {
         }
     }
 
-    private static String getPkg(File sourceDirectory, File file) {
+    /**
+     * 获取类路径
+     * @param sourceDirectory
+     * @param file
+     * @return
+     */
+    public static String getClassPath(File sourceDirectory, File file){
         String sourceAbsolutePath = file.getAbsolutePath();
         sourceAbsolutePath = sourceAbsolutePath.substring(0,sourceAbsolutePath.lastIndexOf("."));
         String sourcePkg = sourceAbsolutePath.replace(sourceDirectory.getAbsolutePath(), "")
-                .replace("\\", ".")
-                .substring(1);
+                .replace("\\", ".").substring(1);
         return sourcePkg;
     }
 }

@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <groupId>zzq</groupId>
     <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>maven-plugin</packaging>
     <name>jmockit-auto-ut-maven-plugin</name>
@@ -45,7 +45,7 @@
             <plugin>
                 <groupId>zzq</groupId>
                 <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
-                <version>0.0.2-SNAPSHOT</version>
+                <version>0.0.1-SNAPSHOT</version>
             </plugin>
         </plugins>
     </build>
