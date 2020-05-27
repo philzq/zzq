@@ -14,6 +14,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
+ * 执行mvn dependency:list 获取项目所有的依赖jar
+ *
  * URLClassLoader--->读取所有的jar中的class
  *
  * ClassPool--->加载所有的class
