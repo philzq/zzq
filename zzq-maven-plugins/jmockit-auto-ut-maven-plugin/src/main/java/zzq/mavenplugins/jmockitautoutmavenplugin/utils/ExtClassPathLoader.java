@@ -81,7 +81,7 @@ public class ExtClassPathLoader {
 
     public static void main(String[] args){
         ExtClassPathLoader.init();
-        String path = "D:\\Users\\zhiqiangzhou\\.m2\\repository\\com\\ctrip\\wingon\\fpbs-business-api\\0.0.1-SNAPSHOT\\fpbs-business-api-0.0.1-SNAPSHOT.jar";//外部jar包的路径
+        String path = "D:\\1.jar";//外部jar包的路径
         Set<Class<?>> classes = new LinkedHashSet<>();//所有的Class对象
         Map<Class<?>, Annotation[]> classAnnotationMap = new HashMap<>();//每个Class对象上的注释对象
         Map<Class<?>, Map<Method, Annotation[]>> classMethodAnnoMap = new HashMap<Class<?>, Map<Method,Annotation[]>>();//每个Class对象中每个方法上的注释对象
