@@ -13,7 +13,7 @@
         <module>zzq-web</module>
         <module>zzq-simple-framework</module>
         <module>zzq-demo</module>
-        <module>zzq-maven-plugins</module>
+        <module>zzq-plugins</module>
     </modules>
     <packaging>pom</packaging>
     <name>zzq</name>
