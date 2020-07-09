@@ -8,8 +8,9 @@ import java.util.concurrent.*;
 public class Test {
 
     public static void main(String[] args) throws Exception{
-        Date date = new Date(1577414214653L);
-        System.out.println(date);
+        System.out.println(5&1);
+        System.out.println(4|8);
+        System.out.println(4|2);
         /*int corePoolSize = 5;
         int maximumPoolSize = 10;
         int blockingQueueSize = 10;
