@@ -13,6 +13,7 @@
     <name>zzq-demo</name>
     <modules>
         <module>jenkins-api-demo</module>
+        <module>httpclient</module>
     </modules>
     <packaging>pom</packaging>
 
