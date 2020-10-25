@@ -70,7 +70,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             //列名转换成Java属性名
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setAttrName(attrName);
-            columnEntity.setAttrname(convertColumnName(column.get("columnName") + ""));
+            columnEntity.setAttrname(convertColumnName(attrName));
 
             //列的数据类型，转换成Java类型
             String attrType = config.getString(columnEntity.getDataType(), "unknowType");
@@ -218,11 +218,15 @@ public class GeneratorServiceImpl implements GeneratorService {
         }
 
         if (template.contains("Entity.java.vm")) {
-            return entityModulePath + File.separator + "entity" + File.separator + className + "DBEntity.java";
+            return entityModulePath + File.separator + "entity" + File.separator + className + ".java";
         }
 
         if (template.contains("Dao.java.vm")) {
             return packagePath + "dao" + File.separator + className + "Dao.java";
+        }
+
+        if (template.contains("Repository.java.vm")) {
+            return packagePath + "repository" + File.separator + className + "Repository.java";
         }
 
         if (template.contains("Service.java.vm")) {
