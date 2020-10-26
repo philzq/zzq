@@ -244,15 +244,6 @@ public class GeneratorServiceImpl implements GeneratorService {
         if (template.contains("Dao.xml.vm")) {
             return resourcePath + "mapper" + File.separator + className + "Dao.xml";
         }
-        if (template.contains("List.js.vm")) {
-            return resourcePath + "js" + File.separator + className + "List.js";
-        }
-        if (template.contains("List.html.vm")) {
-            return resourcePath + "html" + File.separator + className + "List.html";
-        }
-        if (template.contains("Save.html.vm")) {
-            return resourcePath + "html" + File.separator + className + "Save.html";
-        }
         return null;
     }
 }
