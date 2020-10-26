@@ -18,8 +18,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import com.atwo.lsc.mservice.common.ShiroUserUtil;
+import com.atwo.lsc.mservice.config.shiro.UserRealm;
+import com.atwo.lsc.commons.enums.DeleteFlagEnum;
 
 
 @Service
@@ -52,6 +54,7 @@ public class ${className}Service{
         Specification<${className}> specification = (root, criteriaQuery, criteriaBuilder) -> {
             // new一个集合来保存查询的多值
             List<Predicate> predicateList = new ArrayList<>();
+            predicateList.add(criteriaBuilder.equal(root.get("deleted").as(Integer.class),DeleteFlagEnum.NOT_DELETE.getValue()));
             // 保存最终返回值的条件
             Predicate[] predicates = new Predicate[predicateList.size()];
             // 集合转成数组
@@ -71,6 +74,7 @@ public class ${className}Service{
         Specification<${className}> specification = (root, criteriaQuery, criteriaBuilder) -> {
             // new一个集合来保存查询的多值
             List<Predicate> predicateList = new ArrayList<>();
+            predicateList.add(criteriaBuilder.equal(root.get("deleted").as(Integer.class),DeleteFlagEnum.NOT_DELETE.getValue()));
             // 保存最终返回值的条件
             Predicate[] predicates = new Predicate[predicateList.size()];
             // 集合转成数组
@@ -107,9 +111,34 @@ public class ${className}Service{
      * @return
      */
     public ResultBean<Object> save(${className} ${classname}){
-        ${classname}Repository.save(${classname});
+        if(${classname}.getId() == null){//新增
+            createInit(${classname});
+            ${classname}Repository.save(${classname});
+        }else{//修改
+            ${className} update${className} = ${classname}Repository.findById(${classname}.getId()).get();
+            if(update${className} != null){
+                update${className}.setLastUpdateTime(new Date());
+                if(${classname}.getDeleted() != null){//删除操作
+                    update${className}.setDeleted(${classname}.getDeleted());
+                }
+            }
+            ${classname}Repository.save(update${className});
+        }
         return ResultBean.successfulResult(null);
     }
+
+    /**
+ * 新增数据初始化
+ * @param ${classname}
+ */
+    private void createInit(${className} ${classname}) {
+        UserRealm.ShiroUser user = ShiroUserUtil.getUser();
+        ${classname}.setCreateTime(new Date());
+        ${classname}.setCreatorId(user.id);
+        ${classname}.setCreatorName(user.name);
+        ${classname}.setDeleted(DeleteFlagEnum.NOT_DELETE.getValue());
+    }
+
 
     /**
      * 批量保存
