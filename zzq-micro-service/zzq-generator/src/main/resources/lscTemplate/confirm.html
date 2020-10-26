@@ -1,0 +1,22 @@
+<div class="modal-dialog">
+	<form class="form-horizontal" name="myForm" novalidate role="form" ng-submit="save()">
+		<div class="modal-content">
+			<div class="modal-header ng-scope">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+					<span aria-hidden="true">×</span>
+				</button> 
+				<h3 class="modal-title" id="modal-title">{{title}}</h3>
+			</div>
+			<div class="modal-body ng-scope" id="modal-body">
+				{{content}}
+			</div>
+			<div class="modal-footer ng-scope">
+				<button type="button" class="btn btn-default cancel" data-dismiss="modal" ng-click="cancel()">取消</button>
+				<button type="submit" class="btn btn-primary">
+					<i class="fa fa-circle-o-notch icon-loading" ng-hide="loading"></i>
+					{{buttonName}}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
