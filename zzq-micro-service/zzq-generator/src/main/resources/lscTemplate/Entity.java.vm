@@ -1,0 +1,37 @@
+package ${package}.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import lombok.Data;
+import com.atwo.lsc.commons.entity.IdEntity;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+import java.util.Date;
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+
+@Data
+@Entity
+@Table(name = "${tableName}")
+public class ${className}DBEntity implements IdEntity {
+
+#foreach ($column in $columns)
+	/**
+	 * $column.comments
+	 */
+	#if($column.columnName == $pk.columnName)
+@Id
+	@Column(name = "$column.columnName")
+	#else
+@Column(name = "$column.columnName")
+	#end
+private $column.attrType $column.attrname;
+#end
+
+}

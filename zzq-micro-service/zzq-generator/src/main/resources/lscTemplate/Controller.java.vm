@@ -1,0 +1,170 @@
+package ${package}.controller;
+
+import com.atwo.lsc.commons.entity.course.${className};
+import com.atwo.lsc.commons.util.ResultBean;
+import com.atwo.lsc.mservice.portal.course.tag.service.${className}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+@Controller
+@RequestMapping("/${classname}")
+public class ${className}Controller {
+
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+
+    /**
+     * 列表页
+     *
+     * @return
+     */
+    @GetMapping(value = "list.html")
+    public String goList() {
+        return getTemplatePath("list");
+    }
+
+    /**
+     * 新增页
+     *
+     * @return
+     */
+    @GetMapping(value = "save.html")
+    public String goAdd() {
+        return getTemplatePath("save");
+    }
+
+    /**
+     * 确认页
+     *
+     * @return
+     */
+    @GetMapping(value = "confirm.html")
+    public String goDeleteConfirm() {
+        return getTemplatePath("confirm");
+    }
+
+    public String getTemplatePath(String fileName) {
+        return "portal/${classname}/" + fileName;
+    }
+
+    /**
+     * 分页列表
+     * @param pageNumber
+     * @param pageSize
+     * @param ${classname}
+     * @return
+     */
+    @GetMapping("page")
+    @ResponseBody
+    public ResultBean<Page<${className}>> page(@RequestParam Integer pageNumber,
+                                            @RequestParam(defaultValue = "25") Integer pageSize,
+                                            ${className} ${classname}) {
+        return ${classname}Service.page(pageNumber,pageSize, ${classname});
+    }
+
+    /**
+     * 查询一个
+     *
+     * @param ${classname}
+     * @return
+     */
+    @GetMapping("findOne")
+    @ResponseBody
+    public ResultBean<${className}> findOne(${className} ${classname}) {
+        return ${classname}Service.findOne(${classname});
+    }
+
+    /**
+     * 通过主键批量查询
+     *
+     * @param ids
+     * @return
+     */
+    @GetMapping("findAllById")
+    @ResponseBody
+    public ResultBean<Iterable<${className}>> findAllById(List<Long> ids) {
+        return ${classname}Service.findAllById(ids);
+    }
+
+    /**
+     * 通过主键查询
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("findById/{id}")
+    @ResponseBody
+    public ResultBean<${className}> findById(@PathVariable Long id) {
+        return ${classname}Service.findById(id);
+    }
+
+    /**
+     * 保存
+     *
+     * @param ${classname}
+     * @return
+     */
+    @PostMapping("save")
+    @ResponseBody
+    public ResultBean<Object> save(${className} ${classname}) {
+        return ${classname}Service.save(${classname});
+    }
+
+    /**
+     * 批量保存
+     *
+     * @param ${classname}s
+     * @return
+     */
+    @PostMapping("saveAll")
+    @ResponseBody
+    public ResultBean<Object> saveAll(List<${className}> ${classname}s) {
+        return ${classname}Service.saveAll(${classname}s);
+    }
+
+    /**
+     * 通过主键删除
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("deleteById/{id}")
+    @ResponseBody
+    public ResultBean<Object> deleteById(@PathVariable Long id) {
+        return ${classname}Service.deleteById(id);
+    }
+
+    /**
+     * 删除
+     *
+     * @param ${classname}
+     * @return
+     */
+    @DeleteMapping("delete")
+    @ResponseBody
+    public ResultBean<Object> delete(${className} ${classname}) {
+        return ${classname}Service.delete(${classname});
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ${classname}s
+     * @return
+     */
+    @DeleteMapping("deleteAll")
+    @ResponseBody
+    public ResultBean<Object> deleteAll(List<${className}> ${classname}s) {
+        return ${classname}Service.deleteAll(${classname}s);
+    }
+}

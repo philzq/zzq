@@ -1,0 +1,14 @@
+package ${package}.dao;
+
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import ${package}.entity.${className};
+
+/**
+ * ${comments}
+ *
+ * @date ${datetime}
+ */
+public interface ${className}Repository extends PagingAndSortingRepository<${className}, Long>, JpaSpecificationExecutor<${className}> {
+	
+}

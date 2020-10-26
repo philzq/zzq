@@ -1,0 +1,154 @@
+package ${package}.service;
+
+import com.atwo.lsc.commons.entity.course.${className};
+import com.atwo.lsc.commons.util.ResultBean;
+import com.atwo.lsc.commons.util.StringUtils;
+import com.atwo.lsc.mservice.common.CommonService;
+import com.atwo.lsc.mservice.portal.course.tag.repository.${className}Repository;
+import com.atwo.lsc.mservice.portal.wechat.account.service.WechatAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Service
+public class ${className}Service{
+
+    private static final Logger LOG = LoggerFactory.getLogger(WechatAccountService.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    @Qualifier("stringRedisTemplate")
+    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private CommonService commonService;
+    @Autowired
+    private ${className}Repository ${classname}Repository;
+
+
+    /**
+     * 分页列表
+     * @param pageNumber
+     * @param pageSize
+     * @param ${classname}
+     * @return
+     */
+    public ResultBean<Page<${className}>> page(Integer pageNumber,
+                                            Integer pageSize,
+                                            ${className} ${classname}) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Specification<${className}> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            // new一个集合来保存查询的多值
+            List<Predicate> predicateList = new ArrayList<>();
+            // 保存最终返回值的条件
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            // 集合转成数组
+            predicateList.toArray(predicates);
+            return criteriaBuilder.and(predicates);
+        };
+        Page<${className}> ${classname}Page = ${classname}Repository.findAll(specification, pageRequest);
+        return ResultBean.successfulResult(${classname}Page);
+    }
+
+    /**
+     * 查询一个
+     * @param ${classname}
+     * @return
+     */
+    public ResultBean<${className}> findOne(${className} ${classname}){
+        Specification<${className}> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            // new一个集合来保存查询的多值
+            List<Predicate> predicateList = new ArrayList<>();
+            // 保存最终返回值的条件
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            // 集合转成数组
+            predicateList.toArray(predicates);
+            return criteriaBuilder.and(predicates);
+        };
+        ${className} ${classname}1 = ${classname}Repository.findOne(specification).get();
+        return ResultBean.successfulResult(${classname}1);
+    }
+
+    /**
+     * 通过主键批量查询
+     * @param ids
+     * @return
+     */
+    public ResultBean<Iterable<${className}>> findAllById(List<Long> ids){
+        Iterable<${className}> ${classname}s = ${classname}Repository.findAllById(ids);
+        return ResultBean.successfulResult(${classname}s);
+    }
+
+    /**
+     * 通过主键查询
+     * @param id
+     * @return
+     */
+    public ResultBean<${className}> findById(Long id){
+        ${className} ${classname} = ${classname}Repository.findById(id).get();
+        return ResultBean.successfulResult(${classname});
+    }
+
+    /**
+     * 保存
+     * @param ${classname}
+     * @return
+     */
+    public ResultBean<Object> save(${className} ${classname}){
+        ${classname}Repository.save(${classname});
+        return ResultBean.successfulResult(null);
+    }
+
+    /**
+     * 批量保存
+     * @param ${classname}s
+     * @return
+     */
+    public ResultBean<Object> saveAll(List<${className}> ${classname}s){
+        ${classname}Repository.saveAll(${classname}s);
+        return ResultBean.successfulResult(null);
+    }
+
+    /**
+     * 通过主键删除
+     * @param id
+     * @return
+     */
+    public ResultBean<Object> deleteById(Long id){
+        ${classname}Repository.deleteById(id);
+        return ResultBean.successfulResult(null);
+    }
+
+    /**
+     * 删除
+     * @param ${classname}
+     * @return
+     */
+    public ResultBean<Object> delete(${className} ${classname}){
+        ${classname}Repository.delete(${classname});
+        return ResultBean.successfulResult(null);
+    }
+
+    /**
+     * 批量删除
+     * @param ${classname}s
+     * @return
+     */
+    public ResultBean<Object> deleteAll(List<${className}> ${classname}s){
+        ${classname}Repository.deleteAll(${classname}s);
+        return ResultBean.successfulResult(null);
+    }
+
+}
