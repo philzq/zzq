@@ -146,7 +146,7 @@
         $scope.openAddWin = function () {
             $modal.open({
                 animation: true,
-                templateUrl: 'course/tag/save.html',
+                templateUrl: 'course/tag/save.html.vm',
                 controller: 'CourseTagSaveController',
                 resolve: {
                     items: {}
@@ -169,7 +169,7 @@
 
             $modal.open({
                 animation: true,
-                templateUrl: 'course/tag/save.html',
+                templateUrl: 'course/tag/save.html.vm',
                 controller: 'CourseTagSaveController',
                 controllerAs: '$ctrl',
                 resolve: {
@@ -194,7 +194,7 @@
 
             $modal.open({
                 animation: true,
-                templateUrl: 'course/tag/confirm.html',
+                templateUrl: 'course/tag/confirm.html.vm',
                 controller: 'CourseTagSaveController',
                 controllerAs: '$ctrl',
                 resolve: {
