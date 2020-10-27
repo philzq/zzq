@@ -10,13 +10,13 @@
     /**
      * 全局变量
      */
-    var $ctrl = this;
+    var ${knife}ctrl = this;
     var refreshTable = null; // 用于刷新表格全局函数
     var app = angular.module('CourseTagControllerApp', ['ngTouch', 'ui.grid', 'ui.grid.moveColumns', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.pagination']);
     /**
      * 列表控制器
      */
-    app.controller('CourseTagController', ['$scope', 'i18nService', 'uiGridConstants', '$uibModal', 'CourseTagService', function ($scope, i18nService, uiGridConstants, $modal, service) {
+    app.controller('CourseTagController', ['${knife}scope', 'i18nService', 'uiGridConstants', '${knife}uibModal', 'CourseTagService', function (${knife}scope, i18nService, uiGridConstants, ${knife}modal, service) {
         // 分页初始化设置
         var pageOptions = {
             page: 1
@@ -27,21 +27,21 @@
             sort: ''
         };
 
-        $scope.queryForm = {};
+        ${knife}scope.queryForm = {};
 
         //查询需要的参数
-        $scope.queryFormInit = function(){
-            $scope.queryForm = {};
+        ${knife}scope.queryFormInit = function(){
+            ${knife}scope.queryForm = {};
             refreshTable();
         };
 
         // 显示、隐藏按钮
-        $scope.showOrHide = '隐藏过滤';
+        ${knife}scope.showOrHide = '隐藏过滤';
 
         // 表格语言中文
         i18nService.setCurrentLang('zh-cn');
 
-        $scope.gridOptions = {
+        ${knife}scope.gridOptions = {
             paginationPageSizes: [5, 10, 25, 50, 75, 100, 500],
             paginationPageSize: 25,
             useExternalPagination: true,
@@ -101,12 +101,12 @@
                 }
             ],
             onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
+                ${knife}scope.gridApi = gridApi;
 
                 /**
                  * 分页
                  */
-                $scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize, sortColumns) {
+                ${knife}scope.gridApi.pagination.on.paginationChanged(${knife}scope, function (newPage, pageSize, sortColumns) {
                     pageParams.pageNumber = newPage;
                     pageParams.pageSize = pageSize;
 
@@ -124,13 +124,13 @@
             clearInterval(utils.time);
 
             utils.time = setTimeout(function () {
-                pageParams.pageNumber = $scope.gridOptions.paginationCurrentPage === undefined ? pageOptions.page : $scope.gridOptions.paginationCurrentPage;
-                pageParams.pageSize = $scope.gridOptions.paginationPageSize;
-                let params = Object.assign({},pageParams, $scope.queryForm);
+                pageParams.pageNumber = ${knife}scope.gridOptions.paginationCurrentPage === undefined ? pageOptions.page : ${knife}scope.gridOptions.paginationCurrentPage;
+                pageParams.pageSize = ${knife}scope.gridOptions.paginationPageSize;
+                let params = Object.assign({},pageParams, ${knife}scope.queryForm);
                 service.getPage(params, function (response) {
                     if (response.code == utils.code.success) {
-                        $scope.gridOptions.totalItems = response.resultData.totalElements;
-                        $scope.gridOptions.data = response.resultData.content;
+                        ${knife}scope.gridOptions.totalItems = response.resultData.totalElements;
+                        ${knife}scope.gridOptions.data = response.resultData.content;
                     }
                 });
             }, utils.timeout);
@@ -138,13 +138,13 @@
 
         refreshTable();
 
-        $scope.refreshTable = refreshTable;
+        ${knife}scope.refreshTable = refreshTable;
 
         /**
          * 新增/编辑
          */
-        $scope.openAddWin = function () {
-            $modal.open({
+        ${knife}scope.openAddWin = function () {
+            ${knife}modal.open({
                 animation: true,
                 templateUrl: 'course/tag/save.html.vm',
                 controller: 'CourseTagSaveController',
@@ -157,24 +157,24 @@
         /**
          * 编辑
          */
-        $scope.openEditWin = function (entity) {
+        ${knife}scope.openEditWin = function (entity) {
             // 删除黑色泡泡提示
             utils.deletTip();
 
-            $ctrl.items = {
+            ${knife}ctrl.items = {
                 id : entity.id,
                 name : entity.name,
                 weight : entity.weight
             };
 
-            $modal.open({
+            ${knife}modal.open({
                 animation: true,
                 templateUrl: 'course/tag/save.html.vm',
                 controller: 'CourseTagSaveController',
-                controllerAs: '$ctrl',
+                controllerAs: '${knife}ctrl',
                 resolve: {
                     items: function () {
-                        return $ctrl.items;
+                        return ${knife}ctrl.items;
                     }
                 }
             });
@@ -183,23 +183,23 @@
         /**
          * 删除
          */
-        $scope.openDelWin = function (id) {
+        ${knife}scope.openDelWin = function (id) {
             // 删除黑色泡泡提示
             utils.deletTip();
 
-            $ctrl.items = {
+            ${knife}ctrl.items = {
                 id: id,
                 deleted: 1
             }
 
-            $modal.open({
+            ${knife}modal.open({
                 animation: true,
                 templateUrl: 'course/tag/confirm.html.vm',
                 controller: 'CourseTagSaveController',
-                controllerAs: '$ctrl',
+                controllerAs: '${knife}ctrl',
                 resolve: {
                     items: function () {
-                        return $ctrl.items;
+                        return ${knife}ctrl.items;
                     }
                 }
             });
@@ -209,41 +209,41 @@
     /**
      * 新增/编辑控制器
      */
-    app.controller('CourseTagSaveController', ['$scope', '$uibModalInstance', 'items', 'CourseTagService', function ($scope, $uibModalInstance, items, service) {
+    app.controller('CourseTagSaveController', ['${knife}scope', '${knife}uibModalInstance', 'items', 'CourseTagService', function (${knife}scope, ${knife}uibModalInstance, items, service) {
         // 初始化
-        $scope.loading = true;
-        $scope.items = {};
-        Object.assign($scope.items, items);
+        ${knife}scope.loading = true;
+        ${knife}scope.items = {};
+        Object.assign(${knife}scope.items, items);
         /**
          * 取消弹窗
          */
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss();
+        ${knife}scope.cancel = function () {
+            ${knife}uibModalInstance.dismiss();
         };
         //删除需要的一些数据--软删除
         // 初始化表单默认选择变量
-        $scope.loading = true;
-        $scope.title = '删除';
-        $scope.buttonName = '确定';
-        $scope.content = '确定删除该课程标签吗？';
+        ${knife}scope.loading = true;
+        ${knife}scope.title = '删除';
+        ${knife}scope.buttonName = '确定';
+        ${knife}scope.content = '确定删除该课程标签吗？';
 
         /**
          * 提交表单
          */
-        $scope.save = function () {
-            if ($scope.loading) {
+        ${knife}scope.save = function () {
+            if (${knife}scope.loading) {
                 // 禁止按钮
-                $scope.myForm.$invalid = true;
-                $scope.loading = false;
+                ${knife}scope.myForm.${knife}invalid = true;
+                ${knife}scope.loading = false;
 
-                service.save($scope.items, function (response) {
+                service.save(${knife}scope.items, function (response) {
                     if (response.code === utils.code.success) {
                         toastr['success']('新增/编辑成功');
-                        $scope.cancel();
+                        ${knife}scope.cancel();
                         refreshTable();
                     } else {
-                        $scope.myForm.$invalid = false;
-                        $scope.loading = true;
+                        ${knife}scope.myForm.${knife}invalid = false;
+                        ${knife}scope.loading = true;
                     }
                 });
             }
@@ -254,7 +254,7 @@
     /**
      * 自定义请求服务
      */
-    app.factory('CourseTagService', ['$http', function ($http) {
+    app.factory('CourseTagService', ['${knife}http', function (${knife}http) {
         return {
             /**
              * 获取表格分页数据
@@ -265,7 +265,7 @@
             getPage: function (pageParams, callbackFun) {
                 pageParams.pageNumber = (pageParams.pageNumber - 1);
 
-                $http.get('/course/tag/page', {
+                ${knife}http.get('/course/tag/page', {
                     params: pageParams
                 })
                     .success(function (response) {
@@ -286,7 +286,7 @@
                     formData.append(i, params[i]);
                 }
 
-                $http({
+                ${knife}http({
                     method: 'post',
                     url: '/course/tag/save',
                     data: formData,
