@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
  | 微信管理-服务号录入 
  +--------------------------------------------------------------
- | Author: chensenrong
+ | Author: zhouzhiqiang
  +--------------------------------------------------------------
  | Date: 2019-12-04
  +--------------------------------------------------------------
@@ -12,11 +12,11 @@
      */
     var ${knife}ctrl = this;
     var refreshTable = null; // 用于刷新表格全局函数
-    var app = angular.module('CourseTagControllerApp', ['ngTouch', 'ui.grid', 'ui.grid.moveColumns', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.pagination']);
+    var app = angular.module('${className}ControllerApp', ['ngTouch', 'ui.grid', 'ui.grid.moveColumns', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.pagination']);
     /**
      * 列表控制器
      */
-    app.controller('CourseTagController', ['${knife}scope', 'i18nService', 'uiGridConstants', '${knife}uibModal', 'CourseTagService', function (${knife}scope, i18nService, uiGridConstants, ${knife}modal, service) {
+    app.controller('${className}Controller', ['${knife}scope', 'i18nService', 'uiGridConstants', '${knife}uibModal', '${className}Service', function (${knife}scope, i18nService, uiGridConstants, ${knife}modal, service) {
         // 分页初始化设置
         var pageOptions = {
             page: 1
@@ -54,37 +54,18 @@
             enableRowHeaderSelection: false,
             enableColumnResizing: true,
             columnDefs: [
-                {
-                    field: 'id',
-                    name: 'ID',
-                    minWidth: 100,
-                    enableSorting: false,
-                    enableFiltering: false,
-                    cellTemplate: function () {
-                        return '<div class="el-line-height-30" title="{{row.entity.id}}">{{row.entity.id}}</div>';
-                    }
-                },
-                {
-                    field: 'name',
-                    name: '标签名称',
-                    displayName: '标签名称',
-                    minWidth: 100,
-                    enableSorting: false,
-                    enableFiltering: false,
-                    cellTemplate: function () {
-                        return '<div class="el-line-height-30" title="{{row.entity.name}}">{{row.entity.name}}</div>';
-                    }
-                },
-                {
-                    field: 'weight',
-                    name: '权重',
-                    minWidth: 100,
-                    enableSorting: false,
-                    enableFiltering: false,
-                    cellTemplate: function () {
-                        return '<div class="el-line-height-30" title="{{row.entity.weight}}">{{row.entity.weight}}</div>';
-                    }
-                },
+                #foreach ($column in $columns)
+                    {
+                        field: '$column.attrname',
+                        name: '$column.attrname',
+                        minWidth: 100,
+                        enableSorting: false,
+                        enableFiltering: false,
+                        cellTemplate: function () {
+                            return '<div class="el-line-height-30" title="{{row.entity.$column.attrname}}">{{row.entity.$column.attrname}}</div>';
+                        }
+                    },
+                #end
                 {
                     field: 'action',
                     name: '操作',
@@ -146,8 +127,8 @@
         ${knife}scope.openAddWin = function () {
             ${knife}modal.open({
                 animation: true,
-                templateUrl: 'course/tag/save.html.vm',
-                controller: 'CourseTagSaveController',
+                templateUrl: '${classname}/save.html.vm',
+                controller: '${className}SaveController',
                 resolve: {
                     items: {}
                 }
@@ -162,15 +143,15 @@
             utils.deletTip();
 
             ${knife}ctrl.items = {
-                id : entity.id,
-                name : entity.name,
-                weight : entity.weight
+                #foreach ($column in $columns)
+                    $column.attrname : entity.$column.attrname ,
+                #end
             };
 
             ${knife}modal.open({
                 animation: true,
-                templateUrl: 'course/tag/save.html.vm',
-                controller: 'CourseTagSaveController',
+                templateUrl: '${classname}/save.html.vm',
+                controller: '${className}SaveController',
                 controllerAs: '${knife}ctrl',
                 resolve: {
                     items: function () {
@@ -194,8 +175,8 @@
 
             ${knife}modal.open({
                 animation: true,
-                templateUrl: 'course/tag/confirm.html.vm',
-                controller: 'CourseTagSaveController',
+                templateUrl: '${classname}/confirm.html.vm',
+                controller: '${className}SaveController',
                 controllerAs: '${knife}ctrl',
                 resolve: {
                     items: function () {
@@ -209,7 +190,7 @@
     /**
      * 新增/编辑控制器
      */
-    app.controller('CourseTagSaveController', ['${knife}scope', '${knife}uibModalInstance', 'items', 'CourseTagService', function (${knife}scope, ${knife}uibModalInstance, items, service) {
+    app.controller('${className}SaveController', ['${knife}scope', '${knife}uibModalInstance', 'items', '${className}Service', function (${knife}scope, ${knife}uibModalInstance, items, service) {
         // 初始化
         ${knife}scope.loading = true;
         ${knife}scope.items = {};
@@ -225,7 +206,7 @@
         ${knife}scope.loading = true;
         ${knife}scope.title = '删除';
         ${knife}scope.buttonName = '确定';
-        ${knife}scope.content = '确定删除该课程标签吗？';
+        ${knife}scope.content = '确定删除该${comments}吗？';
 
         /**
          * 提交表单
@@ -254,7 +235,7 @@
     /**
      * 自定义请求服务
      */
-    app.factory('CourseTagService', ['${knife}http', function (${knife}http) {
+    app.factory('${className}Service', ['${knife}http', function (${knife}http) {
         return {
             /**
              * 获取表格分页数据
@@ -265,7 +246,7 @@
             getPage: function (pageParams, callbackFun) {
                 pageParams.pageNumber = (pageParams.pageNumber - 1);
 
-                ${knife}http.get('/course/tag/page', {
+                ${knife}http.get('/${classname}/page', {
                     params: pageParams
                 })
                     .success(function (response) {
@@ -288,7 +269,7 @@
 
                 ${knife}http({
                     method: 'post',
-                    url: '/course/tag/save',
+                    url: '/${classname}/save',
                     data: formData,
                     headers: {
                         'Content-Type': undefined
