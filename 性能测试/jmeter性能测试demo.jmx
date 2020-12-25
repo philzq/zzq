@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="jmeter性能测试demo" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="beginDate" elementType="Argument">
+            <stringProp name="Argument.name">beginDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,time,p17D,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="endDate" elementType="Argument">
+            <stringProp name="Argument.name">endDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,time,p18D,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="departureDateTime" elementType="Argument">
+            <stringProp name="Argument.name">departureDateTime</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd HH:mm:ss,time,p5DT3H4M,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="destinationDateTime" elementType="Argument">
+            <stringProp name="Argument.name">destinationDateTime</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd HH:mm:ss,time,p6DT3H4M,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="departureDateTime1" elementType="Argument">
+            <stringProp name="Argument.name">departureDateTime1</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd HH:mm:ss,time,p7DT3H4M,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="destinationDateTime1" elementType="Argument">
+            <stringProp name="Argument.name">destinationDateTime1</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd HH:mm:ss,time,p8DT3H4M,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="env" elementType="Argument">
+            <stringProp name="Argument.name">env</stringProp>
+            <stringProp name="Argument.value">test</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="cityid" elementType="Argument">
+            <stringProp name="Argument.name">cityid</stringProp>
+            <stringProp name="Argument.value">617</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="cid" elementType="Argument">
+            <stringProp name="Argument.name">cid</stringProp>
+            <stringProp name="Argument.value">03159524367882215238</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="sver" elementType="Argument">
+            <stringProp name="Argument.name">sver</stringProp>
+            <stringProp name="Argument.value">7.5</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="cver" elementType="Argument">
+            <stringProp name="Argument.name">cver</stringProp>
+            <stringProp name="Argument.value">7.5</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="city" elementType="Argument">
+            <stringProp name="Argument.name">city</stringProp>
+            <stringProp name="Argument.value">617</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoDate" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,time,p47D,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackDate" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,time,p49D,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="cityCode" elementType="Argument">
+            <stringProp name="Argument.name">cityCode</stringProp>
+            <stringProp name="Argument.value">TPE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="---1A机票资源参数" elementType="Argument">
+            <stringProp name="Argument.name">---1A机票资源参数</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityid" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityid</stringProp>
+            <stringProp name="Argument.value">58</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityid" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityid</stringProp>
+            <stringProp name="Argument.value">617</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityCode" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityCode</stringProp>
+            <stringProp name="Argument.value">HKG</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityCode" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityCode</stringProp>
+            <stringProp name="Argument.value">TPE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="---携程机票参数" elementType="Argument">
+            <stringProp name="Argument.name">---携程机票参数</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityidCtrip" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityidCtrip</stringProp>
+            <stringProp name="Argument.value">73</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityidCtrip" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityidCtrip</stringProp>
+            <stringProp name="Argument.value">58</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityCodeCtrip" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityCodeCtrip</stringProp>
+            <stringProp name="Argument.value">SIN</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityCodeCtrip" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityCodeCtrip</stringProp>
+            <stringProp name="Argument.value">HKG</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="---UO资源机票参数" elementType="Argument">
+            <stringProp name="Argument.name">---UO资源机票参数</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityidUO" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityidUO</stringProp>
+            <stringProp name="Argument.value">58</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityidUO" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityidUO</stringProp>
+            <stringProp name="Argument.value">219</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityCodeUO" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityCodeUO</stringProp>
+            <stringProp name="Argument.value">HKG</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityCodeUO" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityCodeUO</stringProp>
+            <stringProp name="Argument.value">OSA</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="---本地（sabre/GDS）资源机票参数" elementType="Argument">
+            <stringProp name="Argument.name">---本地（sabre/GDS）资源机票参数</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityiS" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityiS</stringProp>
+            <stringProp name="Argument.value">58</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityidS" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityidS</stringProp>
+            <stringProp name="Argument.value">617</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketGoCityCodeS" elementType="Argument">
+            <stringProp name="Argument.name">ticketGoCityCodeS</stringProp>
+            <stringProp name="Argument.value">HKG</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ticketBackCityCodeS" elementType="Argument">
+            <stringProp name="Argument.name">ticketBackCityCodeS</stringProp>
+            <stringProp name="Argument.value">TPE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="---登录会员" elementType="Argument">
+            <stringProp name="Argument.name">---登录会员</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserNametest" elementType="Argument">
+            <stringProp name="Argument.name">UserNametest</stringProp>
+            <stringProp name="Argument.value">9038a59497eb161105122ff44e2158c387048fb34e561cc95f88b7fa15071fb17236c88d75b29757cd6b98073ec4ec3ee65fab6caefd795dc244d267a406498c88e98f7fa8f2c9004ad7e3fca759d71bd45df61420f12739ce5a5791b8cedd4f5dff070d145e09b6d046cf7c7d4e32ea406f740b3434184f721c7bd7d02d1b4e</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Passwordtest" elementType="Argument">
+            <stringProp name="Argument.name">Passwordtest</stringProp>
+            <stringProp name="Argument.value">07f9c757f5c14f5e12e0b68173cb08aa31803a29a6dd20f52c00fb00f7950b282eb51e497d83a70cd849f16612aeb56089e68a492bd8fb3c8799d1acb3c68572059f2f293e2817256ba7431921b7628f5b771dfb73b2c4331bac5bda8a846cbbf8ac265fe91074709cfc4a372bf74f843b881fe388bedbae6f1c7a3c76ef9008</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserNamedev" elementType="Argument">
+            <stringProp name="Argument.name">UserNamedev</stringProp>
+            <stringProp name="Argument.value">64026e6c952490b6760e8954fba8d9813c6515346db0b6f8421b3a1ff17e27bbd655deaec0ab3f42aaad98fe88710898c55688177531365b2deabfa3cf2b258f6766cee8e4ec3f23ecccc4896de1d7aa24680f576917988ed0f307d2e3e0a9004d2c3a25772241b4b8d7216cf5dd9f5526eb980f02a70fe27c2e827b59ea45c3</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Passworddev" elementType="Argument">
+            <stringProp name="Argument.name">Passworddev</stringProp>
+            <stringProp name="Argument.value">27768a89a5a82a085e6ac1690e19b89d5a98ca590d49755ee1c9e73c9ef6d80f036b83db684d48dc0c09850d9934758dca999f1699838988f544c9c23e7d1ac785dbef097554712761de1dea52b6a86beba2f01a515c4528c36d3a8528fde4b2513cad03a13215ab140468fd05adbe41b037b3d29d764f3f29adfc025f950396</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserNameuat" elementType="Argument">
+            <stringProp name="Argument.name">UserNameuat</stringProp>
+            <stringProp name="Argument.value">c01bfd4d66256c5abb92fb402182ab45e2697a3fbe0591ea2f57462ad36e0149513cc32738c9cde32e8832c0836041a335ef510866d28ff01ce88281c44ef8e673fe84d898147ae24d90cc4c5217b1fc922af312ac76b0efbe8c9738d010d6b04b2c4fe2a8bc582dae1d5edf51ecab65d72a48398387848218c56fceb792f989</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Passworduat" elementType="Argument">
+            <stringProp name="Argument.name">Passworduat</stringProp>
+            <stringProp name="Argument.value">8639a623b8e961d3fb60cc8050c5299ecdcb5187b7ac55bdf1bf160a84af8a499fe071f410e244288bec6dbc6c271c8d2237142fe7d602954e42073939ce94a877aaa48da74503d040b56bae2528a89933168ac0d4720f74799316994329a6db42399ce7e975d28efb0e4eb30d48c46d70838bb2e47b4a61109e1a77686cdc8f</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="auth" elementType="Argument">
+            <stringProp name="Argument.name">auth</stringProp>
+            <stringProp name="Argument.value">${auth}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="${contextPath}" elementType="Argument">
+            <stringProp name="Argument.name">${contextPath}</stringProp>
+            <stringProp name="Argument.value">/api/frbs</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="departDate" elementType="Argument">
+            <stringProp name="Argument.name">departDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,,P10DT2H4M5S,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="departStationName" elementType="Argument">
+            <stringProp name="Argument.name">departStationName</stringProp>
+            <stringProp name="Argument.value">深圳</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="toStationName" elementType="Argument">
+            <stringProp name="Argument.name">toStationName</stringProp>
+            <stringProp name="Argument.value">广州</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnDate" elementType="Argument">
+            <stringProp name="Argument.name">returnDate</stringProp>
+            <stringProp name="Argument.value">${__timeShift(yyyy-MM-dd,,P11DT2H4M5S,,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnfromStationName" elementType="Argument">
+            <stringProp name="Argument.name">returnfromStationName</stringProp>
+            <stringProp name="Argument.value">上海</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returntoStationName" elementType="Argument">
+            <stringProp name="Argument.name">returntoStationName</stringProp>
+            <stringProp name="Argument.value">北京</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnFromTelecode" elementType="Argument">
+            <stringProp name="Argument.name">returnFromTelecode</stringProp>
+            <stringProp name="Argument.value">SHH</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnToTelecode" elementType="Argument">
+            <stringProp name="Argument.name">returnToTelecode</stringProp>
+            <stringProp name="Argument.value">BJP</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="goFromTelecode" elementType="Argument">
+            <stringProp name="Argument.name">goFromTelecode</stringProp>
+            <stringProp name="Argument.value">BJP</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="goToTelecode" elementType="Argument">
+            <stringProp name="Argument.name">goToTelecode</stringProp>
+            <stringProp name="Argument.value">SHH</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="IP" elementType="Argument">
+            <stringProp name="Argument.name">IP</stringProp>
+            <stringProp name="Argument.value">172.18.144.170:8010</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="-----------------香港西九龙（港铁）" elementType="Argument">
+            <stringProp name="Argument.name">-----------------香港西九龙（港铁）</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="departStationNameHKG" elementType="Argument">
+            <stringProp name="Argument.name">departStationNameHKG</stringProp>
+            <stringProp name="Argument.value">香港西九龙</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="goFromTelecodeHKG" elementType="Argument">
+            <stringProp name="Argument.name">goFromTelecodeHKG</stringProp>
+            <stringProp name="Argument.value">XJA</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="goToTelecodeHKG" elementType="Argument">
+            <stringProp name="Argument.name">goToTelecodeHKG</stringProp>
+            <stringProp name="Argument.value">IOQ</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnFromTelecodeHKG" elementType="Argument">
+            <stringProp name="Argument.name">returnFromTelecodeHKG</stringProp>
+            <stringProp name="Argument.value">IOQ</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="returnToTelecodeHKG" elementType="Argument">
+            <stringProp name="Argument.name">returnToTelecodeHKG</stringProp>
+            <stringProp name="Argument.value">XJA</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="参数化请求前的环境处理" enabled="true">
+        <stringProp name="scriptLanguage">javascript</stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="script">if(&quot;${env}&quot;==&quot;debug&quot;){
+	vars.put(&quot;UserName&quot;, &quot;${UserNamedev}&quot;);
+     vars.put(&quot;Password&quot;, &quot;${Passworddev}&quot;);
+     vars.put(&quot;domain&quot;,&quot;http://127.0.0.1:8011&quot;)
+     vars.put(&quot;mUrl&quot;,&quot;https://m.dev.wingontravel.com&quot;)
+     vars.put(&quot;MockUrl&quot;,&quot;http://127.0.0.1:8050&quot;)
+	vars.put(&quot;MotoInvokeUrl&quot;,&quot;http://offline.esb.dev.wot.com.hk/Services/fpbs/&quot;)
+	
+}else if(&quot;${env}&quot;==&quot;dev&quot;){
+	vars.put(&quot;UserName&quot;, &quot;${UserNamedev}&quot;);
+     vars.put(&quot;Password&quot;, &quot;${Passworddev}&quot;);
+     vars.put(&quot;domain&quot;,&quot;https://m.dev.wingontravel.com/api/frbs&quot;)
+     vars.put(&quot;mUrl&quot;,&quot;https://m.dev.wingontravel.com&quot;)
+     vars.put(&quot;MockUrl&quot;,&quot;http://offline.dev.wingontravel.com&quot;)
+	vars.put(&quot;MotoInvokeUrl&quot;,&quot;http://offline.esb.dev.wot.com.hk/Services/fpbs/&quot;)
+	
+} else if(&quot;${env}&quot;==&quot;test&quot;){
+	vars.put(&quot;UserName&quot;, &quot;${UserNametest}&quot;);
+     vars.put(&quot;Password&quot;, &quot;${Passwordtest}&quot;);
+     vars.put(&quot;domain&quot;,&quot;https://m.test.wingontravel.com/api/frbs&quot;)
+     vars.put(&quot;domain1&quot;,&quot;https://m.test.wingontravel.com/api/fpbs&quot;)
+     vars.put(&quot;mUrl&quot;,&quot;https://m.test.wingontravel.com&quot;)
+     vars.put(&quot;MockUrl&quot;,&quot;http://offline.test.wingontravel.com&quot;)
+     vars.put(&quot;MotoInvokeUrl&quot;,&quot;https://offline.test.wingontravel.com/Services/fpbs/&quot;)
+     
+} else if(&quot;${env}&quot;==&quot;uat&quot;){
+	vars.put(&quot;UserName&quot;, &quot;${UserNameuat}&quot;);
+     vars.put(&quot;Password&quot;, &quot;${Passworduat}&quot;);
+     vars.put(&quot;domain&quot;,&quot;https://m.uat.wingontravel.com/api/frbs&quot;)
+     vars.put(&quot;mUrl&quot;,&quot;https://m.uat.wingontravel.com&quot;)
+     vars.put(&quot;MotoInvokeUrl&quot;,&quot;https://sys.uat.wot.com.hk/Services/fpbs/&quot;)
+     
+}
+</stringProp>
+      </JSR223PreProcessor>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">RequestFrom</stringProp>
+            <stringProp name="Header.value">JMeter</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="http请求应返回head.errcode:0" enabled="true">
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="script">if((SampleResult.getUrlAsString().contains(&quot;api/MOTO&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;\&quot;errcode\&quot;:418015996&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;&lt;Status&gt;SUCCESS&lt;/Status&gt;&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;\&quot;returnCode\&quot;:1&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;\&quot;errcode\&quot;:418016001&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;&lt;ServiceName&gt;web.order.notifyTicket&lt;/ServiceName&gt;&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;\&quot;resultCode\&quot;:1&quot;))||(SampleResult.getResponseDataAsString().contains(&quot;\&quot;errcode\&quot;:418016000&quot;))){
+	//放过
+}else if(SampleResult.getContentType()!=&quot;&quot; &amp;&amp; !SampleResult.getResponseDataAsString().contains(&quot;\&quot;errcode\&quot;:0&quot;)){
+    AssertionResult.setFailure(true)
+}</stringProp>
+        <stringProp name="scriptLanguage">groovy</stringProp>
+      </JSR223Assertion>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="测试接口demo" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time"></stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">60</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="仅一次控制器" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="辅助接口---一个线程只执行一次" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+  &quot;data&quot;: {},&#xd;
+   &quot;head&quot;: {&#xd;
+    &quot;auth&quot;: &quot;${auth}&quot;,&#xd;
+    &quot;cid&quot;: &quot;${cid}&quot;,&#xd;
+    &quot;ctok&quot;: &quot;&quot;,&#xd;
+    &quot;cver&quot;: &quot;${sver}&quot;,&#xd;
+    &quot;lang&quot;: &quot;zh&quot;,&#xd;
+    &quot;sid&quot;: &quot;5&quot;,&#xd;
+    &quot;sver&quot;: &quot;${sver}&quot;,&#xd;
+    &quot;syscode&quot;: &quot;&quot;,&#xd;
+    &quot;mockConfigID&quot;:&quot;Config-001&quot;,&#xd;
+    &quot;tcks&quot;: &quot;MTMxNTc4NTU1NTI3NTQwMjQ1&quot;&#xd;
+   }&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">${domain}/shopping/startBooking</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-tempOrderID" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">tempOrderID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">import java.util.UUID;
+
+//隨機生成CID
+long OrderId=System.currentTimeMillis()*10000+Thread.currentThread().getId();
+vars.put(&quot;CID&quot;,String.valueOf(OrderId));
+
+</stringProp>
+            </BeanShellPreProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="mock设置" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">[&#xd;
+  {&#xd;
+    &quot;mockConfigID&quot;: &quot;Config-001&quot;,&#xd;
+    &quot;features&quot;: {&#xd;
+       &quot;Train:List&quot;: &quot;火车票列表，参数：【SeatName:商务座|二等座|一等座|无座】&quot;&#xd;
+    }&#xd;
+  }&#xd;
+]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">${MockUrl}/frbs-mock-server/mock/setCondition/${tempOrderID}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="需测试接口" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;data&quot;: {&#xd;
+    &quot;chooseHighSpeedTrain&quot;: false,&#xd;
+    &quot;departDate&quot;: &quot;${departDate}&quot;,&#xd;
+    &quot;from&quot;: &quot;${departStationName}&quot;,&#xd;
+    &quot;go&quot;: true,&#xd;
+    &quot;to&quot;: &quot;${toStationName}&quot;&#xd;
+   &#xd;
+  },&#xd;
+  &quot;head&quot;: {&#xd;
+    &quot;auth&quot;: &quot;${auth}&quot;,&#xd;
+    &quot;cid&quot;: &quot;${CID}&quot;,&#xd;
+    &quot;ctok&quot;: &quot;&quot;,&#xd;
+    &quot;cver&quot;: &quot;&quot;,&#xd;
+    &quot;lang&quot;: &quot;&quot;,&#xd;
+    &quot;sid&quot;: &quot;&quot;,&#xd;
+    &quot;sver&quot;: &quot;&quot;,&#xd;
+    &quot;syscode&quot;: &quot;&quot;,&#xd;
+    &quot;mockConfigID&quot;:&quot;Config-001&quot;,&#xd;
+    &quot;tcks&quot;: &quot;&quot;&#xd;
+  }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">${domain}/shopping/getS2S/${tempOrderID}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-startDate" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">startDate</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].startDate</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-startTime" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">startTime</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].startTime</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-seatName" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">seatName</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].seats[0].seatName</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-trainNo" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">trainNo</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].trainNo</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-toTelcode" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">toTelcode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].toTelcode</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor-fromTelcode" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">fromTelcode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.trains[0].fromTelcode</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Response Times Over Time" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <longProp name="interval_grouping">500</longProp>
+          <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
+        </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+        <hashTree/>
+        <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <longProp name="interval_grouping">1000</longProp>
+          <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
+        </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
