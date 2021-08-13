@@ -7,9 +7,9 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,21 +23,17 @@ public class FirstMqConfiguration {
     @Qualifier("firstConnectionFactory")
     private ConnectionFactory connectionFactory;
 
+    /**
+     * https://docs.spring.io/spring-amqp/docs/2.1.7.RELEASE/reference/html/#_common_properties
+     * 该链接有ConnectionFactory配置的系列属性
+     *
+     * @return
+     */
     @Bean(name = "firstConnectionFactory")
+    @ConfigurationProperties("spring.rabbitmq.first")
     @Primary
-    public ConnectionFactory firstConnectionFactory(
-            @Value("${spring.rabbitmq.first.host}") String host,
-            @Value("${spring.rabbitmq.first.port}") int port,
-            @Value("${spring.rabbitmq.first.username}") String username,
-            @Value("${spring.rabbitmq.first.password}") String password,
-            @Value("${spring.rabbitmq.first.virtual-host}") String virtualHost
-    ) {
+    public ConnectionFactory firstConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setHost(host);
-        connectionFactory.setPort(port);
-        connectionFactory.setVirtualHost(virtualHost);
-        connectionFactory.setUsername(username);
-        connectionFactory.setPassword(password);
         connectionFactory.setPublisherConfirms(true); //必须要设置
         return connectionFactory;
     }

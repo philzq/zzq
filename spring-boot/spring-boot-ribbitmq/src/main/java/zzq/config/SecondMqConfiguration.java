@@ -7,9 +7,9 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -23,20 +23,16 @@ public class SecondMqConfiguration {
     @Qualifier("secondConnectionFactory")
     private ConnectionFactory connectionFactory;
 
+    /**
+     * https://docs.spring.io/spring-amqp/docs/2.1.7.RELEASE/reference/html/#_common_properties
+     * 该链接有ConnectionFactory配置的系列属性
+     *
+     * @return
+     */
     @Bean(name = "secondConnectionFactory")
-    public ConnectionFactory secondConnectionFactory(
-            @Value("${spring.rabbitmq.second.host}") String host,
-            @Value("${spring.rabbitmq.second.port}") int port,
-            @Value("${spring.rabbitmq.second.username}") String username,
-            @Value("${spring.rabbitmq.second.password}") String password,
-            @Value("${spring.rabbitmq.second.virtual-host}") String virtualHost
-    ) {
+    @ConfigurationProperties("spring.rabbitmq.second")
+    public ConnectionFactory secondConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setHost(host);
-        connectionFactory.setPort(port);
-        connectionFactory.setVirtualHost(virtualHost);
-        connectionFactory.setUsername(username);
-        connectionFactory.setPassword(password);
         connectionFactory.setPublisherConfirms(true); //必须要设置
         return connectionFactory;
     }
@@ -66,7 +62,7 @@ public class SecondMqConfiguration {
     public String testSecond() {
         try {
             connectionFactory.createConnection().createChannel(false).queueDeclare("testSecond", true, false, false, null);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "testSecond";
