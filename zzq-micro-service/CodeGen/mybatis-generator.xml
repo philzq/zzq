@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!--
+官方：
+http://www.mybatis.org/generator/reference/pluggingIn.html
+https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins
+-->
+
+<generatorConfiguration>
+    <context id="zzq_admin" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="suppressTypeWarnings" value="true"/>
+
+
+        <!--jpa需要-->
+        <!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>-->
+
+        <!--视图没有主键，自己在table标签里创建个虚拟的-->
+        <!--https://github.com/mybatis/generator/blob/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.java -->
+        <plugin type="org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin"/>
+
+
+
+        <!--MyBatis Generator 1.3.7还没有实现生成MSSQL  SqlServer备注，用插件填充上，之后再使用就有了，应该放的尽可能靠前-->
+        <!--        <plugin type="FixSqlServerCommentPlugin"/>-->
+
+        <!--为Model加上Swagger的注解-->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.SwaggerAnnotationPlugin"/>
+
+        <!--为Model加上lombok的import及自己想在类上加的注解，都是以|分割-->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.LombokAnnotationPlugin">
+            <property name="imports" value="lombok.*|lombok.experimental.*"/>
+            <property name="annotations" value="@Data|@SuperBuilder|@AllArgsConstructor|@NoArgsConstructor"/>
+        </plugin>
+
+        <!--为Model加上Jpa注解@Entity,@Id,@Table,@Column等-->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.JpaAnnotationPlugin"/>
+
+        <!-- 生成标示是否Db加密字段的注释插件 -->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.EncrypedColumnAnnotationPlugin">
+            <property name="annotaionClass" value="zzq.plugin.entities.common.EncryptedColumn"/>
+            <property name="annotaionClassValue" value="★★★很重要：此注解不能去掉。此字段是加密的，要有此注解查询和更新时 mybatis 才会自动处理★★★"/>
+        </plugin>
+
+        <!-- ★★ 其它的插件都放在这个前端 ★★ 集成tk 通用mapper，Model，SqlMap，DAO都是融合的：同一文件上面自动，下面手动-->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.TkMapperPlugin">
+            <!--所有生成的Mapper都继承自这个设定，多个可以“,”隔开-->
+            <property name="mappers" value="zzq.plugin.data.dao.MyMapper"/>
+            <!-- Field加类似@ColumnType(jdbcType = JdbcType.NVARCHAR)，最终运行时效果：#{resourceID,jdbcType=BIGINT}-->
+            <property name="isGenColumnTypeWithJdbcType" value="true"/>
+            <!--是否融合Model新旧imports-->
+            <property name="isMixModelImports" value="true"/>
+        </plugin>
+
+
+        <!--Model与XML增量更新插件-->
+        <!--放在TkMapperPlugin与MybatisPlusPlugin插件后-->
+        <plugin type="zzq.plugins.mybatis.generator.plugins.IncrementalUpdatingPlugin"/>
+
+
+        <!--为Model加上javadoc，内容是数据库备注-->
+        <commentGenerator type="zzq.plugins.mybatis.generator.plugins.DatabaseCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <!--zzq生成实体备注的插件不关注此设置-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+
+        <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3307/zzq_admin?useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="root"
+                        password="root">
+            <!-- 新增下面这个属性-->
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver type="zzq.plugins.mybatis.generator.plugins.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+            <!-- 简单说就是生成 LocalDateTime而不是Date -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!--    Model    -->
+        <javaModelGenerator targetPackage="zzq.plugin.entities.domain.fpbsproductdb" targetProject="../CodeGen/generateFiles/src/main/java">
+        </javaModelGenerator>
+
+        <!--    Xml  SqlMap    -->
+        <sqlMapGenerator targetPackage="mybatis/zzq_admin" targetProject="../CodeGen/generateFiles/src/main/resources">
+        </sqlMapGenerator>
+
+        <!--   DAO Mapper    -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="zzq.plugin.data.dao.fpbsproductdb" targetProject="../CodeGen/generateFiles/src/main/java">
+        </javaClientGenerator>
+
+        <table tableName="system_menu" domainObjectName="SystemMenuDO" mapperName="SystemMenuMapper">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+        <table tableName="system_role" domainObjectName="SystemRoleDO" mapperName="SystemRoleMapper">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+        <table tableName="system_role_menu" domainObjectName="SystemRoleMenuDO" mapperName="SystemRoleMenuMapper">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+        <table tableName="SYSTEM_USER" domainObjectName="SystemUserDO" mapperName="SystemUserMapper">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+        <table tableName="system_user_role" domainObjectName="SystemUserDO" mapperName="SystemUserMapper">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

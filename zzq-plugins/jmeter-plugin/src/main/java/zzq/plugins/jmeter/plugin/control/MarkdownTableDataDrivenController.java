@@ -1,4 +1,4 @@
-package zzq.jmeter.plugin.control;
+package zzq.plugins.jmeter.plugin.control;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.control.WhileController;

@@ -375,7 +375,7 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>zzq</groupId>
+                    <groupId>zzq-plugins</groupId>
                     <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
                     <version>${jmockit-auto-ut-maven-plugin.version}</version>
                 </plugin>

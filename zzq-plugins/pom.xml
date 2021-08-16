@@ -14,6 +14,7 @@
     <modules>
         <module>jmockit-auto-ut-maven-plugin</module>
         <module>jmeter-plugin</module>
+        <module>mybatis-generator-plugins</module>
     </modules>
 
 

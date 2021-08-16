@@ -61,7 +61,7 @@
             </plugin>
 
             <plugin>
-                <groupId>zzq</groupId>
+                <groupId>zzq-plugins</groupId>
                 <artifactId>jmockit-auto-ut-maven-plugin</artifactId>
             </plugin>
         </plugins>

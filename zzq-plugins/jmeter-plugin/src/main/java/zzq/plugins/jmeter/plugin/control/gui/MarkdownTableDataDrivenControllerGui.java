@@ -1,11 +1,11 @@
-package zzq.jmeter.plugin.control.gui;
+package zzq.plugins.jmeter.plugin.control.gui;
 
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.control.gui.AbstractControllerGui;
 import org.apache.jmeter.testbeans.gui.TextAreaEditor;
 import org.apache.jmeter.testelement.TestElement;
-import zzq.jmeter.plugin.control.MarkdownTableDataDrivenController;
+import zzq.plugins.jmeter.plugin.control.MarkdownTableDataDrivenController;
 
 import javax.swing.*;
 import java.awt.*;

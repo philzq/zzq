@@ -1,4 +1,4 @@
-package zzq.jmeter.plugin.assertions.gui;
+package zzq.plugins.jmeter.plugin.assertions.gui;
 
 import net.miginfocom.swing.MigLayout;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
@@ -7,7 +7,7 @@ import org.apache.jmeter.gui.util.JSyntaxTextArea;
 import org.apache.jmeter.gui.util.JTextScrollPane;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
-import zzq.jmeter.plugin.assertions.JSONPathAssertionPlus;
+import zzq.plugins.jmeter.plugin.assertions.JSONPathAssertionPlus;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

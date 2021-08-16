@@ -1,4 +1,4 @@
-package zzq.jmeter.plugin;
+package zzq.plugins.jmeter.plugin;
 
 import java.util.List;
 

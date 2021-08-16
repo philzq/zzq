@@ -1,4 +1,4 @@
-package zzq.jmeter.plugin.lister;
+package zzq.plugins.jmeter.plugin.lister;
 
 import net.minidev.json.JSONValue;
 import org.apache.commons.collections4.EnumerationUtils;
@@ -19,7 +19,7 @@ import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.gui.JMeterUIDefaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zzq.jmeter.plugin.ReportVO;
+import zzq.plugins.jmeter.plugin.ReportVO;
 
 import javax.swing.Timer;
 import javax.swing.*;

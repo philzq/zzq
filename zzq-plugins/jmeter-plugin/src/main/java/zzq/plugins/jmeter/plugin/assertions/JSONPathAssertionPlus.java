@@ -1,4 +1,4 @@
-package zzq.jmeter.plugin.assertions;
+package zzq.plugins.jmeter.plugin.assertions;
 
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
