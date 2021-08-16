@@ -9,6 +9,7 @@
 .vs/
 
 ### IntelliJ IDEA ###
+arthas-output/
 .idea/
 *.iws
 *.iml
