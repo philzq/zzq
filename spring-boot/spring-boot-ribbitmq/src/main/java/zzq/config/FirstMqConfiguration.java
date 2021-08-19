@@ -55,17 +55,17 @@ public class FirstMqConfiguration {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         configurer.configure(factory, connectionFactory);
+
+        rabbitMqInit();
         return factory;
     }
 
-    @Bean
-    public String testFirst() {
+    private void rabbitMqInit() {
         try {
             connectionFactory.createConnection().createChannel(false).queueDeclare("testFirst", true, false, false, null);
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
-        return "testFirst";
     }
 
 }

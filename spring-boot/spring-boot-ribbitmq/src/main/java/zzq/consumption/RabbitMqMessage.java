@@ -10,6 +10,7 @@ public class RabbitMqMessage {
     public void testFirst(Object data) {
         try {
             System.out.println("firstFactory:"+ data);
+            Thread.sleep(10);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -17,7 +18,12 @@ public class RabbitMqMessage {
 
     @RabbitListener(queues = "testSecond", containerFactory="secondFactory")
     public void testSecond(Object data) {
-        System.out.println("secondFactory:"+ data);
+        try {
+            System.out.println("secondFactory:"+ data);
+            Thread.sleep(10);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 
