@@ -13,9 +13,6 @@
 
 # 使用方法
 
-### 配置maven
-参见：http://172.18.144.106/FIT.PBS/Principle/blob/master/maven.md
-
 ### 配置pom.xml 
 ```xml
     <build>
