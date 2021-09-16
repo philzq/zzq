@@ -15,11 +15,11 @@ public class RabbitMqMessage {
     public void testFirst(Channel channel, Message message) throws IOException {
         try {
             System.out.println(LocalDateTime.now() + "-firstFactory:" + new String(message.getBody()));
-            Thread.sleep(10);
+            System.out.println(1 / 0);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
+            e.printStackTrace();
         }
     }
 
@@ -27,11 +27,10 @@ public class RabbitMqMessage {
     public void testSecond(Channel channel, Message message) throws IOException {
         try {
             System.out.println(LocalDateTime.now() + "-secondFactory:" + new String(message.getBody()));
-            Thread.sleep(10);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
+            e.printStackTrace();
         }
     }
 }

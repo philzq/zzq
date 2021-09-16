@@ -1,6 +1,5 @@
 package zzq.config;
 
-import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,8 +12,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-
-import java.io.IOException;
 
 @Configuration
 public class SecondMqConfiguration {
@@ -33,7 +30,7 @@ public class SecondMqConfiguration {
     @ConfigurationProperties("spring.rabbitmq.second")
     public ConnectionFactory secondConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setPublisherConfirms(true); //必须要设置
+        MqConfigurationUtil.initMqConnectionFactory(connectionFactory);
         return connectionFactory;
     }
 
@@ -44,8 +41,11 @@ public class SecondMqConfiguration {
             @Qualifier("secondConnectionFactory") ConnectionFactory connectionFactory
     ) {
         RabbitTemplate secondRabbitTemplate = new RabbitTemplate(connectionFactory);
+        MqConfigurationUtil.initRabbitTemplate(secondRabbitTemplate);
         return secondRabbitTemplate;
     }
+
+
 
 
     @Bean(name = "secondFactory")
@@ -53,17 +53,18 @@ public class SecondMqConfiguration {
             SimpleRabbitListenerContainerFactoryConfigurer configurer,
             @Qualifier("secondConnectionFactory") ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        MqConfigurationUtil.initSimpleRabbitListenerContainerFactory(factory);
         configurer.configure(factory, connectionFactory);
 
         rabbitMqInit();
         return factory;
     }
 
+
     private void rabbitMqInit() {
         try {
             connectionFactory.createConnection().createChannel(false).queueDeclare("testSecond", true, false, false, null);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

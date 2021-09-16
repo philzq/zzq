@@ -2,13 +2,13 @@ spring:
   rabbitmq:
     first:
       host: 127.0.0.1
-      port: 5672
+      port: 5673
       username: zzq
       password: zzq
       virtual-host: first
     second:
       host: 127.0.0.1
-      port: 5672
+      port: 5673
       username: zzq
       password: zzq
       virtual-host: second

@@ -1,6 +1,5 @@
 package zzq.config;
 
-import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -14,8 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
-
-import java.io.IOException;
 
 @Configuration
 public class FirstMqConfiguration {
@@ -34,7 +31,7 @@ public class FirstMqConfiguration {
     @Primary
     public ConnectionFactory firstConnectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setPublisherConfirms(true); //必须要设置
+        MqConfigurationUtil.initMqConnectionFactory(connectionFactory);
         return connectionFactory;
     }
 
@@ -45,6 +42,7 @@ public class FirstMqConfiguration {
             @Qualifier("firstConnectionFactory") ConnectionFactory connectionFactory
     ) {
         RabbitTemplate firstRabbitTemplate = new RabbitTemplate(connectionFactory);
+        MqConfigurationUtil.initRabbitTemplate(firstRabbitTemplate);
         return firstRabbitTemplate;
     }
 
@@ -53,7 +51,7 @@ public class FirstMqConfiguration {
             SimpleRabbitListenerContainerFactoryConfigurer configurer,
             @Qualifier("firstConnectionFactory") ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        MqConfigurationUtil.initSimpleRabbitListenerContainerFactory(factory);
         configurer.configure(factory, connectionFactory);
 
         rabbitMqInit();
@@ -63,7 +61,7 @@ public class FirstMqConfiguration {
     private void rabbitMqInit() {
         try {
             connectionFactory.createConnection().createChannel(false).queueDeclare("testFirst", true, false, false, null);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

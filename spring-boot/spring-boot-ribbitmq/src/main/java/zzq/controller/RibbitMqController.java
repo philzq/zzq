@@ -12,13 +12,19 @@ public class RibbitMqController {
     private Sender sender;
 
     @GetMapping("testFirst")
-    public String testFirst(String message){
+    public String testFirst(String message) {
         sender.testFirst(message);
         return "testFirst";
     }
 
+    @GetMapping("testReturnCallback")
+    public String testReturnCallback(String message) {
+        sender.testReturnCallback(message);
+        return "testReturnCallback";
+    }
+
     @GetMapping("testSecond")
-    public String testSecond(String message){
+    public String testSecond(String message) {
         sender.testSecond(message);
         return "testSecond";
     }
