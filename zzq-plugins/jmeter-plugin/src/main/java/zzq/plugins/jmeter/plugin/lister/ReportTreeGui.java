@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Queue;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -87,7 +88,7 @@ public class ReportTreeGui extends AbstractVisualizer
     private Object resultsObject = null;
     private TreeSelectionEvent lastSelectionEvent;
     private JCheckBox autoScrollCB;
-    private final java.util.Queue<SampleResult> buffer;
+    private final Queue<SampleResult> buffer;
     private boolean dataChanged;
 
     /**
@@ -116,7 +117,7 @@ public class ReportTreeGui extends AbstractVisualizer
 
     @Override
     public String getStaticLabel() {
-        return this.getClass().getSimpleName();
+        return "ZZQ-"+this.getClass().getSimpleName();
     }
 
     @Override
@@ -186,7 +187,7 @@ public class ReportTreeGui extends AbstractVisualizer
                 DefaultMutableTreeNode currNode = new SearchableTreeNode(sampler, treeModel);
                 DefaultMutableTreeNode parent = threadNameMap.get(sampler.getThreadName());
                 treeModel.insertNodeInto(currNode, parent, parent.getChildCount());
-                java.util.List<TreeNode> path = new ArrayList<>(Arrays.asList(parent, currNode));
+                List<TreeNode> path = new ArrayList<>(Arrays.asList(parent, currNode));
                 selectedPath = checkExpandedOrSelected(path,
                         sampler, oldSelectedElement,
                         oldExpandedElements, newExpandedPaths, selectedPath);
@@ -244,7 +245,8 @@ public class ReportTreeGui extends AbstractVisualizer
             ReportVO reportVOs = getReportVOs(root);
 
             String reportVOsStr = JSONValue.toJSONString(reportVOs);
-            System.out.println(reportVOsStr);
+//            System.out.println(reportVOsStr);
+            log.info(reportVOsStr);
 
             // 创建基于文件的输出流
             fos = new FileOutputStream(file);
@@ -341,7 +343,7 @@ public class ReportTreeGui extends AbstractVisualizer
         return oldSelectedElement;
     }
 
-    private TreePath checkExpandedOrSelected(java.util.List<TreeNode> path,
+    private TreePath checkExpandedOrSelected(List<TreeNode> path,
                                              Object item, Object oldSelectedObject,
                                              Set<Object> oldExpandedObjects, Set<TreePath> newExpandedPaths,
                                              TreePath defaultPath) {
@@ -355,7 +357,7 @@ public class ReportTreeGui extends AbstractVisualizer
         return result;
     }
 
-    private TreePath checkExpandedOrSelected(java.util.List<TreeNode> path,
+    private TreePath checkExpandedOrSelected(List<TreeNode> path,
                                              Object item, Object oldSelectedObject,
                                              Set<Object> oldExpandedObjects, Set<TreePath> newExpandedPaths,
                                              TreePath defaultPath, DefaultMutableTreeNode extensionNode) {
@@ -371,7 +373,7 @@ public class ReportTreeGui extends AbstractVisualizer
 
     private Set<Object> extractExpandedObjects(final Enumeration<TreePath> expandedElements) {
         if (expandedElements != null) {
-            final java.util.List<TreePath> list = EnumerationUtils.toList(expandedElements);
+            final List<TreePath> list = EnumerationUtils.toList(expandedElements);
             log.debug("Expanded: {}", list);
             Set<Object> result = list.stream()
                     .map(TreePath::getLastPathComponent)
@@ -385,7 +387,7 @@ public class ReportTreeGui extends AbstractVisualizer
     }
 
     private TreePath addSubResults(DefaultMutableTreeNode currNode,
-                                   SampleResult res, java.util.List<TreeNode> path, Object selectedObject,
+                                   SampleResult res, List<TreeNode> path, Object selectedObject,
                                    Set<Object> oldExpandedObjects, Set<TreePath> newExpandedPaths) {
         SampleResult[] subResults = res.getSubResults();
 
@@ -397,7 +399,7 @@ public class ReportTreeGui extends AbstractVisualizer
             DefaultMutableTreeNode leafNode = new SearchableTreeNode(child, treeModel);
 
             treeModel.insertNodeInto(leafNode, currNode, leafIndex++);
-            java.util.List<TreeNode> newPath = new ArrayList<>(path);
+            List<TreeNode> newPath = new ArrayList<>(path);
             newPath.add(leafNode);
             result = checkExpandedOrSelected(newPath, child, selectedObject, oldExpandedObjects, newExpandedPaths, result);
             addSubResults(leafNode, child, newPath, selectedObject, oldExpandedObjects, newExpandedPaths);
@@ -417,11 +419,11 @@ public class ReportTreeGui extends AbstractVisualizer
         return result;
     }
 
-    private TreePath toTreePath(java.util.List<TreeNode> newPath) {
+    private TreePath toTreePath(List<TreeNode> newPath) {
         return new TreePath(newPath.toArray(new TreeNode[newPath.size()]));
     }
 
-    private TreePath toTreePath(java.util.List<TreeNode> path,
+    private TreePath toTreePath(List<TreeNode> path,
                                 DefaultMutableTreeNode extensionNode) {
         TreeNode[] result = path.toArray(new TreeNode[path.size() + 1]);
         result[result.length - 1] = extensionNode;

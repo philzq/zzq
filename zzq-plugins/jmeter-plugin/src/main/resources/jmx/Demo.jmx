@@ -12,7 +12,7 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Markdown Demo" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="中文" enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
@@ -28,14 +28,14 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <MarkdownTableDataDrivenController guiclass="MarkdownTableDataDrivenControllerGui" testclass="MarkdownTableDataDrivenController" testname="Calc" enabled="true">
+        <yongfa365.jmeter.control.MarkdownTableDataDrivenController guiclass="yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui" testclass="yongfa365.jmeter.control.MarkdownTableDataDrivenController" testname="Calc" enabled="true">
           <stringProp name="Markdown.Data"> a     | b     | c     | remark&#xd;
  1     | 2     | 3     | ok&#xd;
  -1    | 2     | 1     | ok&#xd;
  1     | 2     | 3     | ok&#xd;
  -1    | -1    | -2    | ok&#xd;
  1     | -2    | -1    | ok</stringProp>
-        </MarkdownTableDataDrivenController>
+        </yongfa365.jmeter.control.MarkdownTableDataDrivenController>
         <hashTree>
           <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="add test : ${a}+${b}=${c}  ${remark}" enabled="true">
             <boolProp name="displayJMeterProperties">false</boolProp>
@@ -57,12 +57,12 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <MarkdownTableDataDrivenController guiclass="MarkdownTableDataDrivenControllerGui" testclass="MarkdownTableDataDrivenController" testname="Markdown Table Data-driven Controller" enabled="true">
+        <yongfa365.jmeter.control.MarkdownTableDataDrivenController guiclass="yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui" testclass="yongfa365.jmeter.control.MarkdownTableDataDrivenController" testname="Markdown Table Data-driven Controller" enabled="true">
           <stringProp name="Markdown.Data"> username     | password    | remark&#xd;
  yongfa365    | xx1x        | valid data&#xd;
  yongfa111    | 123455      | username not exist&#xd;
  yongfa222    | xx3x        | password not exist</stringProp>
-        </MarkdownTableDataDrivenController>
+        </yongfa365.jmeter.control.MarkdownTableDataDrivenController>
         <hashTree>
           <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Degug111 ${username}--${password}--${remark}" enabled="true">
             <boolProp name="displayJMeterProperties">false</boolProp>
@@ -71,12 +71,12 @@
           </DebugSampler>
           <hashTree/>
         </hashTree>
-        <MarkdownTableDataDrivenController guiclass="MarkdownTableDataDrivenControllerGui" testclass="MarkdownTableDataDrivenController" testname="Markdown Table Data-driven Controller" enabled="true">
+        <yongfa365.jmeter.control.MarkdownTableDataDrivenController guiclass="yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui" testclass="yongfa365.jmeter.control.MarkdownTableDataDrivenController" testname="Markdown Table Data-driven Controller" enabled="true">
           <stringProp name="Markdown.Data"> username    | password    | remark&#xd;
  haha        | abc123      | valid data&#xd;
  #hehe111    | 123455      | username not exist&#xd; TODO:dev impl&#xd;
  ooo222      | ******      | password not exist</stringProp>
-        </MarkdownTableDataDrivenController>
+        </yongfa365.jmeter.control.MarkdownTableDataDrivenController>
         <hashTree>
           <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Degug222  ${username}--${password}--${remark}" enabled="true">
             <boolProp name="displayJMeterProperties">false</boolProp>
@@ -127,9 +127,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">2</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -156,19 +156,31 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE"></stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>
             <boolProp name="ISREGEX">true</boolProp>
-            <boolProp name="IS_ASC">true</boolProp>
+            <boolProp name="IS_ASC">false</boolProp>
             <boolProp name="IS_DESC">false</boolProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
             <boolProp name="IS_USE_MATCH">false</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">true</boolProp>
+            <stringProp name="BEGIN_SIZE">10</stringProp>
+            <stringProp name="END_SIZE">15</stringProp>
+            <stringProp name="DATA_SIZE">10</stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
+          <hashTree/>
+          <yongfa365.jmeter.assertions.ResponseAssertionTest guiclass="yongfa365.jmeter.assertions.AssertionGuiTest" testclass="yongfa365.jmeter.assertions.ResponseAssertionTest" testname="[res_key=ResponseAssertionTest]" enabled="true">
+            <collectionProp name="Asserion.test_strings"/>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </yongfa365.jmeter.assertions.ResponseAssertionTest>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="is asc ok" enabled="true">
@@ -190,19 +202,23 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE"></stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>
             <boolProp name="ISREGEX">true</boolProp>
-            <boolProp name="IS_ASC">true</boolProp>
+            <boolProp name="IS_ASC">false</boolProp>
             <boolProp name="IS_DESC">false</boolProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
             <boolProp name="IS_USE_MATCH">false</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">true</boolProp>
+            <stringProp name="BEGIN_SIZE">6454</stringProp>
+            <stringProp name="END_SIZE">12131</stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="is desc fail" enabled="true">
@@ -224,7 +240,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE"></stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -232,11 +248,15 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="INVERT">false</boolProp>
             <boolProp name="ISREGEX">true</boolProp>
             <boolProp name="IS_ASC">false</boolProp>
-            <boolProp name="IS_DESC">true</boolProp>
+            <boolProp name="IS_DESC">false</boolProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
             <boolProp name="IS_USE_MATCH">false</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">true</boolProp>
+            <stringProp name="BEGIN_SIZE"></stringProp>
+            <stringProp name="END_SIZE"></stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="is desc ok" enabled="true">
@@ -258,7 +278,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE"></stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -270,7 +290,11 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
             <boolProp name="IS_USE_MATCH">false</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">false</boolProp>
+            <stringProp name="BEGIN_SIZE"></stringProp>
+            <stringProp name="END_SIZE"></stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="all match fail" enabled="true">
@@ -292,7 +316,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE">21.+13</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -303,8 +327,12 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="IS_DESC">false</boolProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
-            <boolProp name="IS_USE_MATCH">true</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_MATCH">false</boolProp>
+            <boolProp name="IS_USE_SIZE">true</boolProp>
+            <stringProp name="BEGIN_SIZE">46546</stringProp>
+            <stringProp name="END_SIZE">45645</stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="all match ok" enabled="true">
@@ -326,7 +354,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE">2021.+13</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -337,8 +365,12 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="IS_DESC">false</boolProp>
             <boolProp name="IS_ALL_MATCH">true</boolProp>
             <boolProp name="IS_ANY_MATCH">false</boolProp>
-            <boolProp name="IS_USE_MATCH">true</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_MATCH">false</boolProp>
+            <boolProp name="IS_USE_SIZE">true</boolProp>
+            <stringProp name="BEGIN_SIZE"></stringProp>
+            <stringProp name="END_SIZE"></stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="any match ok" enabled="true">
@@ -360,7 +392,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE">2021-06-13</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -372,7 +404,11 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="IS_ALL_MATCH">false</boolProp>
             <boolProp name="IS_ANY_MATCH">true</boolProp>
             <boolProp name="IS_USE_MATCH">true</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">false</boolProp>
+            <stringProp name="BEGIN_SIZE"></stringProp>
+            <stringProp name="END_SIZE"></stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -428,7 +464,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESULT_CLASS">org.apache.jmeter.samplers.SampleResult</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <JSONPathAssertionPlus guiclass="JSONPathAssertionPlusGui" testclass="JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
+          <yongfa365.jmeter.assertions.JSONPathAssertionPlus guiclass="yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui" testclass="yongfa365.jmeter.assertions.JSONPathAssertionPlus" testname="JsonPath Assertion" enabled="true">
             <stringProp name="JSON_PATH">$..goTime</stringProp>
             <stringProp name="EXPECTED_VALUE">2021-06-13</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -440,48 +476,52 @@ without actual network activity. This helps debugging tests.</stringProp>
             <boolProp name="IS_ALL_MATCH">false</boolProp>
             <boolProp name="IS_ANY_MATCH">true</boolProp>
             <boolProp name="IS_USE_MATCH">true</boolProp>
-          </JSONPathAssertionPlus>
+            <boolProp name="IS_USE_SIZE">false</boolProp>
+            <stringProp name="BEGIN_SIZE"></stringProp>
+            <stringProp name="END_SIZE"></stringProp>
+            <stringProp name="DATA_SIZE"></stringProp>
+          </yongfa365.jmeter.assertions.JSONPathAssertionPlus>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
       </hashTree>
-      <ResultCollector guiclass="ReportTreeGui" testclass="ResultCollector" testname="ReportTreeGui" enabled="true">
+      <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="yongfa365.jmeter.lister.ReportTreeGui" testclass="ResultCollector" testname="ReportTreeGui" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -554,6 +594,19 @@ without actual network activity. This helps debugging tests.</stringProp>
         </objProp>
         <stringProp name="filename"></stringProp>
       </ResultCollector>
+      <hashTree/>
+      <kg.apc.jmeter.reporters.FlexibleFileWriter guiclass="kg.apc.jmeter.reporters.FlexibleFileWriterGui" testclass="kg.apc.jmeter.reporters.FlexibleFileWriter" testname="jp@gc - Flexible File Writer" enabled="true">
+        <stringProp name="TestPlan.comments">Run the test and then look for file &apos;testResults.tsv&apos; at your disk.
+It contains test results written in specified format.</stringProp>
+        <stringProp name="filename">testResults.tsv</stringProp>
+        <stringProp name="columns">endTime|\t|responseTime|\t|sentBytes|\t|receivedBytes|\t|responseCode|\r\n</stringProp>
+        <boolProp name="overwrite">true</boolProp>
+        <stringProp name="header">endTime	responseTime	sentBytes	receivedBytes	responseCode	responseMessage	errorCount	sampleLabel 	
+</stringProp>
+        <stringProp name="footer">-- end-of-file</stringProp>
+      </kg.apc.jmeter.reporters.FlexibleFileWriter>
+      <hashTree/>
+      <yongfa365.jmeter.result.FlexibleFileWriterTest guiclass="yongfa365.jmeter.result.FlexibleFileWriterTestGui" testclass="yongfa365.jmeter.result.FlexibleFileWriterTest" testname="jp@gc - FlexibleFileWriterTestGui" enabled="true"/>
       <hashTree/>
     </hashTree>
   </hashTree>

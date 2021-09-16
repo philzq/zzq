@@ -26,10 +26,16 @@ public class JSONPathAssertionPlus extends AbstractTestElement implements Serial
     public static final String JSONPATH = "JSON_PATH";
     public static final String EXPECTEDVALUE = "EXPECTED_VALUE";
     public static final String ISREGEX = "ISREGEX";
+    public static final String DATA_SIZE = "DATA_SIZE";
 
     public static final String IS_USE_MATCH = "IS_USE_MATCH";
     public static final String IS_ASC = "IS_ASC";
     public static final String IS_DESC = "IS_DESC";
+
+    public static final String IS_USE_SIZE = "IS_USE_SIZE";
+    public static final String BEGIN_SIZE = "BEGIN_SIZE";
+    public static final String END_SIZE = "END_SIZE";
+
     public static final String IS_ALL_MATCH = "IS_ALL_MATCH";
     public static final String IS_ANY_MATCH = "IS_ANY_MATCH";
 
@@ -88,6 +94,22 @@ public class JSONPathAssertionPlus extends AbstractTestElement implements Serial
         return getPropertyAsBoolean(IS_DESC, false);
     }
 
+    public String getDataSize() {
+        return getPropertyAsString(DATA_SIZE, "0");
+    }
+
+    public boolean isUseSize() {
+        return getPropertyAsBoolean(IS_USE_SIZE, false);
+    }
+
+
+    public String getBeginSize() {
+        return isUseSize() ? getPropertyAsString(BEGIN_SIZE, "0") : "0";
+    }
+
+    public String getEndSize() {
+        return isUseSize() ? getPropertyAsString(END_SIZE, "0") : "0";
+    }
 
     private void doAssert(String jsonString) {
         Object value = JsonPath.read(jsonString, getJsonPath());
@@ -96,6 +118,8 @@ public class JSONPathAssertionPlus extends AbstractTestElement implements Serial
             assertIsAsc(value);
         } else if (isDesc()) {
             assertIsDesc(value);
+        } else if (isUseSize()) {
+            assertIsUseSize();
         } else {
             if (value instanceof JSONArray) {
                 arrayMatched((JSONArray) value);
@@ -107,6 +131,33 @@ public class JSONPathAssertionPlus extends AbstractTestElement implements Serial
             }
         }
 
+    }
+
+    /**
+     * 断言size
+     */
+    public void assertIsUseSize() {
+        String dataSize = getDataSize();
+        Long data = 0L;
+        if (dataSize != null && dataSize.trim().length() != 0) {
+            data = Long.valueOf(dataSize);
+        }
+
+        String beginSize = getBeginSize();
+        Long begin = 0L;
+        if (beginSize != null && beginSize.trim().length() != 0) {
+            begin = Long.valueOf(beginSize);
+        }
+
+        String endSize = getEndSize();
+        Long end = 0L;
+        if (endSize != null && endSize.trim().length() != 0) {
+            end = Long.valueOf(endSize);
+        }
+
+        if (data < begin || data > end) {
+            throw new RuntimeException("Size:" + data + "不在" + begin + "-" + end + "之内");
+        }
     }
 
     private void assertIsAsc(Object input) {
@@ -191,6 +242,26 @@ public class JSONPathAssertionPlus extends AbstractTestElement implements Serial
     public AssertionResult getResult(SampleResult samplerResult) {
         AssertionResult result = new AssertionResult(getName());
         String responseData = samplerResult.getResponseDataAsString();
+/*        System.out.println("***************************start*********************************");
+        System.out.println("threadName:"+samplerResult.getThreadName());
+        System.out.println("label:"+samplerResult.getSampleLabel());
+        System.out.println("url:"+samplerResult.getUrlAsString());
+        System.out.println("responseCode:"+samplerResult.getResponseCode());
+        System.out.println("responseMessage:"+samplerResult.getResponseMessage());
+        System.out.println("FirstAssertionFailureMessage:"+samplerResult.getFirstAssertionFailureMessage());
+        System.out.println("errorCount:"+samplerResult.getErrorCount());
+        System.out.println("*****************************end*******************************");
+
+        log.info("***************************start*********************************");
+        log.info("threadName:"+samplerResult.getThreadName());
+        log.info("label:"+samplerResult.getSampleLabel());
+        log.info("url:"+samplerResult.getUrlAsString());
+        log.info("responseCode:"+samplerResult.getResponseCode());
+        log.info("responseMessage:"+samplerResult.getResponseMessage());
+        log.info("FirstAssertionFailureMessage:"+samplerResult.getFirstAssertionFailureMessage());
+        log.info("errorCount:"+samplerResult.getErrorCount());
+        log.info("*****************************end*******************************");*/
+
         if (responseData.isEmpty()) {
             return result.setResultForNull();
         }
