@@ -9,6 +9,7 @@ public class MqConfigurationUtil {
 
     /**
      * 初始化mq监听容器工厂
+     *
      * @param factory
      */
     static void initSimpleRabbitListenerContainerFactory(SimpleRabbitListenerContainerFactory factory) {
@@ -26,15 +27,23 @@ public class MqConfigurationUtil {
 
     /**
      * 初始化连接工厂
+     *
      * @param connectionFactory
      */
     static void initMqConnectionFactory(CachingConnectionFactory connectionFactory) {
         connectionFactory.setPublisherConfirms(true);
         connectionFactory.setPublisherReturns(true);
+
+        connectionFactory.setCloseExceptionLogger((log, s, throwable) -> {
+            System.out.println("**********************Start CloseExceptionLogger****************************");
+            throwable.printStackTrace();
+            System.out.println("**********************End CloseExceptionLogger****************************");
+        });
     }
 
     /**
      * 初始化RabbitTemplate
+     *
      * @param secondRabbitTemplate
      */
     static void initRabbitTemplate(RabbitTemplate secondRabbitTemplate) {
@@ -48,6 +57,7 @@ public class MqConfigurationUtil {
                 System.out.println("消息id为: " + correlationData + "的消息，消息nack，失败原因是：" + cause);
             }
         });
+        //处理不可路由的消息
         secondRabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
             System.out.println("secondRabbitTemplate***setReturnCallback*********************");
             System.out.println("消息主体 message：" + message);
