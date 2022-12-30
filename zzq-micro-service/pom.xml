@@ -18,7 +18,7 @@
         <module>zzq-java-demo</module>
         <module>zzq-games</module>
         <module>zzq-ocr</module>
-        <module>CodeGen</module>
+<!--        <module>CodeGen</module>-->
     </modules>
 
 
