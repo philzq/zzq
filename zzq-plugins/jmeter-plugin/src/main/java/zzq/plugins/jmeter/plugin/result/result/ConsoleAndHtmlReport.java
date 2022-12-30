@@ -210,7 +210,7 @@ public class ConsoleAndHtmlReport
             String reportPath = rootPath + "\\" + baseName;
             Files.createDirectories(Paths.get(reportPath));
 
-            String index = JMeterUtils.getResourceFileAsText("index.html");
+            String index = JMeterUtils.getResourceFileAsText("templates/index.html");
             MyUtils.writeToFile(Paths.get(reportPath, "index.html"), index);
 
             String result = "let data = " + MyUtils.toJson(reportVO);
