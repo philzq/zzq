@@ -1,0 +1,10 @@
+server:
+  port: 9966
+
+# DATABASE CONFIG
+spring:
+  application:
+    name: zzq-simple-framework-cache
+
+
+
