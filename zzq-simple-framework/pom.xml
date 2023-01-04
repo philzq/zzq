@@ -18,6 +18,8 @@
         <module>nio-http-server</module>
         <module>zzq-simple-framework-cache</module>
         <module>zzq-simple-framework-cache-client</module>
+        <module>zzq-simple-framework-json</module>
+        <module>zzq-simple-framework-json-client</module>
     </modules>
 
 

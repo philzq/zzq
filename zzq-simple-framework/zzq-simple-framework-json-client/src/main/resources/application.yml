@@ -1,0 +1,10 @@
+server:
+  port: 9965
+
+# DATABASE CONFIG
+spring:
+  application:
+    name: zzq-simple-framework-json-client
+
+
+
