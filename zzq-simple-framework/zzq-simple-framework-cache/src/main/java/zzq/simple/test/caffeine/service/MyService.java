@@ -1,10 +1,10 @@
-package zzq.simple.test.service;
+package zzq.simple.test.caffeine.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zzq.simple.framework.cache.caffeine.config.CacheableLoading;
-import zzq.simple.test.common.Helper;
+import zzq.simple.test.caffeine.common.Helper;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
