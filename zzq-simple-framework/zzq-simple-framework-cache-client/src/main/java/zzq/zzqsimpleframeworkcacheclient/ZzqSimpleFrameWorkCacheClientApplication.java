@@ -2,6 +2,7 @@ package zzq.zzqsimpleframeworkcacheclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import zzq.simple.framework.cache.caffeine.config.EnableCaffeineCache;
 
 /**
  * @author zhouzhiqiang
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023-01-03 17:04
  */
 @SpringBootApplication
+@EnableCaffeineCache
 public class ZzqSimpleFrameWorkCacheClientApplication {
 
     public static void main(String[] args) {

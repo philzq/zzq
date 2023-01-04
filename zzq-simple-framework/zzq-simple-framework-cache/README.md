@@ -21,10 +21,6 @@ spring-boot-cache默认不支持LoadingCache，但我们希望的是数据还没
 	<version>3.1.2</version>
 </dependency>
 ```
-```java
-//spring-boot默认加了spring.aop.auto: true，所以这句不是必须的
-@EnableAspectJAutoProxy
-```
 
 ```java
 //CacheName==@CacheableLoading的所有属性拼成的字符串，相同的CacheName会放在同一个LoadingCache里。
@@ -44,6 +40,27 @@ expireAfterWrite: 最后一次写操作后经过指定时间过期
 refreshAfterWrite: 创建缓存或者最近一次更新缓存后经过指定时间间隔，刷新缓存
 recordStats：开发统计功能
 timeout : 出错后要等几秒再尝试，默认10秒，防止出错后不停的发起穿透请求。
+```
+
+#### 使用教程
+参考zzq-simple-framework-cache-client项目
+```java
+一、使用@EnableCaffeineCache注解开启CaffeineCache
+@SpringBootApplication
+@EnableCaffeineCache
+public class ZzqSimpleFrameWorkCacheClientApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ZzqSimpleFrameWorkCacheClientApplication.class, args);
+    }
+}
+二、使用注解CacheableLoading使用缓存
+@CacheableLoading(name = "可以不要", expireAfterWrite = 100, refreshAfterWrite = 50, maximumSize = 10, recordStats = true)
+String getDataWithCaffeineLoadingCache(String input) {
+
+    log.info("穿透getDataWithCaffeineLoadingCache {} ", input);
+    return String.format("input:%s , data:%s", input, LocalDateTime.now().getSecond());
+}
 ```
 
 ## 二、redis

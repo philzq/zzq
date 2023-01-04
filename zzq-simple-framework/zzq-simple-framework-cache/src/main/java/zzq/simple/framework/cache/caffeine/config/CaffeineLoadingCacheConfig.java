@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Aspect
-@Configuration
 public class CaffeineLoadingCacheConfig {
 
     private static final ConcurrentHashMap<String, LoadingCache<CacheKey, Object>> LOADING_CACHES = new ConcurrentHashMap<>();

@@ -16,7 +16,7 @@ public class MyService {
     @Autowired
     MyService myService;
 
-    @CacheableLoading(name = "可以不要", expireAfterWrite = 100, refreshAfterWrite = 5, maximumSize = 10, recordStats = true)
+    @CacheableLoading(name = "可以不要", expireAfterWrite = 100, refreshAfterWrite = 50, maximumSize = 10, recordStats = true)
     String getDataWithCaffeineLoadingCache(String input) {
 
         log.info("穿透getDataWithCaffeineLoadingCache {} ", input);
@@ -67,7 +67,6 @@ public class MyService {
         for(int i=0;i<50;i++){
             String expireAfterAccess = myService.getDataWithCaffeineLoadingCache("测试缓存刷新----自动刷新，调用走缓存，看日志间隔时间"+(i%25));
             log.info(expireAfterAccess);
-            Helper.sleep(100);
         }
 
 
