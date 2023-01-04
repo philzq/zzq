@@ -1,4 +1,4 @@
-package zzq.simple;
+package zzq.zzqsimpleframeworkcacheclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023-01-03 17:04
  */
 @SpringBootApplication
-public class ZzqSimpleFrameWorkCacheApplication {
+public class ZzqSimpleFrameWorkCacheClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZzqSimpleFrameWorkCacheApplication.class, args);
+        SpringApplication.run(ZzqSimpleFrameWorkCacheClientApplication.class, args);
     }
 }

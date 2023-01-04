@@ -1,9 +1,9 @@
-package zzq.simple.test.caffeine.entity;
+package zzq.zzqsimpleframeworkcacheclient.entity;
 
 
 import lombok.Builder;
 import lombok.Data;
-import zzq.simple.test.caffeine.common.Helper;
+import zzq.zzqsimpleframeworkcacheclient.common.Helper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

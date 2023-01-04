@@ -1,4 +1,4 @@
-package zzq.simple.test.caffeine.common;
+package zzq.zzqsimpleframeworkcacheclient.common;
 
 public class Helper {
     public static void sleep(long millis) {

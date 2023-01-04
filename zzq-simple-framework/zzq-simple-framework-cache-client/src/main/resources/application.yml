@@ -4,7 +4,7 @@ server:
 # DATABASE CONFIG
 spring:
   application:
-    name: zzq-simple-framework-cache
+    name: zzq-simple-framework-cache-client
 
 
 
