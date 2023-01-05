@@ -27,7 +27,7 @@ id|desc|url
 }
 ```
 ```java
-一、开启注解@EnableJackson
+一、开启注解@EnableJackson，全局设置spring的json序列化与反序列化
 @SpringBootApplication
 @EnableJackson
 public class ZzqSimpleFrameworkJsonClientApplication {
