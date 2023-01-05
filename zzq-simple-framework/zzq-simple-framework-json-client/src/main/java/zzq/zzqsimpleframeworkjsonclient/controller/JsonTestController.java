@@ -18,17 +18,14 @@ import zzq.zzqsimpleframeworkjsonclient.entity.JsonTestEntity;
 @RequestMapping("JsonTestController")
 public class JsonTestController {
 
-    @Autowired
-    private JacksonUtil jacksonUtil;
-
     @PostMapping("jsonTestEntity")
     private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity){
 
-        String toJSon = jacksonUtil.toJSon(jsonTestEntity);
+        String toJSon = JacksonUtil.toJSon(jsonTestEntity);
 
         System.out.println("toJSon:\n" + toJSon);
 
-        JsonTestEntity parseJson = jacksonUtil.parseJson(toJSon, new TypeReference<JsonTestEntity>() {
+        JsonTestEntity parseJson = JacksonUtil.parseJson(toJSon, new TypeReference<JsonTestEntity>() {
         });
 
         return parseJson;

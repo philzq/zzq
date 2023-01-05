@@ -37,21 +37,19 @@ public class ZzqSimpleFrameworkJsonClientApplication {
     }
 }
 二、使用
-@Autowired
-private JacksonUtil jacksonUtil;
-
 @PostMapping("jsonTestEntity")
 private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity){
 
-    String toJSon = jacksonUtil.toJSon(jsonTestEntity);
+    String toJSon = JacksonUtil.toJSon(jsonTestEntity);
 
     System.out.println("toJSon:\n" + toJSon);
 
-    JsonTestEntity parseJson = jacksonUtil.parseJson(toJSon, new TypeReference<JsonTestEntity>() {
+    JsonTestEntity parseJson = JacksonUtil.parseJson(toJSon, new TypeReference<JsonTestEntity>() {
     });
 
     return parseJson;
 }
+
 三、自定义日期格式
 // JacksonConfigure 有统一处理日期的格式，如果想自定义可以在字段的getXXX上单独指定
 public class OrderLog {

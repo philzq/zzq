@@ -18,6 +18,6 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @AutoConfigurationPackage
-@Import({JacksonConfigure.class, JacksonUtil.class})
+@Import({JacksonConfigure.class})
 public @interface EnableJackson {
 }

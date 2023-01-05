@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zzq.zzqsimpleframeworkjson.config.JacksonConfigure;
 
 /**
  * @author zhouzhiqiang
@@ -18,10 +19,10 @@ public class JacksonUtil {
     /**
      * 配置ObjectMapper对象
      */
-    private ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper;
 
-    public JacksonUtil(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    static {
+        objectMapper = new JacksonConfigure().objectMapper();
     }
 
     /**
@@ -30,7 +31,7 @@ public class JacksonUtil {
      * @param object
      * @return
      */
-    public String toJSon(Object object) {
+    public static String toJSon(Object object) {
         try {
             //Json对象转为String字符串
             return objectMapper.writeValueAsString(object);
@@ -48,7 +49,7 @@ public class JacksonUtil {
      * @param <T>
      * @return
      */
-    public <T> T parseJson(String content, TypeReference<T> typeReference) {
+    public static <T> T parseJson(String content, TypeReference<T> typeReference) {
         try {
             return objectMapper.readValue(content, typeReference);
         } catch (JsonProcessingException e) {
