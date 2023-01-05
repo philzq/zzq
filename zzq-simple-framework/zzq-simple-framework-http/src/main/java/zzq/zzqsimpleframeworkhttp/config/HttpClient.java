@@ -155,17 +155,17 @@ public class HttpClient {
         return t;
     }
 
-    public <T> T postByForm(String url, Map<String, String> param, TypeReference<T> typeReference) {
-        T t = postToResponseByForm(url, param, null, typeReference);
-        return t;
-    }
-
     public <T> T post(String url, Object param, Map<String, String> header, TypeReference<T> typeReference) {
         T t = postToResponse(url, param, header, typeReference);
         return t;
     }
 
-    public <T> T post(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+    public <T> T postByForm(String url, Map<String, String> param, TypeReference<T> typeReference) {
+        T t = postToResponseByForm(url, param, null, typeReference);
+        return t;
+    }
+
+    public <T> T postByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
         T t = postToResponseByForm(url, param, header, typeReference);
         return t;
     }
