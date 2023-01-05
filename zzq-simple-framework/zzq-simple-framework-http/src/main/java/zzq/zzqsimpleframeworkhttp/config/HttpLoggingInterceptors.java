@@ -5,9 +5,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * 日志拦截器
@@ -17,6 +18,8 @@ import java.util.logging.Logger;
  * @date 2023-01-05 9:37
  */
 class HttpLoggingInterceptors {
+
+    private final static Logger logger = LoggerFactory.getLogger(HttpLoggingInterceptors.class);
 
     /**
      * 该拦截器优先级最高，最先执行，用于统计输出HttpLoggingInterceptor 和 EventListener 日志
@@ -44,6 +47,7 @@ class HttpLoggingInterceptors {
             } finally {
                 LogEntity.collectLog("elapseTime");
                 //输出日志
+                logger.info(HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().getLog().toString());
                 System.out.println(HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().getLog().toString());
                 HttpLogThreadLocal.remove();
             }

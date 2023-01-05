@@ -26,7 +26,7 @@ class LogEntity {
      * 当前请求的id
      */
     @Builder.Default
-    private String id = UUID.randomUUID().toString();
+    private String traceID = UUID.randomUUID().toString();
 
     /**
      * 记录当前请求事件中的开始时间 --- 用于输出各个时段的时间信息
@@ -47,30 +47,26 @@ class LogEntity {
     private boolean recordLog;
 
     /**
+     * 收集日志
+     *
+     * @param content
+     */
+    public static void collectLog(String content) {
+        collectLogWithTimeCycle(content, true);
+    }
+
+    /**
      * 不记录打印日志所处的时长，用于输出HttpLoggingInterceptor日志
      */
     public static void collectLogWithTimeCycle(String content, boolean outputTimeCycle) {
         LogEntity logEntity = HttpLogThreadLocal.logEntityTransmittableThreadLocal.get();
         if ("callStart".equals(content)) {//EventListener 最先执行，用于触发收集动作
             logEntity.setStartTime(System.currentTimeMillis());
-            HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().setRecordLog(true);
+            logEntity.setRecordLog(true);
+            addLog("【traceID】" + logEntity.getTraceID(), false, logEntity);
         }
-        if (HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().isRecordLog()) {
-            logEntity.getLog()
-                    .append("\n")
-                    .append(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss.SSS")))
-                    .append("  ");
-            if (outputTimeCycle) {
-                //EventListener 才输出具体时间点
-                long nowTime = System.currentTimeMillis();
-                long elapsedTime = nowTime - logEntity.getStartTime();
-                logEntity.getLog()
-                        .append("【")
-                        .append(elapsedTime)
-                        .append("ms】");
-            }
-            logEntity.getLog()
-                    .append("  ").append(content);
+        if (logEntity.isRecordLog()) {
+            addLog(content, outputTimeCycle, logEntity);
         } else {
             //此处会过滤EventListener部分日志，只要收集过直接干掉,防止HttpLogThreadLocal内存泄漏
             HttpLogThreadLocal.remove();
@@ -78,7 +74,27 @@ class LogEntity {
         }
     }
 
-    public static void collectLog(String content) {
-        collectLogWithTimeCycle(content, true);
+    /**
+     * 添加日志
+     *
+     * @param content
+     * @param outputTimeCycle
+     * @param logEntity
+     */
+    private static void addLog(String content, boolean outputTimeCycle, LogEntity logEntity) {
+        logEntity.getLog()
+                .append("\n")
+                .append(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss.SSS")))
+                .append("  ");
+        if (outputTimeCycle) {
+            //EventListener 才输出具体时间点
+            long nowTime = System.currentTimeMillis();
+            long elapsedTime = nowTime - logEntity.getStartTime();
+            logEntity.getLog()
+                    .append("【")
+                    .append(elapsedTime)
+                    .append("ms】 ");
+        }
+        logEntity.getLog().append(content);
     }
 }
