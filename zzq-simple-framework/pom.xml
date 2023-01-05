@@ -20,6 +20,7 @@
         <module>zzq-simple-framework-cache-client</module>
         <module>zzq-simple-framework-json</module>
         <module>zzq-simple-framework-json-client</module>
+        <module>zzq-simple-framework-http</module>
     </modules>
 
 
