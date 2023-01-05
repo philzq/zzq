@@ -1,12 +1,9 @@
 package zzq.zzqsimpleframeworkhttp;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.Request;
-import okhttp3.Response;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
-
-import java.io.IOException;
-import java.util.Objects;
 
 public class InterceptorDemo {
     public static void main(String[] args) {
@@ -28,17 +25,10 @@ public class InterceptorDemo {
         var httpClient = new HttpClient(okHttpClientProperties);
 
         for (int i = 0; i < 3; i++) {
-            try {
-                //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-                Response response = httpClient.getOkHttpClient().newCall(request).execute(); //同步调用
-                Thread.sleep(2000);
-                System.out.println("***************************************************");
-            } catch (IOException | InterruptedException e) {
-                //证书错、dns错、等其他错误
-                System.out.println("没有返回,报错：\n");
-                System.out.println("***************************************************");
-                e.printStackTrace();
-            }
+            //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+            String response = httpClient.post("http://httpstat.us/200", new TypeReference<String>() {
+            });
+            System.out.println("***************************************************");
         }
 
 
