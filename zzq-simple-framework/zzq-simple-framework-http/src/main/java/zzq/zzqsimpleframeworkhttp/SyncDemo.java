@@ -4,8 +4,10 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
+import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SyncDemo {
     public static void main(String[] args) {
@@ -24,21 +26,15 @@ public class SyncDemo {
         //如：request里有大量设置，而新的对象我只想改下url其他不变
         var request2 = request.newBuilder().url("http://httpstat.us/200").build();
 
-        HttpClient httpClient = new HttpClient();
+        OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
+        HttpClient httpClient = new HttpClient(okHttpClientProperties);
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
         try {
             //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-            Call newCall = httpClient.OkHttpClient.newCall(request);
+            Call newCall = httpClient.getOkHttpClient().newCall(request);
             Response response = newCall.execute(); //同步调用
-            String body = httpClient.body(response);
-            if (response.isSuccessful()) { // 200<=statusCode<300
-                //200响应的进这里
-                System.out.println("正常返回的Body:\n" + body);
-            } else {
-                //400,403,404,500,502,503等响应进这里
-                System.out.println("异常返回的Body:\n" + body);
-            }
+            String body = Objects.requireNonNull(response.body()).string();
         } catch (IOException e) {
             //证书错、dns错、等其他错误
             System.out.println("没有返回,报错：\n");

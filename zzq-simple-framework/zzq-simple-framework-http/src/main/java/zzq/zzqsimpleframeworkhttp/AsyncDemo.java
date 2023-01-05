@@ -2,6 +2,7 @@ package zzq.zzqsimpleframeworkhttp;
 
 import okhttp3.*;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
+import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
 import java.io.IOException;
 
@@ -18,10 +19,11 @@ public class AsyncDemo {
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .build();
 
-        HttpClient httpClient = new HttpClient();
+        OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
+        HttpClient httpClient = new HttpClient(okHttpClientProperties);
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
-        Call call = httpClient.OkHttpClient.newCall(request);
+        Call call = httpClient.getOkHttpClient().newCall(request);
 
 
         //enqueue是异步调用

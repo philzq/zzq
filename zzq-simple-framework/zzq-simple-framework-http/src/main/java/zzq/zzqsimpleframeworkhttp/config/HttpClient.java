@@ -3,25 +3,22 @@ package zzq.zzqsimpleframeworkhttp.config;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 
 public class HttpClient {
 
-    private final static Logger logger = LoggerFactory.getLogger(HttpClient.class);
+    private OkHttpClientProperties okHttpClientProperties;
 
-    public OkHttpClient OkHttpClient;
+    private OkHttpClient OkHttpClient;
 
-    public HttpClient() {
+    public HttpClient(OkHttpClientProperties okHttpClientProperties) {
         Dispatcher dispatcher = new Dispatcher();
-        dispatcher.setMaxRequests(64);
-        dispatcher.setMaxRequestsPerHost(5);
+        dispatcher.setMaxRequests(okHttpClientProperties.getMaxRequests());
+        dispatcher.setMaxRequestsPerHost(okHttpClientProperties.getMaxRequestsPerHost());
         dispatcher.setIdleCallback(new Runnable() {
             @Override
             public void run() {
@@ -32,25 +29,23 @@ public class HttpClient {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(content -> LogEntity.collectLogWithTimeCycle(content, false));
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
 
+        ConnectionPool connectionPool = new ConnectionPool(okHttpClientProperties.getMaxIdleConnections(),15, TimeUnit.SECONDS);
+
         OkHttpClient = new OkHttpClient().newBuilder()
-                .connectionPool(new ConnectionPool()) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
+                .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
                 .dispatcher(dispatcher)
                 .addInterceptor(httpLoggingInterceptor)
                 .eventListener(new CustomEventListener())
-                .connectTimeout(Duration.ofSeconds(10))// default 10s
-                .readTimeout(Duration.ofSeconds(10))// default 10s
-                .writeTimeout(Duration.ofSeconds(10))// default 10s
+                .connectTimeout(Duration.ofSeconds(okHttpClientProperties.getConnectTimeout()))// default 10s
+                .readTimeout(Duration.ofSeconds(okHttpClientProperties.getReadTimeout()))// default 10s
+                .writeTimeout(Duration.ofSeconds(okHttpClientProperties.getWriteTimeout()))// default 10s
                 .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
                 .hostnameVerifier((hostname, session) -> true)
-                .retryOnConnectionFailure(true)
+                .retryOnConnectionFailure(false)
                 .build();
     }
 
-    public String body(Response response) {
-        try {
-            return response.body() != null ? response.body().string() : null;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public okhttp3.OkHttpClient getOkHttpClient() {
+        return OkHttpClient;
     }
 }
