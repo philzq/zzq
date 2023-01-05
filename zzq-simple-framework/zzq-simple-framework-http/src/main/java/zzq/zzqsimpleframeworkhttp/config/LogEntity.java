@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +23,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 class LogEntity {
+
+    private final static Logger logger = LoggerFactory.getLogger(LogEntity.class);
 
     /**
      * 当前请求的id
@@ -40,13 +44,6 @@ class LogEntity {
     private StringBuilder log = new StringBuilder();
 
     /**
-     * 用于判断是否记录日志，如果为true则记录日志，如果为false，则删除当前的logEntityTransmittableThreadLocal对象
-     * 用于兼容EventListener日志和HttpLoggingInterceptor日志
-     * 使logEntityTransmittableThreadLocal日志统一由HttpLoggingInterceptor控制
-     */
-    private boolean recordLog;
-
-    /**
      * 收集日志
      *
      * @param content
@@ -62,16 +59,9 @@ class LogEntity {
         LogEntity logEntity = HttpLogThreadLocal.logEntityTransmittableThreadLocal.get();
         if ("callStart".equals(content)) {//EventListener 最先执行，用于触发收集动作
             logEntity.setStartTime(System.currentTimeMillis());
-            logEntity.setRecordLog(true);
             addLog("【traceID】" + logEntity.getTraceID(), false, logEntity);
         }
-        if (logEntity.isRecordLog()) {
-            addLog(content, outputTimeCycle, logEntity);
-        } else {
-            //此处会过滤EventListener部分日志，只要收集过直接干掉,防止HttpLogThreadLocal内存泄漏
-            HttpLogThreadLocal.remove();
-            System.out.println(content);
-        }
+        addLog(content, outputTimeCycle, logEntity);
     }
 
     /**
@@ -96,5 +86,16 @@ class LogEntity {
                     .append("ms】 ");
         }
         logEntity.getLog().append(content);
+    }
+
+    /**
+     * 记录日志并删除本地副本
+     */
+    public static void printfFinallyLog() {
+        //打印日志
+        //输出日志
+        logger.info(HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().getLog().toString());
+        System.out.println(HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().getLog().toString());
+        HttpLogThreadLocal.remove();
     }
 }

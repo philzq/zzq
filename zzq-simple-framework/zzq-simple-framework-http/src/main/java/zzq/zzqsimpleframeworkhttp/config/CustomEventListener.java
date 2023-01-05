@@ -75,12 +75,12 @@ class CustomEventListener extends EventListener {
         LogEntity.collectLog("connectionAcquired");
     }
 
-    /*
+
     @Override
     public void connectionReleased(Call call, Connection connection) {
         LogEntity.collectLog("connectionReleased");
     }
-    */
+
 
     @Override
     public void requestHeadersStart(Call call) {
@@ -132,7 +132,7 @@ class CustomEventListener extends EventListener {
         LogEntity.collectLog("responseFailed");
     }
 
-    /*@Override
+    @Override
     public void callEnd(Call call) {
         LogEntity.collectLog("callEnd");
     }
@@ -145,5 +145,5 @@ class CustomEventListener extends EventListener {
     @Override
     public void canceled(Call call) {
         LogEntity.collectLog("canceled");
-    }*/
+    }
 }
