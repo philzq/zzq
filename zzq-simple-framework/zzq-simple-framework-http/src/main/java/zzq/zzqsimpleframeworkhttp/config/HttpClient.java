@@ -1,6 +1,9 @@
 package zzq.zzqsimpleframeworkhttp.config;
 
-import okhttp3.*;
+import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +14,7 @@ import java.time.Duration;
 
 public class HttpClient {
 
-    private final static Logger logger = LoggerFactory.getLogger(LogEntity.class);
+    private final static Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
     public OkHttpClient OkHttpClient;
 
