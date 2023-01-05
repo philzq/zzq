@@ -17,8 +17,8 @@ class InterceptorDemo {
                 //.url("http://httpstat.us/500?sleep=5000") //测试延时
                 //.url("http://httpstat.us/404")
                 //.url("http://httpstat.us/502")
-                //.url("https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d")
-                //.url("https://www.baidu.com")
+                .url("https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d")
+                .url("https://www.baidu.com")
                 .url("http://httpstat.us/200")
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .header("Accept-Encoding", "gzip, deflate")
@@ -27,7 +27,7 @@ class InterceptorDemo {
         OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
         var httpClient = new HttpClient(okHttpClientProperties);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        /*ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 90; i++) {
             executorService.execute(new Runnable() {
                 @Override
@@ -37,8 +37,12 @@ class InterceptorDemo {
                     });
                 }
             });
+        }*/
+        for (int i = 0; i < 90; i++){
+            //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+            String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
+            });
         }
-
 
     }
 }
