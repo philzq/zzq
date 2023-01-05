@@ -86,6 +86,12 @@ class LogEntity {
                     .append("ms】 ");
         }
         logEntity.getLog().append(content);
+
+        if("callFailed".equals(content)
+                || "callEnd".equals(content)
+        ){
+            printfFinallyLog();
+        }
     }
 
     /**

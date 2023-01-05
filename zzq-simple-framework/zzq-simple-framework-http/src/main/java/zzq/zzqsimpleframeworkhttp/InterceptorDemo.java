@@ -5,6 +5,9 @@ import okhttp3.Request;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 class InterceptorDemo {
     public static void main(String[] args) {
         //这里写了一堆url，只是便于测试，最终只会用最后一个，自行注释掉其他的来测试
@@ -24,11 +27,16 @@ class InterceptorDemo {
         OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
         var httpClient = new HttpClient(okHttpClientProperties);
 
-        for (int i = 0; i < 3; i++) {
-            //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-            String response = httpClient.post("http://httpstat.us/200", new TypeReference<String>() {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 90; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+                    String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
+                    });
+                }
             });
-            System.out.println("***************************************************");
         }
 
 

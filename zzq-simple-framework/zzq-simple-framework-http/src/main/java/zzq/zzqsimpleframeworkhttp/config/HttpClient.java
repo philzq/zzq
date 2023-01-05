@@ -26,12 +26,6 @@ public class HttpClient {
         Dispatcher dispatcher = new Dispatcher();
         dispatcher.setMaxRequests(okHttpClientProperties.getMaxRequests());
         dispatcher.setMaxRequestsPerHost(okHttpClientProperties.getMaxRequestsPerHost());
-        dispatcher.setIdleCallback(new Runnable() {
-            @Override
-            public void run() {
-                LogEntity.printfFinallyLog();
-            }
-        });
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(content -> LogEntity.collectLogWithTimeCycle(content, false));
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
