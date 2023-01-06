@@ -26,7 +26,6 @@ public class CaffeineLoadingCacheConfig {
                 config.expireAfterWrite(), config.expireAfterAccess(), config.refreshAfterWrite(),
                 config.recordStats(), config.timeout());
 
-        //double check lock TODO:防止并发添加到HashMap锁引起的并发穿透？
         if (!LOADING_CACHES.containsKey(cacheName)) {
             synchronized (LOCK) {
                 if (!LOADING_CACHES.containsKey(cacheName)) {
