@@ -44,6 +44,12 @@ class LogEntity {
     private StringBuilder log = new StringBuilder();
 
     /**
+     * 是否在收集日志，用于对日志收集结束的标识，防止其他eventlister影响的滥用HttpLogThreadLocal
+     * 正常场景是不会出现任何问题
+     */
+    private boolean collectLog;
+
+    /**
      * 收集日志
      *
      * @param content
@@ -57,11 +63,28 @@ class LogEntity {
      */
     public static void collectLogWithTimeCycle(String content, boolean outputTimeCycle) {
         LogEntity logEntity = HttpLogThreadLocal.logEntityTransmittableThreadLocal.get();
-        if ("callStart".equals(content)) {//EventListener 最先执行，用于触发收集动作
+        //All start/connect/acquire events will eventually receive a matching end/release event
+        //https://square.github.io/okhttp/4.x/okhttp/okhttp3/-event-listener/
+        // 所以此处的日志收集从callStart开始，callFailed和callEnd结束，
+        // canceled是特殊场景特殊处理
+        if ("callStart".equals(content) || 
+                ("canceled".equals(content) && 0 == logEntity.getStartTime())) {//EventListener 最先执行，用于触发收集动作
             logEntity.setStartTime(System.currentTimeMillis());
-            addLog("【traceID】" + logEntity.getTraceID(), false, logEntity);
+            logEntity.setCollectLog(true);
+            addLog("okHTTPLog【traceID】" + logEntity.getTraceID(), false, logEntity);
         }
-        addLog(content, outputTimeCycle, logEntity);
+        if (logEntity.isCollectLog()) {
+            addLog(content, outputTimeCycle, logEntity);
+            if ("callFailed".equals(content)
+                    || "callEnd".equals(content)
+                    || "canceled".equals(content)
+            ) {
+                printfFinallyLog();
+            }
+        } else {
+            logger.error("【okhttp日志收集异常啦】异常内容,需持续优化：" + content);
+            HttpLogThreadLocal.remove();
+        }
     }
 
     /**
@@ -86,12 +109,6 @@ class LogEntity {
                     .append("ms】 ");
         }
         logEntity.getLog().append(content);
-
-        if("callFailed".equals(content)
-                || "callEnd".equals(content)
-        ){
-            printfFinallyLog();
-        }
     }
 
     /**

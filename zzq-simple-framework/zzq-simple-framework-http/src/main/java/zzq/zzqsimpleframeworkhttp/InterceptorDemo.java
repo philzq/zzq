@@ -27,7 +27,7 @@ class InterceptorDemo {
         OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
         var httpClient = new HttpClient(okHttpClientProperties);
 
-        /*ExecutorService executorService = Executors.newFixedThreadPool(10);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 90; i++) {
             executorService.execute(new Runnable() {
                 @Override
@@ -35,14 +35,15 @@ class InterceptorDemo {
                     //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
                     String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
                     });
+                    //httpClient.getOkHttpClient().newCall(request).cancel();
                 }
             });
-        }*/
-        for (int i = 0; i < 90; i++){
+        }
+        /*for (int i = 0; i < 90; i++){
             //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
             String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
             });
-        }
+        }*/
 
     }
 }
