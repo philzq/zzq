@@ -91,8 +91,8 @@ public class HttpClient {
         T result = null;
         try {
             Request request = new Request.Builder().url(url).headers(toHeader(header))
-                    .post(RequestBody.create(jsonMediaType, param instanceof String ? (String) param :
-                            Objects.requireNonNull(JacksonUtil.toJSon(param)))).build();
+                    .post(RequestBody.create(param instanceof String ? (String) param :
+                            Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
             if (ObjectUtils.isNotEmpty(response.body())) {
