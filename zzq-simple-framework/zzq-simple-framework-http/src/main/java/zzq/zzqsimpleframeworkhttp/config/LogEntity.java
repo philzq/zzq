@@ -108,7 +108,6 @@ class LogEntity {
      */
     public static void printfFinallyLog() {
         //打印日志
-        //输出日志
         logger.info(HttpLogThreadLocal.logEntityTransmittableThreadLocal.get().getLog().toString());
         HttpLogThreadLocal.remove();
     }
