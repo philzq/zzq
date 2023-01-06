@@ -24,7 +24,7 @@ public class OkHttpClientProperties {
     private int maxRequests = 200;// 最大请求数据
 
     @Builder.Default
-    private int maxRequestsPerHost = 200; // 每台主机的最大并发数
+    private int maxRequestsPerHost = 50; // 每台主机的最大并发数
 
     @Builder.Default
     private long connectTimeout = 10; // 链接超时时间，单位s
