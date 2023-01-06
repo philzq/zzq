@@ -19,7 +19,7 @@ public class JacksonUtil {
     /**
      * 配置ObjectMapper对象
      */
-    private static ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper;
 
     static {
         objectMapper = new JacksonConfigure().objectMapper();
