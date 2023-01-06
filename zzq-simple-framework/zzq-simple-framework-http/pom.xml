@@ -60,5 +60,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>1.8.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 </project>
