@@ -1,16 +1,14 @@
 package zzq.zzqsimpleframeworkhttpclient.test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
-import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author zhouzhiqiang
@@ -19,13 +17,13 @@ import java.util.concurrent.Executors;
  */
 @Service
 public class TestHttpClientServiceTest {
-    
+
     @Autowired
     @Qualifier("testHttpClient")
     private HttpClient httpClient;
-    
+
     @PostConstruct
-    public void test(){
+    public void test() {
         //这里写了一堆url，只是便于测试，最终只会用最后一个，自行注释掉其他的来测试
         /*Request request = new Request.Builder()
                 .url("http://asdfasdfasdfasfe333333.com/") //可以测试dns问题
@@ -40,7 +38,7 @@ public class TestHttpClientServiceTest {
                 .header("Accept-Encoding", "gzip, deflate")
                 .build();*/
 
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        /*ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 90; i++) {
             executorService.execute(new Runnable() {
                 @Override
@@ -51,6 +49,13 @@ public class TestHttpClientServiceTest {
                     //httpClient.getOkHttpClient().newCall(request).cancel();
                 }
             });
-        }
+        }*/
+        Map<String, String> header = new HashMap<>();
+        header.put("head1", "head1");
+        header.put("head2", "head2");
+        header.put("head3", "head3");
+        //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+        String response = httpClient.post("http://httpstat.us/200", null, header, new TypeReference<String>() {
+        });
     }
 }
