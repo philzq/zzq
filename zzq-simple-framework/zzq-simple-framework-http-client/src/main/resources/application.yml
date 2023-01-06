@@ -1,0 +1,18 @@
+server:
+  port: 9964
+
+# DATABASE CONFIG
+spring:
+  application:
+    name: zzq-simple-framework-json-client
+
+httpclient:
+    pool:
+      test:
+        maxIdleConnections: 100
+        maxRequests: 100
+        maxRequestsPerHost: 100
+        connectTimeout: 10
+        readTimeout: 10
+        writeTimeout: 10
+

@@ -21,6 +21,7 @@
         <module>zzq-simple-framework-json</module>
         <module>zzq-simple-framework-json-client</module>
         <module>zzq-simple-framework-http</module>
+        <module>zzq-simple-framework-http-client</module>
     </modules>
 
 
