@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 /**
  * 日志实体
@@ -25,12 +24,6 @@ import java.util.UUID;
 class LogEntity {
 
     private final static Logger logger = LoggerFactory.getLogger(LogEntity.class);
-
-    /**
-     * 当前请求的id
-     */
-    @Builder.Default
-    private String traceID = UUID.randomUUID().toString();
 
     /**
      * 记录当前请求事件中的开始时间 --- 用于输出各个时段的时间信息
@@ -71,7 +64,6 @@ class LogEntity {
                 ("canceled".equals(content) && 0 == logEntity.getStartTime())) {//EventListener 最先执行，用于触发收集动作
             logEntity.setStartTime(System.currentTimeMillis());
             logEntity.setCollectLog(true);
-            addLog("okHTTPLog【traceID】" + logEntity.getTraceID(), false, logEntity);
         }
         if (logEntity.isCollectLog()) {
             addLog(content, outputTimeCycle, logEntity);
