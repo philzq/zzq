@@ -33,7 +33,7 @@ class InterceptorDemo {
                 @Override
                 public void run() {
                     //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-                    String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
+                    String response = httpClient.post("http://httpstat.us/200", new TypeReference<String>() {
                     });
                     //httpClient.getOkHttpClient().newCall(request).cancel();
                 }
