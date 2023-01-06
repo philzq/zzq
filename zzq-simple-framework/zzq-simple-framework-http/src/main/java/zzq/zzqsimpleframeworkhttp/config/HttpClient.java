@@ -3,7 +3,6 @@ package zzq.zzqsimpleframeworkhttp.config;
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
@@ -77,7 +76,7 @@ public class HttpClient {
             }
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (ObjectUtils.isNotEmpty(response.body())) {
+            if (response.body() != null) {
                 String body = response.body().string();
                 result = JacksonUtil.parseJson(body, typeReference);
             }
@@ -95,7 +94,7 @@ public class HttpClient {
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (ObjectUtils.isNotEmpty(response.body())) {
+            if (response.body() != null ) {
                 String body = response.body().string();
                 result = JacksonUtil.parseJson(body, typeReference);
             }
@@ -114,7 +113,7 @@ public class HttpClient {
                     .post(build.build()).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (ObjectUtils.isNotEmpty(response.body())) {
+            if (response.body() != null) {
                 String body = response.body().string();
                 result = JacksonUtil.parseJson(body, typeReference);
             }
