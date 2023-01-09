@@ -87,8 +87,9 @@ public class AESUtil {
         return ivSpec;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String[] keys = GetKeys();
+        System.out.println("key:" + keys[0] + ",iv:" + keys[1]);
         String aesEncrypt = AESEncrypt("ZZQ", keys[0], keys[1]);
         String aesDecrypt = AESDecrypt(aesEncrypt, keys[0], keys[1]);
         System.out.println(aesEncrypt);
