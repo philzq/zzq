@@ -16,13 +16,28 @@ import java.util.Map;
  * @date 2023-01-06 11:30
  */
 @Service
-public class TestHttpClientServiceTest {
+public class TestHttpClientService {
 
     @Autowired
     @Qualifier("testHttpClient")
     private HttpClient httpClient;
 
-    @PostConstruct
+    public String getOK() {
+        Map<String, String> header = new HashMap<>();
+        header.put("head1", "head1");
+        header.put("head2", "head2");
+        header.put("head3", "head3");
+        Map<String, String> params = new HashMap<>();
+        params.put("param1", "param1");
+        params.put("param2", "param2");
+        params.put("param3", "param3");
+        //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+        String response = httpClient.post("http://httpstat.us/200?time=" + System.currentTimeMillis(), params, header, new TypeReference<String>() {
+        });
+        return response;
+    }
+
+    //@PostConstruct
     public void test() {
         //这里写了一堆url，只是便于测试，最终只会用最后一个，自行注释掉其他的来测试
         /*Request request = new Request.Builder()
