@@ -2,7 +2,7 @@ package zzq.zzqsimpleframeworkjsonclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import zzq.zzqsimpleframeworkjson.config.EnableJackson;
+import zzq.zzqsimpleframeworkjson.config.EnableJacksonConfigure;
 
 /**
  * @author zhouzhiqiang
@@ -10,7 +10,7 @@ import zzq.zzqsimpleframeworkjson.config.EnableJackson;
  * @date 2023-01-04 14:06
  */
 @SpringBootApplication
-@EnableJackson
+@EnableJacksonConfigure
 public class ZzqSimpleFrameworkJsonClientApplication {
 
     public static void main(String[] args) {
