@@ -55,21 +55,23 @@ class LogEntity {
      * 不记录打印日志所处的时长，用于输出HttpLoggingInterceptor日志
      */
     public static void collectLogWithTimeCycle(String content, boolean outputTimeCycle) {
+        if (content == null) {
+            return;
+        }
         LogEntity logEntity = HttpLogThreadLocal.logEntityTransmittableThreadLocal.get();
         //All start/connect/acquire events will eventually receive a matching end/release event
         //https://square.github.io/okhttp/4.x/okhttp/okhttp3/-event-listener/
         // 所以此处的日志收集从callStart开始，callFailed和callEnd结束，
         // canceled是特殊场景特殊处理
-        if ("callStart".equals(content) || 
-                ("canceled".equals(content) && 0 == logEntity.getStartTime())) {//EventListener 最先执行，用于触发收集动作
+        if (content.startsWith("callStart")) {//EventListener 最先执行，用于触发收集动作
             logEntity.setStartTime(System.currentTimeMillis());
             logEntity.setCollectLog(true);
         }
         if (logEntity.isCollectLog()) {
             addLog(content, outputTimeCycle, logEntity);
-            if ("callFailed".equals(content)
-                    || "callEnd".equals(content)
-                    || "canceled".equals(content)
+            if (
+                    content.startsWith("callFailed")
+                            || content.startsWith("callEnd")
             ) {
                 printfFinallyLog();
             }

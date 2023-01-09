@@ -19,33 +19,33 @@ class CustomEventListener extends EventListener {
 
     @Override
     public void callStart(Call call) {
-        LogEntity.collectLog("callStart");
+        LogEntity.collectLog("callStart:" + call.request());
     }
 
     @Override
     public void proxySelectStart(Call call, HttpUrl url) {
-        LogEntity.collectLog("proxySelectStart");
+        LogEntity.collectLog("proxySelectStart:" + url);
     }
 
     @Override
     public void proxySelectEnd(Call call, HttpUrl url, List<Proxy> proxies) {
-        LogEntity.collectLog("proxySelectEnd");
+        LogEntity.collectLog("proxySelectEnd:" + proxies);
     }
 
     @Override
     public void dnsStart(Call call, String domainName) {
-        LogEntity.collectLog("dnsStart");
+        LogEntity.collectLog("dnsStart:" + domainName);
     }
 
     @Override
     public void dnsEnd(Call call, String domainName, List<InetAddress> inetAddressList) {
-        LogEntity.collectLog("dnsEnd");
+        LogEntity.collectLog("dnsEnd:" + inetAddressList);
     }
 
     @Override
     public void connectStart(
             Call call, InetSocketAddress inetSocketAddress, Proxy proxy) {
-        LogEntity.collectLog("connectStart");
+        LogEntity.collectLog("connectStart:" + inetSocketAddress + " " + proxy);
     }
 
     @Override
@@ -61,18 +61,18 @@ class CustomEventListener extends EventListener {
     @Override
     public void connectEnd(
             Call call, InetSocketAddress inetSocketAddress, Proxy proxy, Protocol protocol) {
-        LogEntity.collectLog("connectEnd");
+        LogEntity.collectLog("connectEnd:" + protocol);
     }
 
     @Override
     public void connectFailed(Call call, InetSocketAddress inetSocketAddress, Proxy proxy,
                               Protocol protocol, IOException ioe) {
-        LogEntity.collectLog("connectFailed");
+        LogEntity.collectLog("connectFailed:" + protocol + " " + ioe);
     }
 
     @Override
     public void connectionAcquired(Call call, Connection connection) {
-        LogEntity.collectLog("connectionAcquired");
+        LogEntity.collectLog("connectionAcquired:" + connection);
     }
 
 
@@ -99,12 +99,12 @@ class CustomEventListener extends EventListener {
 
     @Override
     public void requestBodyEnd(Call call, long byteCount) {
-        LogEntity.collectLog("requestBodyEnd");
+        LogEntity.collectLog("requestBodyEnd: byteCount=" + byteCount);
     }
 
     @Override
     public void requestFailed(Call call, IOException ioe) {
-        LogEntity.collectLog("requestFailed");
+        LogEntity.collectLog("requestFailed:" + ioe);
     }
 
     @Override
@@ -114,7 +114,7 @@ class CustomEventListener extends EventListener {
 
     @Override
     public void responseHeadersEnd(Call call, Response response) {
-        LogEntity.collectLog("responseHeadersEnd");
+        LogEntity.collectLog("responseHeadersEnd:" + response);
     }
 
     @Override
@@ -124,12 +124,12 @@ class CustomEventListener extends EventListener {
 
     @Override
     public void responseBodyEnd(Call call, long byteCount) {
-        LogEntity.collectLog("responseBodyEnd");
+        LogEntity.collectLog("responseBodyEnd:byteCount=" + byteCount);
     }
 
     @Override
     public void responseFailed(Call call, IOException ioe) {
-        LogEntity.collectLog("responseFailed");
+        LogEntity.collectLog("responseFailed:" + ioe);
     }
 
     @Override
@@ -139,11 +139,6 @@ class CustomEventListener extends EventListener {
 
     @Override
     public void callFailed(Call call, IOException ioe) {
-        LogEntity.collectLog("callFailed");
-    }
-
-    @Override
-    public void canceled(Call call) {
-        LogEntity.collectLog("canceled");
+        LogEntity.collectLog("callFailed:" + ioe);
     }
 }
