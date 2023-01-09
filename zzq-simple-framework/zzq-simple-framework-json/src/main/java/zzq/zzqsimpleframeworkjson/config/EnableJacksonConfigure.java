@@ -19,5 +19,5 @@ import java.lang.annotation.*;
 @Inherited
 @AutoConfigurationPackage
 @Import({JacksonConfigure.class})
-public @interface EnableJackson {
+public @interface EnableJacksonConfigure {
 }
