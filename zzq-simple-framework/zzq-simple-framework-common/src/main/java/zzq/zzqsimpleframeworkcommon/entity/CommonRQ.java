@@ -18,16 +18,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CommonRQ<T> {
 
-    private HeadRQ head;
-
     /**
      * 数据对象
      */
     private T data;
-
-    @Data
-    public static class HeadRQ {
-
-    }
 
 }

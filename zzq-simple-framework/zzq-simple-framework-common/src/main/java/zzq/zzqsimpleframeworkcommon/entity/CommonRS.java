@@ -18,7 +18,20 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CommonRS<T> {
 
-    private HeadRS head;
+    /**
+     * 通用code
+     */
+    private int code;
+
+    /**
+     * 业务code
+     */
+    private int businessCode;
+
+    /**
+     * 消息
+     */
+    private String message;
 
     /**
      * 数据对象
@@ -31,7 +44,7 @@ public class CommonRS<T> {
      * @return 成功消息
      */
     public static CommonRS<Object> success() {
-        return CommonRS.success("操作成功");
+        return CommonRS.success(HttpStatus.SUCCESS.getMessage());
     }
 
     /**
@@ -40,7 +53,7 @@ public class CommonRS<T> {
      * @return 成功消息
      */
     public static <R> CommonRS<R> success(R data) {
-        return CommonRS.success("操作成功", data);
+        return CommonRS.success(HttpStatus.SUCCESS.getMessage(), data);
     }
 
     /**
@@ -61,10 +74,11 @@ public class CommonRS<T> {
      * @return 成功消息
      */
     public static <R> CommonRS<R> success(String msg, R data) {
-        HeadRS headRS = new HeadRS();
-        headRS.setCode(HttpStatus.SUCCESS);
-        headRS.setMsg(msg);
-        return new CommonRS<R>(headRS, data);
+        CommonRS<R> rCommonRS = new CommonRS<>();
+        rCommonRS.setCode(HttpStatus.SUCCESS.getCode());
+        rCommonRS.setMessage(msg);
+        rCommonRS.setData(data);
+        return rCommonRS;
     }
 
     /**
@@ -73,7 +87,7 @@ public class CommonRS<T> {
      * @return
      */
     public static CommonRS<Object> error() {
-        return CommonRS.error("操作失败");
+        return CommonRS.error(HttpStatus.ERROR.getMessage());
     }
 
     /**
@@ -94,10 +108,11 @@ public class CommonRS<T> {
      * @return 警告消息
      */
     public static <R> CommonRS<R> error(String msg, R data) {
-        HeadRS headRS = new HeadRS();
-        headRS.setCode(HttpStatus.ERROR);
-        headRS.setMsg(msg);
-        return new CommonRS<R>(headRS, data);
+        CommonRS<R> rCommonRS = new CommonRS<>();
+        rCommonRS.setCode(HttpStatus.ERROR.getCode());
+        rCommonRS.setMessage(msg);
+        rCommonRS.setData(data);
+        return rCommonRS;
     }
 
     /**
@@ -107,25 +122,10 @@ public class CommonRS<T> {
      * @param msg  返回内容
      * @return 警告消息
      */
-    public static CommonRS<Object> error(int code, String msg) {
-        HeadRS headRS = new HeadRS();
-        headRS.setCode(code);
-        headRS.setMsg(msg);
-        return new CommonRS<>(headRS, null);
-    }
-
-    @Data
-    public static class HeadRS {
-
-        /**
-         * 状态码
-         */
-        private int code = HttpStatus.SUCCESS;
-
-        /**
-         * 返回内容
-         */
-        private String msg = "操作成功";
-
+    public static <R> CommonRS<R> error(int code, String msg) {
+        CommonRS<R> rCommonRS = new CommonRS<>();
+        rCommonRS.setCode(code);
+        rCommonRS.setMessage(msg);
+        return rCommonRS;
     }
 }

@@ -1,6 +1,7 @@
 package zzq.zzqsimpleframeworkcommon.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +21,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class KafkaMessageRS<T> {
 
-    private KafkaMessageHead head;
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
 
     /**
      * 消息内容
@@ -36,17 +38,10 @@ public class KafkaMessageRS<T> {
      * @return
      */
     public static <T> KafkaMessageRS<T> getInstall(T data) {
-        KafkaMessageHead kafkaMessageHead = new KafkaMessageHead();
         KafkaMessageRS<T> kafkaMessageRS = new KafkaMessageRS<>();
-        kafkaMessageRS.setHead(kafkaMessageHead);
         kafkaMessageRS.setData(data);
         return kafkaMessageRS;
     }
 
-    @Data
-    public static class KafkaMessageHead {
-        private String id = UUID.randomUUID().toString();
-
-    }
 
 }
