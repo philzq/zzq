@@ -44,8 +44,8 @@ class InterceptorDemo {
             String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
             });
         }*/
-        String response = httpClient.post("http://httpstat.us/200", new TypeReference<String>() {
-        });
+        String response = httpClient.post("http://httpstat.us/200");
+        System.out.println(response);
 
     }
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class HttpClient {
 
-    private final static Logger logger = LoggerFactory.getLogger(HttpClient.class);
+    private final Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
     private OkHttpClientProperties okHttpClientProperties;
 
@@ -58,8 +58,8 @@ public class HttpClient {
         return Headers.of(header);
     }
 
-    private <T> T getToResponse(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
-        T result = null;
+    private String getToResponse(String url, Map<String, String> param, Map<String, String> header) {
+        String rs = null;
         try {
             Request request;
             Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header));
@@ -76,36 +76,30 @@ public class HttpClient {
             }
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (response.body() != null) {
-                String body = response.body().string();
-                result = JacksonUtil.parseJson(body, typeReference);
-            }
+            rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
         }
-        return result;
+        return rs;
     }
 
-    private <T> T postToResponse(String url, Object param, Map<String, String> header, TypeReference<T> typeReference) {
-        T result = null;
+    private String postToResponse(String url, Object param, Map<String, String> header) {
+        String rs = null;
         try {
             Request request = new Request.Builder().url(url).headers(toHeader(header))
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (response.body() != null ) {
-                String body = response.body().string();
-                result = JacksonUtil.parseJson(body, typeReference);
-            }
+            rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
         }
-        return result;
+        return rs;
     }
 
-    private <T> T postToResponseByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
-        T result = null;
+    private String postToResponseByForm(String url, Map<String, String> param, Map<String, String> header) {
+        String rs = null;
         try {
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
@@ -113,12 +107,36 @@ public class HttpClient {
                     .post(build.build()).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
-            if (response.body() != null) {
-                String body = response.body().string();
-                result = JacksonUtil.parseJson(body, typeReference);
-            }
+            rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
+        }
+        return rs;
+    }
+
+    private <T> T getToResponse(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+        T result = null;
+        String toResponse = getToResponse(url, param, header);
+        if (toResponse != null) {
+            result = JacksonUtil.parseJson(toResponse, typeReference);
+        }
+        return result;
+    }
+
+    private <T> T postToResponse(String url, Object param, Map<String, String> header, TypeReference<T> typeReference) {
+        T result = null;
+        String postToResponse = postToResponse(url, param, header);
+        if (postToResponse != null) {
+            result = JacksonUtil.parseJson(postToResponse, typeReference);
+        }
+        return result;
+    }
+
+    private <T> T postToResponseByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+        T result = null;
+        String postToResponseByForm = postToResponseByForm(url, param, header);
+        if (postToResponseByForm != null) {
+            result = JacksonUtil.parseJson(postToResponseByForm, typeReference);
         }
         return result;
     }
@@ -161,5 +179,38 @@ public class HttpClient {
     public <T> T postByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
         T t = postToResponseByForm(url, param, header, typeReference);
         return t;
+    }
+
+    public String get(String url) {
+        return getToResponse(url, null, null);
+    }
+
+    public String get(String url, Map<String, String> param) {
+        return getToResponse(url, param, null);
+    }
+
+    public String get(String url, Map<String, String> param, Map<String, String> header) {
+        return getToResponse(url, param, header);
+    }
+
+    public String post(String url) {
+        return postToResponse(url, null, null);
+    }
+
+    public String post(String url, Object param) {
+        return postToResponse(url, param, null);
+    }
+
+    public String post(String url, Object param, Map<String, String> header) {
+        return postToResponse(url, param, header);
+    }
+
+
+    public String postByForm(String url, Map<String, String> param) {
+        return postToResponseByForm(url, param, null);
+    }
+
+    public String postByForm(String url, Map<String, String> param, Map<String, String> header) {
+        return postToResponseByForm(url, param, header);
     }
 }
