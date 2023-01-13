@@ -1,12 +1,9 @@
 package zzq.zzqsimpleframeworkhttpclient.test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import zzq.zzqsimpleframeworkhttp.config.HttpClient;
+import zzq.zzqsimpleframeworkhttpclient.util.HttpClientUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +15,6 @@ import java.util.Map;
 @Service
 public class TestHttpClientService {
 
-    @Autowired
-    @Qualifier("testHttpClient")
-    private HttpClient httpClient;
 
     public String getOK() {
         Map<String, String> header = new HashMap<>();
@@ -32,7 +26,7 @@ public class TestHttpClientService {
         params.put("param2", "param2");
         params.put("param3", "param3");
         //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-        String response = httpClient.get("http://localhost:9964/testHttpClient/testOk?time=" + System.currentTimeMillis(), params, header);
+        String response = HttpClientUtils.testHttpClient.get("http://localhost:9964/testHttpClient/testOk?time=" + System.currentTimeMillis(), params, header);
         return response;
     }
 
@@ -69,7 +63,7 @@ public class TestHttpClientService {
         header.put("head2", "head2");
         header.put("head3", "head3");
         //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-        String response = httpClient.post("http://httpstat.us/200", null, header, new TypeReference<String>() {
+        String response = HttpClientUtils.testHttpClient.post("http://httpstat.us/200", null, header, new TypeReference<String>() {
         });
     }
 }

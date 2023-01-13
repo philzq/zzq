@@ -36,70 +36,30 @@ http://httpstat.us/502
 
 ## 使用方法
 一、配置OkHttpClientProperties和HttpClient
-```yaml
-httpclient:
-    pool:
-      test:
-        maxIdleConnections: 100
-        maxRequests: 100    #只对异步请求生效
-        maxRequestsPerHost: 100    #只对异步请求生效
-        connectTimeout: 10
-        readTimeout: 10
-        writeTimeout: 10
-```
 ```java
-@Configuration
-public class TestHttpClientConfig {
-    
-    @ConfigurationProperties("httpclient.pool.test")
-    @Bean("testOkHttpClientProperties")
-    public OkHttpClientProperties okHttpClientProperties(){
-        return OkHttpClientProperties.builder().build();
-    }
+public class HttpClientUtils {
 
-    @Bean("testHttpClient")
-    public HttpClient httpClient(@Qualifier("testOkHttpClientProperties") OkHttpClientProperties okHttpClientProperties){
-        return new HttpClient(okHttpClientProperties);
-    }
+    public static final HttpClient testHttpClient = new HttpClient(100);
+
+
 }
 ```
 
 二、使用
 ```java
-    @Autowired
-    @Qualifier("testHttpClient")
-    private HttpClient httpClient;
-    
-    @PostConstruct
-    public void test(){
-        //这里写了一堆url，只是便于测试，最终只会用最后一个，自行注释掉其他的来测试
-        /*Request request = new Request.Builder()
-                .url("http://asdfasdfasdfasfe333333.com/") //可以测试dns问题
-                //.url("https://self-signed.badssl.com/") //可以用原生的okhttpclient测试假证书问题
-                //.url("http://httpstat.us/500?sleep=5000") //测试延时
-                //.url("http://httpstat.us/404")
-                //.url("http://httpstat.us/502")
-                .url("https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d")
-                .url("https://www.baidu.com")
-                .url("http://httpstat.us/200")
-                .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
-                .header("Accept-Encoding", "gzip, deflate")
-                .build();*/
-
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < 90; i++) {
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-                    String response = httpClient.post("http://httpstat.us/200", new TypeReference<String>() {
-                    });
-                    //httpClient.getOkHttpClient().newCall(request).cancel();
-                }
-            });
-        }
-    }
-
+public String getOK() {
+    Map<String, String> header = new HashMap<>();
+    header.put("head1", "head1");
+    header.put("head2", "head2");
+    header.put("head3", "head3");
+    Map<String, String> params = new HashMap<>();
+    params.put("param1", "param1");
+    params.put("param2", "param2");
+    params.put("param3", "param3");
+    //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+    String response = HttpClientUtils.testHttpClient.get("http://httpstat.us/200?time=" + System.currentTimeMillis(), params, header);
+    return response;
+}
  ```
 
 三、使用newBuilder基于原有OkHttpClient自定义配置，如代理

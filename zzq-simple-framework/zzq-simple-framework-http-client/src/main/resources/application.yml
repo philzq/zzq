@@ -44,13 +44,4 @@ spring:
   application:
     name: zzq-simple-framework-json-client
 
-httpclient:
-    pool:
-      test:
-        maxIdleConnections: 1
-        maxRequests: 5
-        maxRequestsPerHost: 5
-        connectTimeout: 10
-        readTimeout: 10
-        writeTimeout: 10
 
