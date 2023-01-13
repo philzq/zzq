@@ -25,9 +25,8 @@ class SyncDemo {
         //OkHttp好用的地方，可以直接复用之前定义好的对象，从而减少编码量，
         //如：request里有大量设置，而新的对象我只想改下url其他不变
         var request2 = request.newBuilder().url("http://httpstat.us/200").build();
-
-        OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
-        HttpClient httpClient = new HttpClient(okHttpClientProperties);
+        
+        HttpClient httpClient = new HttpClient(100);
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
         try {

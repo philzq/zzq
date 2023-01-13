@@ -17,28 +17,61 @@ public class HttpClient {
 
     private final Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
-    private OkHttpClientProperties okHttpClientProperties;
-
     private OkHttpClient okHttpClient;
 
-    public HttpClient(OkHttpClientProperties okHttpClientProperties) {
+    /**
+     * @param maxIdleConnections 最大连接数
+     */
+    public HttpClient(int maxIdleConnections) {
+        this(maxIdleConnections, 15);
+    }
+
+    /**
+     * @param maxIdleConnections 最大连接数
+     * @param keepAlive          连接保持时长，单位秒
+     */
+    public HttpClient(int maxIdleConnections, long keepAlive) {
+        this(maxIdleConnections, keepAlive, 10, 10, 10);
+    }
+
+    /**
+     * @param maxIdleConnections 最大连接数
+     * @param keepAlive          连接保持时长，单位秒
+     * @param connectTimeout     链接超时时间
+     * @param readTimeout        读超时时间
+     * @param writeTimeout       写超时时间
+     */
+    public HttpClient(int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout) {
+        this(maxIdleConnections, keepAlive, connectTimeout, readTimeout, writeTimeout, 64, 5);
+    }
+
+    /**
+     * @param maxIdleConnections 最大连接数
+     * @param keepAlive          连接保持时长，单位秒
+     * @param connectTimeout     链接超时时间
+     * @param readTimeout        读超时时间
+     * @param writeTimeout       写超时时间
+     * @param maxRequests        最大线程数，异步调用场景才用的到（同步调用可不关注）
+     * @param maxRequestsPerHost 每台主机的最大并发数,只对异步请求生效 （同步调用可不关注）
+     */
+    public HttpClient(int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout, int maxRequests, int maxRequestsPerHost) {
         Dispatcher dispatcher = new Dispatcher();
-        dispatcher.setMaxRequests(okHttpClientProperties.getMaxRequests());
-        dispatcher.setMaxRequestsPerHost(okHttpClientProperties.getMaxRequestsPerHost());
+        dispatcher.setMaxRequests(maxRequests);
+        dispatcher.setMaxRequestsPerHost(maxRequestsPerHost);
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(content -> LogEntity.collectLogWithTimeCycle(content, false));
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
 
-        ConnectionPool connectionPool = new ConnectionPool(okHttpClientProperties.getMaxIdleConnections(), 15, TimeUnit.SECONDS);
+        ConnectionPool connectionPool = new ConnectionPool(maxIdleConnections, keepAlive, TimeUnit.SECONDS);
 
         okHttpClient = new OkHttpClient().newBuilder()
                 .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
                 .dispatcher(dispatcher)
                 .addInterceptor(httpLoggingInterceptor)
                 .eventListener(new CustomEventListener())
-                .connectTimeout(Duration.ofSeconds(okHttpClientProperties.getConnectTimeout()))// default 10s
-                .readTimeout(Duration.ofSeconds(okHttpClientProperties.getReadTimeout()))// default 10s
-                .writeTimeout(Duration.ofSeconds(okHttpClientProperties.getWriteTimeout()))// default 10s
+                .connectTimeout(Duration.ofSeconds(connectTimeout))// default 10s
+                .readTimeout(Duration.ofSeconds(readTimeout))// default 10s
+                .writeTimeout(Duration.ofSeconds(writeTimeout))// default 10s
                 .sslSocketFactory(IgnoreTsl.SOCKET_FACTORY, IgnoreTsl.TRUST_ALL_MANAGER)
                 .hostnameVerifier((hostname, session) -> true)
                 .retryOnConnectionFailure(false)

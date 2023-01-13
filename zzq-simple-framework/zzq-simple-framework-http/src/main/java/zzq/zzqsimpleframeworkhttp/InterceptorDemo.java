@@ -24,8 +24,7 @@ class InterceptorDemo {
                 .header("Accept-Encoding", "gzip, deflate")
                 .build();
 
-        OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
-        var httpClient = new HttpClient(okHttpClientProperties);
+        var httpClient = new HttpClient(100);
 
         /*ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 90; i++) {

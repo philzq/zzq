@@ -18,9 +18,8 @@ class AsyncDemo {
                 .url("http://httpstat.us/200")
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .build();
-
-        OkHttpClientProperties okHttpClientProperties = OkHttpClientProperties.builder().build();
-        HttpClient httpClient = new HttpClient(okHttpClientProperties);
+        
+        HttpClient httpClient = new HttpClient(15);
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
         Call call = httpClient.getOkHttpClient().newCall(request);
