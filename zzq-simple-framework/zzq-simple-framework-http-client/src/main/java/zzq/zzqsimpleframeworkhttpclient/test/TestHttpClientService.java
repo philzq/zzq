@@ -32,8 +32,7 @@ public class TestHttpClientService {
         params.put("param2", "param2");
         params.put("param3", "param3");
         //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-        String response = httpClient.post("http://httpstat.us/200?time=" + System.currentTimeMillis(), params, header, new TypeReference<String>() {
-        });
+        String response = httpClient.get("http://localhost:9964/testHttpClient/testOk?time=" + System.currentTimeMillis(), params, header);
         return response;
     }
 

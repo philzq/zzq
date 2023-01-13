@@ -47,9 +47,9 @@ spring:
 httpclient:
     pool:
       test:
-        maxIdleConnections: 100
-        maxRequests: 100
-        maxRequestsPerHost: 100
+        maxIdleConnections: 1
+        maxRequests: 5
+        maxRequestsPerHost: 5
         connectTimeout: 10
         readTimeout: 10
         writeTimeout: 10

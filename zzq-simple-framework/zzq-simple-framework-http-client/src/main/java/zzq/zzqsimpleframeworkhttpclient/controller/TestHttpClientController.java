@@ -19,8 +19,21 @@ public class TestHttpClientController {
     private TestHttpClientService testHttpClientService;
 
     @GetMapping("getOK")
-    public String getOK(){
+    public String getOK() {
         String ok = testHttpClientService.getOK();
-        return ok;
+        return "zzq" + ok;
     }
+
+    @GetMapping("testOk")
+    public String testOk() {
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("testOkhahaha:" + Thread.currentThread().getId());
+        return "zzqtest" + Thread.currentThread().getId();
+    }
+
+
 }
