@@ -39,7 +39,7 @@ http://httpstat.us/502
 ```java
 public class HttpClientUtils {
 
-    public static final HttpClient testHttpClient = new HttpClient(100);
+    public static final HttpClient testHttpClient = new HttpClient("http://httpstat.us/", 100);
 
 
 }
@@ -47,19 +47,19 @@ public class HttpClientUtils {
 
 二、使用
 ```java
-public String getOK() {
-    Map<String, String> header = new HashMap<>();
-    header.put("head1", "head1");
-    header.put("head2", "head2");
-    header.put("head3", "head3");
-    Map<String, String> params = new HashMap<>();
-    params.put("param1", "param1");
-    params.put("param2", "param2");
-    params.put("param3", "param3");
-    //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-    String response = HttpClientUtils.testHttpClient.get("http://httpstat.us/200?time=" + System.currentTimeMillis(), params, header);
-    return response;
-}
+    public String getOK() {
+        Map<String, String> header = new HashMap<>();
+        header.put("head1", "head1");
+        header.put("head2", "head2");
+        header.put("head3", "head3");
+        Map<String, String> params = new HashMap<>();
+        params.put("param1", "param1");
+        params.put("param2", "param2");
+        params.put("param3", "param3");
+        //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
+        String response = HttpClientUtils.testHttpClient.get("200?time=" + System.currentTimeMillis(), params, header);
+        return response;
+    }
  ```
 
 三、使用newBuilder基于原有OkHttpClient自定义配置，如代理
@@ -70,11 +70,11 @@ httpClient.getOkHttpClient().newBuilder().proxy(null).build();
 ## 注意
 如果是响应是json结构的请求
  ```java
-Object response = httpClient.post("http://httpstat.us/200", new TypeReference<Object>() {
+Object response = httpClient.post("200", new TypeReference<Object>() {
                     });
  ```
 如果不是json结构的请求
 ```java
-String response = httpClient.post("http://httpstat.us/200");
+String response = httpClient.post("200");
  ```
  
