@@ -106,4 +106,15 @@ public class TestHttpClientConfig {
  ```java
 httpClient.getOkHttpClient().newBuilder().proxy(null).build();
  ```
+
+## 注意
+如果是响应是json结构的请求
+ ```java
+Object response = httpClient.post("http://httpstat.us/200", new TypeReference<Object>() {
+                    });
+ ```
+如果不是json结构的请求
+```java
+String response = httpClient.post("http://httpstat.us/200");
+ ```
  
