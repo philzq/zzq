@@ -1,6 +1,9 @@
 package zzq.zzqsimpleframeworkhttp;
 
-import okhttp3.*;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 
 import java.io.IOException;
@@ -17,8 +20,8 @@ class AsyncDemo {
                 .url("http://httpstat.us/200")
                 .header("Accept", "application/json")  //测试httpstat.us时需要加这个，不然获取到的body是空
                 .build();
-        
-        HttpClient httpClient = new HttpClient(15);
+
+        HttpClient httpClient = new HttpClient("http://httpstat.us/", 15);
         //httpClient = new OkHttpClient(); //原生client，默认会校验证书
 
         Call call = httpClient.getOkHttpClient().newCall(request);

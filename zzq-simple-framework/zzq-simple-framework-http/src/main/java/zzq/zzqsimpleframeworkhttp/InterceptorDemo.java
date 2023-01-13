@@ -19,7 +19,7 @@ class InterceptorDemo {
                 .header("Accept-Encoding", "gzip, deflate")
                 .build();
 
-        var httpClient = new HttpClient(100);
+        var httpClient = new HttpClient("http://httpstat.us/", 100);
 
         /*ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 90; i++) {
@@ -38,7 +38,7 @@ class InterceptorDemo {
             String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
             });
         }*/
-        String response = httpClient.post("http://httpstat.us/200");
+        String response = httpClient.post("200");
         System.out.println(response);
 
     }

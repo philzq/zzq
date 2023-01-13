@@ -5,6 +5,7 @@ import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
 
 import java.time.Duration;
@@ -17,21 +18,26 @@ public class HttpClient {
 
     private final Logger logger = LoggerFactory.getLogger(HttpClient.class);
 
-    private OkHttpClient okHttpClient;
+    private final OkHttpClient okHttpClient;
+
+    /**
+     * 请求url前缀，简化调用及防止HttpClient窜用
+     */
+    private final String hostName;
 
     /**
      * @param maxIdleConnections 最大连接数
      */
-    public HttpClient(int maxIdleConnections) {
-        this(maxIdleConnections, 15);
+    public HttpClient(String hostName, int maxIdleConnections) {
+        this(hostName, maxIdleConnections, 15);
     }
 
     /**
      * @param maxIdleConnections 最大连接数
      * @param keepAlive          连接保持时长，单位秒
      */
-    public HttpClient(int maxIdleConnections, long keepAlive) {
-        this(maxIdleConnections, keepAlive, 10, 10, 10);
+    public HttpClient(String hostName, int maxIdleConnections, long keepAlive) {
+        this(hostName, maxIdleConnections, keepAlive, 10, 10, 10);
     }
 
     /**
@@ -41,8 +47,8 @@ public class HttpClient {
      * @param readTimeout        读超时时间
      * @param writeTimeout       写超时时间
      */
-    public HttpClient(int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout) {
-        this(maxIdleConnections, keepAlive, connectTimeout, readTimeout, writeTimeout, 64, 5);
+    public HttpClient(String hostName, int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout) {
+        this(hostName, maxIdleConnections, keepAlive, connectTimeout, readTimeout, writeTimeout, 64, 5);
     }
 
     /**
@@ -54,7 +60,11 @@ public class HttpClient {
      * @param maxRequests        最大线程数，异步调用场景才用的到（同步调用可不关注）
      * @param maxRequestsPerHost 每台主机的最大并发数,只对异步请求生效 （同步调用可不关注）
      */
-    public HttpClient(int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout, int maxRequests, int maxRequestsPerHost) {
+    public HttpClient(String hostName, int maxIdleConnections, long keepAlive, long connectTimeout, long readTimeout, long writeTimeout, int maxRequests, int maxRequestsPerHost) {
+        if (hostName == null) {
+            throw new HttpClientException("hostName 不能为空！");
+        }
+        this.hostName = hostName;
         Dispatcher dispatcher = new Dispatcher();
         dispatcher.setMaxRequests(maxRequests);
         dispatcher.setMaxRequestsPerHost(maxRequestsPerHost);
@@ -91,9 +101,10 @@ public class HttpClient {
         return Headers.of(header);
     }
 
-    private String getToResponse(String url, Map<String, String> param, Map<String, String> header) {
+    private String getToResponse(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
         try {
+            String url = hostName + relativePath;
             Request request;
             Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header));
             if (param != null) {
@@ -116,9 +127,10 @@ public class HttpClient {
         return rs;
     }
 
-    private String postToResponse(String url, Object param, Map<String, String> header) {
+    private String postToResponse(String relativePath, Object param, Map<String, String> header) {
         String rs = null;
         try {
+            String url = hostName + relativePath;
             Request request = new Request.Builder().url(url).headers(toHeader(header))
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
@@ -131,9 +143,10 @@ public class HttpClient {
         return rs;
     }
 
-    private String postToResponseByForm(String url, Map<String, String> param, Map<String, String> header) {
+    private String postToResponseByForm(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
         try {
+            String url = hostName + relativePath;
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
             Request request = new Request.Builder().url(url).headers(toHeader(header))
@@ -147,103 +160,103 @@ public class HttpClient {
         return rs;
     }
 
-    private <T> T getToResponse(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+    private <T> T getToResponse(String relativePath, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
         T result = null;
-        String toResponse = getToResponse(url, param, header);
+        String toResponse = getToResponse(relativePath, param, header);
         if (toResponse != null) {
             result = JacksonUtil.parseJson(toResponse, typeReference);
         }
         return result;
     }
 
-    private <T> T postToResponse(String url, Object param, Map<String, String> header, TypeReference<T> typeReference) {
+    private <T> T postToResponse(String relativePath, Object param, Map<String, String> header, TypeReference<T> typeReference) {
         T result = null;
-        String postToResponse = postToResponse(url, param, header);
+        String postToResponse = postToResponse(relativePath, param, header);
         if (postToResponse != null) {
             result = JacksonUtil.parseJson(postToResponse, typeReference);
         }
         return result;
     }
 
-    private <T> T postToResponseByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+    private <T> T postToResponseByForm(String relativePath, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
         T result = null;
-        String postToResponseByForm = postToResponseByForm(url, param, header);
+        String postToResponseByForm = postToResponseByForm(relativePath, param, header);
         if (postToResponseByForm != null) {
             result = JacksonUtil.parseJson(postToResponseByForm, typeReference);
         }
         return result;
     }
 
-    public <T> T get(String url, TypeReference<T> typeReference) {
-        T result = getToResponse(url, null, null, typeReference);
+    public <T> T get(String relativePath, TypeReference<T> typeReference) {
+        T result = getToResponse(relativePath, null, null, typeReference);
         return result;
     }
 
-    public <T> T get(String url, Map<String, String> param, TypeReference<T> typeReference) {
-        T toResponse = getToResponse(url, param, null, typeReference);
+    public <T> T get(String relativePath, Map<String, String> param, TypeReference<T> typeReference) {
+        T toResponse = getToResponse(relativePath, param, null, typeReference);
         return toResponse;
     }
 
-    public <T> T get(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
-        T toResponse = getToResponse(url, param, header, typeReference);
+    public <T> T get(String relativePath, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+        T toResponse = getToResponse(relativePath, param, header, typeReference);
         return toResponse;
     }
 
-    public <T> T post(String url, TypeReference<T> typeReference) {
-        T postToResponse = postToResponse(url, null, null, typeReference);
+    public <T> T post(String relativePath, TypeReference<T> typeReference) {
+        T postToResponse = postToResponse(relativePath, null, null, typeReference);
         return postToResponse;
     }
 
-    public <T> T post(String url, Object param, TypeReference<T> typeReference) {
-        T t = postToResponse(url, param, null, typeReference);
+    public <T> T post(String relativePath, Object param, TypeReference<T> typeReference) {
+        T t = postToResponse(relativePath, param, null, typeReference);
         return t;
     }
 
-    public <T> T post(String url, Object param, Map<String, String> header, TypeReference<T> typeReference) {
-        T t = postToResponse(url, param, header, typeReference);
+    public <T> T post(String relativePath, Object param, Map<String, String> header, TypeReference<T> typeReference) {
+        T t = postToResponse(relativePath, param, header, typeReference);
         return t;
     }
 
-    public <T> T postByForm(String url, Map<String, String> param, TypeReference<T> typeReference) {
-        T t = postToResponseByForm(url, param, null, typeReference);
+    public <T> T postByForm(String relativePath, Map<String, String> param, TypeReference<T> typeReference) {
+        T t = postToResponseByForm(relativePath, param, null, typeReference);
         return t;
     }
 
-    public <T> T postByForm(String url, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
-        T t = postToResponseByForm(url, param, header, typeReference);
+    public <T> T postByForm(String relativePath, Map<String, String> param, Map<String, String> header, TypeReference<T> typeReference) {
+        T t = postToResponseByForm(relativePath, param, header, typeReference);
         return t;
     }
 
-    public String get(String url) {
-        return getToResponse(url, null, null);
+    public String get(String relativePath) {
+        return getToResponse(relativePath, null, null);
     }
 
-    public String get(String url, Map<String, String> param) {
-        return getToResponse(url, param, null);
+    public String get(String relativePath, Map<String, String> param) {
+        return getToResponse(relativePath, param, null);
     }
 
-    public String get(String url, Map<String, String> param, Map<String, String> header) {
-        return getToResponse(url, param, header);
+    public String get(String relativePath, Map<String, String> param, Map<String, String> header) {
+        return getToResponse(relativePath, param, header);
     }
 
-    public String post(String url) {
-        return postToResponse(url, null, null);
+    public String post(String relativePath) {
+        return postToResponse(relativePath, null, null);
     }
 
-    public String post(String url, Object param) {
-        return postToResponse(url, param, null);
+    public String post(String relativePath, Object param) {
+        return postToResponse(relativePath, param, null);
     }
 
-    public String post(String url, Object param, Map<String, String> header) {
-        return postToResponse(url, param, header);
+    public String post(String relativePath, Object param, Map<String, String> header) {
+        return postToResponse(relativePath, param, header);
     }
 
 
-    public String postByForm(String url, Map<String, String> param) {
-        return postToResponseByForm(url, param, null);
+    public String postByForm(String relativePath, Map<String, String> param) {
+        return postToResponseByForm(relativePath, param, null);
     }
 
-    public String postByForm(String url, Map<String, String> param, Map<String, String> header) {
-        return postToResponseByForm(url, param, header);
+    public String postByForm(String relativePath, Map<String, String> param, Map<String, String> header) {
+        return postToResponseByForm(relativePath, param, header);
     }
 }
