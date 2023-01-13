@@ -26,7 +26,7 @@ public class TestHttpClientService {
         params.put("param2", "param2");
         params.put("param3", "param3");
         //只要是Server响应了，就会有Response，包括：400,403,404,500,502,503等
-        String response = HttpClientUtils.testHttpClient.get("http://localhost:9964/testHttpClient/testOk?time=" + System.currentTimeMillis(), params, header);
+        String response = HttpClientUtils.testHttpClient.get("testHttpClient/testOk?time=" + System.currentTimeMillis(), params, header);
         return response;
     }
 

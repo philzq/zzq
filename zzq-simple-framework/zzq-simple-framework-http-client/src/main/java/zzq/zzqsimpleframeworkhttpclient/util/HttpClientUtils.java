@@ -11,7 +11,7 @@ import zzq.zzqsimpleframeworkhttp.config.HttpClient;
  */
 public class HttpClientUtils {
 
-    public static final HttpClient testHttpClient = new HttpClient(100);
+    public static final HttpClient testHttpClient = new HttpClient("http://localhost:9964/", 100);
 
 
 }
