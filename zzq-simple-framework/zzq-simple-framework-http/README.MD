@@ -35,7 +35,7 @@ http://httpstat.us/502
 
 
 ## 使用方法
-一、配置OkHttpClientProperties和HttpClient
+一、配置HttpClientUtil
 ```java
 public class HttpClientUtils {
 
