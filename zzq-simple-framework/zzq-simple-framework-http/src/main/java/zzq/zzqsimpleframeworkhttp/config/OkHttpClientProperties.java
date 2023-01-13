@@ -21,10 +21,10 @@ public class OkHttpClientProperties {
     private int maxIdleConnections = 200; // 最大连接数
 
     @Builder.Default
-    private int maxRequests = 200;// 最大请求数据
+    private int maxRequests = 200;// 最大请求数据，,只对异步请求生效
 
     @Builder.Default
-    private int maxRequestsPerHost = 50; // 每台主机的最大并发数
+    private int maxRequestsPerHost = 50; // 每台主机的最大并发数,只对异步请求生效
 
     @Builder.Default
     private long connectTimeout = 10; // 链接超时时间，单位s
