@@ -4,7 +4,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
-import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
 import java.io.IOException;
 import java.util.Objects;

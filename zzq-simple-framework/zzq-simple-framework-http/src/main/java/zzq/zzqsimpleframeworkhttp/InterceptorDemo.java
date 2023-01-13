@@ -1,12 +1,7 @@
 package zzq.zzqsimpleframeworkhttp;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.Request;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
-import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 class InterceptorDemo {
     public static void main(String[] args) {

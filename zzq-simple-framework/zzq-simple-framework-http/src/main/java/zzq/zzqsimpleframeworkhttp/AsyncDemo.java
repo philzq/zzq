@@ -2,7 +2,6 @@ package zzq.zzqsimpleframeworkhttp;
 
 import okhttp3.*;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
-import zzq.zzqsimpleframeworkhttp.config.OkHttpClientProperties;
 
 import java.io.IOException;
 
