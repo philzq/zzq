@@ -41,8 +41,8 @@ httpclient:
     pool:
       test:
         maxIdleConnections: 100
-        maxRequests: 100
-        maxRequestsPerHost: 100
+        maxRequests: 100    #只对异步请求生效
+        maxRequestsPerHost: 100    #只对异步请求生效
         connectTimeout: 10
         readTimeout: 10
         writeTimeout: 10
