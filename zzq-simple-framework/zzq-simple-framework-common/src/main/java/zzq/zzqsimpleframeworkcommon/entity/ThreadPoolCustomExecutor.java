@@ -57,7 +57,7 @@ public class ThreadPoolCustomExecutor{
     /**
      * 线程池
      */
-    public static class ThreadPoolCustom extends ThreadPoolExecutor{
+    private static class ThreadPoolCustom extends ThreadPoolExecutor{
 
         public ThreadPoolCustom(int corePoolSize, int maximumPoolSize) {
             this(corePoolSize, maximumPoolSize, 60, TimeUnit.SECONDS);
