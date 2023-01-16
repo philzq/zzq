@@ -13,9 +13,11 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * 
- * @author huangboke
- * @version $Id: GZIPUtils.java, v 0.1 2017年7月11日 上午9:49:50 huangboke Exp $
+ * 压缩解压
+ *
+ * @author zhouzhiqiang
+ * @version 1.0
+ * @date 2022-04-24 12:01
  */
 public abstract class GZIPUtil {
 

@@ -8,9 +8,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * 获取IP方法
+ * 获取ip
  *
- * @author ruoyi
+ * @author zhouzhiqiang
+ * @version 1.0
+ * @date 2022-04-24 12:01
  */
 public class IpUtils {
     

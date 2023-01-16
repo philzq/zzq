@@ -8,6 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * AES加密解密
+ *
+ * @author zhouzhiqiang
+ * @version 1.0
+ * @date 2022-04-24 12:01
+ */
 public class AESUtil {
     public static String[] GetFixedKeys() {
         return new String[]{"ll7uz0DREVGBA9IJxmnwoEsJoQtgpGPqXQOzmYgaS6o=", "yuntM97GbF5ISjSsx0qKqA=="};
