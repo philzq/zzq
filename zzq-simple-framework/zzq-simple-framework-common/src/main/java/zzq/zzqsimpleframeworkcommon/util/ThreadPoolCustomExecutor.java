@@ -1,4 +1,4 @@
-package zzq.zzqsimpleframeworkcommon.entity;
+package zzq.zzqsimpleframeworkcommon.util;
 
 import java.util.concurrent.*;
 
