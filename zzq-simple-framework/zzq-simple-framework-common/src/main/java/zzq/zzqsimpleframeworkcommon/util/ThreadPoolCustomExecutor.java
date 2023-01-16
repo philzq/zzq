@@ -22,9 +22,9 @@ import java.util.concurrent.*;
  * @version 1.0
  * @date 2023-01-16 9:54
  */
-public class ThreadPoolCustomExecutor{
+public class ThreadPoolCustomExecutor {
 
-    private final ThreadPoolCustom threadPoolCustom;
+    private final ThreadPoolExecutor threadPoolExecutor;
 
     public ThreadPoolCustomExecutor(int corePoolSize, int maximumPoolSize) {
         this(corePoolSize, maximumPoolSize, 60, TimeUnit.SECONDS);
@@ -35,52 +35,22 @@ public class ThreadPoolCustomExecutor{
     }
 
     public ThreadPoolCustomExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
-        threadPoolCustom = new ThreadPoolCustom(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+        threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
     public ThreadPoolCustomExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
-        threadPoolCustom = new ThreadPoolCustom(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
+        threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
     }
 
     public ThreadPoolCustomExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
-        threadPoolCustom = new ThreadPoolCustom(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);
+        threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);
     }
 
     public ThreadPoolCustomExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
-        threadPoolCustom = new ThreadPoolCustom(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
+        threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
     }
 
     public void execute(Runnable command){
-        threadPoolCustom.execute(command);
-    }
-
-    /**
-     * 线程池
-     */
-    private static class ThreadPoolCustom extends ThreadPoolExecutor{
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize) {
-            this(corePoolSize, maximumPoolSize, 60, TimeUnit.SECONDS);
-        }
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit) {
-            this(corePoolSize, maximumPoolSize, keepAliveTime, unit, new ArrayBlockingQueue<>(300));
-        }
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
-            super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
-        }
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
-            super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
-        }
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
-            super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);
-        }
-
-        public ThreadPoolCustom(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
-            super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
-        }
+        threadPoolExecutor.execute(command);
     }
 }
