@@ -2,7 +2,6 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
-import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
@@ -69,16 +68,13 @@ public class HttpClient {
         dispatcher.setMaxRequests(maxRequests);
         dispatcher.setMaxRequestsPerHost(maxRequestsPerHost);
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(content -> LogEntity.collectLogWithTimeCycle(content, false));
-        httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
-
         ConnectionPool connectionPool = new ConnectionPool(maxIdleConnections, keepAlive, TimeUnit.SECONDS);
-
+        
         okHttpClient = new OkHttpClient().newBuilder()
                 .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
                 .dispatcher(dispatcher)
-                .addInterceptor(httpLoggingInterceptor)
-                .eventListener(new CustomEventListener())
+                .addInterceptor(new LoggingInterceptor())
+                .eventListener(new LoggingEventListener())
                 .connectTimeout(Duration.ofSeconds(connectTimeout))// default 10s
                 .readTimeout(Duration.ofSeconds(readTimeout))// default 10s
                 .writeTimeout(Duration.ofSeconds(writeTimeout))// default 10s
@@ -103,10 +99,10 @@ public class HttpClient {
 
     private String getToResponse(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
+        Request request = null;
         try {
             String url = hostName + relativePath;
-            Request request;
-            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header));
+            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer());
             if (param != null) {
                 HttpUrl httpUrl = HttpUrl.parse(url);
                 if (httpUrl == null) {
@@ -123,15 +119,24 @@ public class HttpClient {
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
+        } finally {
+            if (request != null) {
+                StringBuffer logTag = request.tag(StringBuffer.class);
+                if (logTag != null) {
+                    logger.info(logTag.toString());
+                    System.out.println(logTag.toString());
+                }
+            }
         }
         return rs;
     }
 
     private String postToResponse(String relativePath, Object param, Map<String, String> header) {
         String rs = null;
+        Request request = null;
         try {
             String url = hostName + relativePath;
-            Request request = new Request.Builder().url(url).headers(toHeader(header))
+            request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             Call r = okHttpClient.newCall(request);
@@ -139,23 +144,38 @@ public class HttpClient {
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
+        } finally {
+            if (request != null) {
+                StringBuffer logTag = request.tag(StringBuffer.class);
+                if (logTag != null) {
+                    logger.info(logTag.toString());
+                }
+            }
         }
         return rs;
     }
 
     private String postToResponseByForm(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
+        Request request = null;
         try {
             String url = hostName + relativePath;
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
-            Request request = new Request.Builder().url(url).headers(toHeader(header))
+            request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
                     .post(build.build()).build();
             Call r = okHttpClient.newCall(request);
             Response response = r.execute();
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
+        } finally {
+            if (request != null) {
+                StringBuffer logTag = request.tag(StringBuffer.class);
+                if (logTag != null) {
+                    logger.info(logTag.toString());
+                }
+            }
         }
         return rs;
     }

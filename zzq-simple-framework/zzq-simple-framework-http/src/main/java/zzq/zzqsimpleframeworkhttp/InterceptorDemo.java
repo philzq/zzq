@@ -3,6 +3,9 @@ package zzq.zzqsimpleframeworkhttp;
 import okhttp3.Request;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class InterceptorDemo {
     public static void main(String[] args) {
         //这里写了一堆url，只是便于测试，最终只会用最后一个，自行注释掉其他的来测试
@@ -38,8 +41,17 @@ class InterceptorDemo {
             String response = httpClient.post("http://httpstat.us/404", new TypeReference<String>() {
             });
         }*/
-        String response = httpClient.post("200");
-        System.out.println(response);
+        Map<String, String> header = new HashMap<>();
+        header.put("head1", "head1");
+        header.put("head2", "head2");
+        header.put("head3", "head3");
+        Map<String, String> params = new HashMap<>();
+        params.put("param1", "param1");
+        params.put("param2", "param2");
+        params.put("param3", "param3");
+        String get = httpClient.get("200", params, header);
+        String post = httpClient.post("200", params, header);
+        String postByForm = httpClient.postByForm("200", params, header);
 
     }
 }
