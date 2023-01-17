@@ -69,7 +69,7 @@ public class HttpClient {
         dispatcher.setMaxRequestsPerHost(maxRequestsPerHost);
 
         ConnectionPool connectionPool = new ConnectionPool(maxIdleConnections, keepAlive, TimeUnit.SECONDS);
-        
+
         okHttpClient = new OkHttpClient().newBuilder()
                 .connectionPool(connectionPool) // 使用默认配置 https://github.com/square/okhttp/blob/master/okhttp-testing-support/src/main/java/okhttp3/TestUtil.java#L44
                 .dispatcher(dispatcher)
@@ -124,7 +124,6 @@ public class HttpClient {
                 StringBuffer logTag = request.tag(StringBuffer.class);
                 if (logTag != null) {
                     logger.info(logTag.toString());
-                    System.out.println(logTag.toString());
                 }
             }
         }
