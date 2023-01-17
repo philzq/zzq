@@ -2,6 +2,7 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
@@ -97,6 +98,37 @@ public class HttpClient {
         return Headers.of(header);
     }
 
+    /**
+     * 发送同步请求
+     *
+     * @param request
+     * @return
+     */
+    private String send(Request request) {
+        String rs = null;
+        try {
+            Call r = okHttpClient.newCall(request);
+            Response response = r.execute();
+            rs = response.body() != null ? response.body().string() : null;
+        } catch (Exception e) {
+            if (request != null) {
+                StringBuffer logTag = request.tag(StringBuffer.class);
+                if (logTag != null) {
+                    logTag.append("\n").append(ExceptionUtils.getStackTrace(e));
+                }
+            }
+            logger.error("【HTTP调用异常】", e);
+        } finally {
+            if (request != null) {
+                StringBuffer logTag = request.tag(StringBuffer.class);
+                if (logTag != null) {
+                    logger.info(logTag.toString());
+                }
+            }
+        }
+        return rs;
+    }
+
     private String getToResponse(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
         Request request = null;
@@ -114,67 +146,38 @@ public class HttpClient {
             } else {
                 request = requestBuilder.url(url).build();
             }
-            Call r = okHttpClient.newCall(request);
-            Response response = r.execute();
-            rs = response.body() != null ? response.body().string() : null;
+            rs = send(request);
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
-        } finally {
-            if (request != null) {
-                StringBuffer logTag = request.tag(StringBuffer.class);
-                if (logTag != null) {
-                    logger.info(logTag.toString());
-                }
-            }
         }
         return rs;
     }
 
     private String postToResponse(String relativePath, Object param, Map<String, String> header) {
         String rs = null;
-        Request request = null;
         try {
             String url = hostName + relativePath;
-            request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
-            Call r = okHttpClient.newCall(request);
-            Response response = r.execute();
-            rs = response.body() != null ? response.body().string() : null;
+            rs = send(request);
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
-        } finally {
-            if (request != null) {
-                StringBuffer logTag = request.tag(StringBuffer.class);
-                if (logTag != null) {
-                    logger.info(logTag.toString());
-                }
-            }
         }
         return rs;
     }
 
     private String postToResponseByForm(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
-        Request request = null;
         try {
             String url = hostName + relativePath;
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
-            request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
                     .post(build.build()).build();
-            Call r = okHttpClient.newCall(request);
-            Response response = r.execute();
-            rs = response.body() != null ? response.body().string() : null;
+            rs = send(request);
         } catch (Exception e) {
             logger.error("【HTTP调用异常】", e);
-        } finally {
-            if (request != null) {
-                StringBuffer logTag = request.tag(StringBuffer.class);
-                if (logTag != null) {
-                    logger.info(logTag.toString());
-                }
-            }
         }
         return rs;
     }
