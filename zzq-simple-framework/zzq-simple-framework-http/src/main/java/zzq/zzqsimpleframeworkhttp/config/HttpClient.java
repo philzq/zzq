@@ -112,17 +112,17 @@ public class HttpClient {
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
             if (request != null) {
-                StringBuffer logTag = request.tag(StringBuffer.class);
+                HttpLogEntity logTag = request.tag(HttpLogEntity.class);
                 if (logTag != null) {
-                    logTag.append("\n").append(ExceptionUtils.getStackTrace(e));
+                    logTag.getLog().append("\n").append(ExceptionUtils.getStackTrace(e));
                 }
             }
             logger.error("【HTTP调用异常】", e);
         } finally {
             if (request != null) {
-                StringBuffer logTag = request.tag(StringBuffer.class);
+                HttpLogEntity logTag = request.tag(HttpLogEntity.class);
                 if (logTag != null) {
-                    logger.info(logTag.toString());
+                    logger.info(logTag.getLog().toString());
                 }
             }
         }
@@ -134,7 +134,7 @@ public class HttpClient {
         Request request = null;
         try {
             String url = hostName + relativePath;
-            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer());
+            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity());
             if (param != null) {
                 HttpUrl httpUrl = HttpUrl.parse(url);
                 if (httpUrl == null) {
@@ -157,7 +157,7 @@ public class HttpClient {
         String rs = null;
         try {
             String url = hostName + relativePath;
-            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             rs = send(request);
@@ -173,7 +173,7 @@ public class HttpClient {
             String url = hostName + relativePath;
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
-            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(StringBuffer.class, new StringBuffer())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
                     .post(build.build()).build();
             rs = send(request);
         } catch (Exception e) {

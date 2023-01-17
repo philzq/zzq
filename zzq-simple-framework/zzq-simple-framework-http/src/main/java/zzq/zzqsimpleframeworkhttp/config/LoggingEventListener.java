@@ -19,18 +19,16 @@ import java.util.List;
  */
 class LoggingEventListener extends EventListener {
 
-    long callStartTime;
-
     private void addEventLog(Call call, String log) {
         Request request = call.request();
-        StringBuffer logStringBuffer = request.tag(StringBuffer.class);
-        if (logStringBuffer != null) {
+        HttpLogEntity httpLogEntity = request.tag(HttpLogEntity.class);
+        if (httpLogEntity != null) {
             long nowTime = System.currentTimeMillis();
             if (log.startsWith("callStart")) {
-                callStartTime = nowTime;
+                httpLogEntity.setStartTime(nowTime);
             }
-            long elapsedTime = nowTime - callStartTime;
-            logStringBuffer.append(String.format("%s %s %s%n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")), "【" + elapsedTime + "ms】", log));
+            long elapsedTime = nowTime - httpLogEntity.getStartTime();
+            httpLogEntity.getLog().append(String.format("%s %s %s%n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")), "【" + elapsedTime + "ms】", log));
         }
     }
 

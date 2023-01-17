@@ -34,17 +34,19 @@ class LoggingInterceptor implements Interceptor {
     public Response intercept(@NotNull Chain chain) throws IOException {
         long t1 = System.currentTimeMillis();
         Request request = chain.request();
-        StringBuffer logStringBuffer = request.tag(StringBuffer.class);
-        if (logStringBuffer != null) {
-            logStringBuffer.append(String.format("Sending request %s %n%s",
+        HttpLogEntity httpLogEntity = request.tag(HttpLogEntity.class);
+        if (httpLogEntity != null) {
+            httpLogEntity.getLog().append(String.format("Sending request %s %n%s",
                     request.url(), request.headers()));
         }
         Response response = chain.proceed(request);
 
         long t2 = System.currentTimeMillis();
-        if (logStringBuffer != null) {
-            logStringBuffer.append(String.format("Received response for %s in %sms%n%s",
-                    request.url(), t2 - t1, response.headers()));
+        if (httpLogEntity != null) {
+            long elapsedTime = t2 - t1;
+            httpLogEntity.setElapsedTime(elapsedTime);
+            httpLogEntity.getLog().append(String.format("Received response for %s in %sms%n%s",
+                    request.url(), elapsedTime, response.headers()));
         }
         return response;
     }
