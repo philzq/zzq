@@ -45,8 +45,10 @@ class LoggingInterceptor implements Interceptor {
         if (httpLogEntity != null) {
             long elapsedTime = t2 - t1;
             httpLogEntity.setElapsedTime(elapsedTime);
-            httpLogEntity.getLog().append(String.format("Received response for %s in %sms%n%s",
-                    request.url(), elapsedTime, response.headers()));
+            //最大只取1M以内的数据，防止响应体太大影响日志组件
+            String body = response.peekBody(1024 * 1024).string();
+            httpLogEntity.getLog().append(String.format("Received response for %s in %sms%n%s%s%n",
+                    request.url(), elapsedTime, response.headers(), body));
         }
         return response;
     }

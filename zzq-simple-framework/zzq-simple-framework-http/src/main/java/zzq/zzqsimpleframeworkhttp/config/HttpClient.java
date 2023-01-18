@@ -2,6 +2,7 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +134,10 @@ public class HttpClient {
         String rs = null;
         Request request = null;
         try {
-            String url = hostName + relativePath;
+            String url = hostName;
+            if(ObjectUtils.isNotEmpty(relativePath)){
+                url += relativePath;
+            }
             Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity());
             if (param != null) {
                 HttpUrl httpUrl = HttpUrl.parse(url);
@@ -156,7 +160,10 @@ public class HttpClient {
     private String postToResponse(String relativePath, Object param, Map<String, String> header) {
         String rs = null;
         try {
-            String url = hostName + relativePath;
+            String url = hostName;
+            if(ObjectUtils.isNotEmpty(relativePath)){
+                url += relativePath;
+            }
             Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
@@ -170,7 +177,10 @@ public class HttpClient {
     private String postToResponseByForm(String relativePath, Map<String, String> param, Map<String, String> header) {
         String rs = null;
         try {
-            String url = hostName + relativePath;
+            String url = hostName;
+            if(ObjectUtils.isNotEmpty(relativePath)){
+                url += relativePath;
+            }
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
             Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
