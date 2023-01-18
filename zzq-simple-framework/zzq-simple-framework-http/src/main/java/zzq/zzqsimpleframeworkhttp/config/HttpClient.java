@@ -2,11 +2,10 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.*;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
+import zzq.zzqsimpleframeworkhttp.utils.ExceptionUtil;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
 
 import java.time.Duration;
@@ -115,7 +114,7 @@ public class HttpClient {
             if (request != null) {
                 HttpLogEntity logTag = request.tag(HttpLogEntity.class);
                 if (logTag != null) {
-                    logTag.getLog().append("\n").append(ExceptionUtils.getStackTrace(e));
+                    logTag.getLog().append("\n").append(ExceptionUtil.getStackTrace(e));
                 }
             }
             logger.error("【HTTP调用异常】", e);
@@ -135,7 +134,7 @@ public class HttpClient {
         Request request = null;
         try {
             String url = hostName;
-            if(ObjectUtils.isNotEmpty(relativePath)){
+            if (relativePath != null) {
                 url += relativePath;
             }
             Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity());
@@ -161,7 +160,7 @@ public class HttpClient {
         String rs = null;
         try {
             String url = hostName;
-            if(ObjectUtils.isNotEmpty(relativePath)){
+            if (relativePath != null) {
                 url += relativePath;
             }
             Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
@@ -178,7 +177,7 @@ public class HttpClient {
         String rs = null;
         try {
             String url = hostName;
-            if(ObjectUtils.isNotEmpty(relativePath)){
+            if (relativePath != null) {
                 url += relativePath;
             }
             FormBody.Builder build = new FormBody.Builder();
