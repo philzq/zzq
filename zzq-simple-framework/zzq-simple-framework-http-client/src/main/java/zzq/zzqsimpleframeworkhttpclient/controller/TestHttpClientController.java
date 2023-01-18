@@ -26,12 +26,7 @@ public class TestHttpClientController {
 
     @GetMapping("testOk")
     public String testOk() {
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("testOkhahaha:" + Thread.currentThread().getId());
+        //System.out.println("testOkhahaha:" + Thread.currentThread().getId());
         return "zzqtest" + Thread.currentThread().getId();
     }
 
