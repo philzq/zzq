@@ -26,6 +26,7 @@ class LoggingEventListener extends EventListener {
             long nowTime = System.currentTimeMillis();
             if (log.startsWith("callStart")) {
                 httpLogEntity.setStartTime(nowTime);
+                httpLogEntity.getLog().append("\n");
             }
             long elapsedTime = nowTime - httpLogEntity.getStartTime();
             httpLogEntity.getLog().append(String.format("%s %s %s%n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")), "【" + elapsedTime + "ms】", log));
