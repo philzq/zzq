@@ -1,0 +1,9 @@
+server:
+  port: 9968
+
+# DATABASE CONFIG
+spring:
+  application:
+    name: common-log-client
+
+
