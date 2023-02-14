@@ -7,8 +7,8 @@
     <property name="log.pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
 
     <!--自定义消息转换-->
-    <conversionRule conversionWord="customInfoMessage" converterClass="com.kdniao.general.common.log.config.CustomInfoMessageConverter" />
-    <conversionRule conversionWord="customErrorMessage" converterClass="com.kdniao.general.common.log.config.CustomErrorMessageConverter" />
+    <conversionRule conversionWord="customInfoMessage" converterClass="zzq.zzqsimpleframeworklog.config.CustomInfoMessageConverter" />
+    <conversionRule conversionWord="customErrorMessage" converterClass="zzq.zzqsimpleframeworklog.config.CustomErrorMessageConverter" />
     <!-- 控制台输出日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -49,7 +49,7 @@
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>100MB</MaxFileSize>
         </triggeringPolicy>
-        <layout class="com.kdniao.general.common.log.config.CustomErrorLayout">
+        <layout class="zzq.zzqsimpleframeworklog.config.CustomErrorLayout">
             <Pattern>%customErrorMessage%n</Pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
