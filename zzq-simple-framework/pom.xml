@@ -23,6 +23,8 @@
         <module>zzq-simple-framework-http</module>
         <module>zzq-simple-framework-http-client</module>
         <module>zzq-simple-framework-common</module>
+        <module>zzq-simple-framework-log</module>
+        <module>zzq-simple-framework-log-client</module>
     </modules>
 
 
