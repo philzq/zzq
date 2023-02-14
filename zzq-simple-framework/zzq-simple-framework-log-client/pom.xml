@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kdniao.general</groupId>
-    <artifactId>common-log-client</artifactId>
+    <groupId>zzq</groupId>
+    <artifactId>zzq-simple-framework-log-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>common-log-client</name>
