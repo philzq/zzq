@@ -23,7 +23,7 @@
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.7</version>
+                <version>1.4.0</version>
                 <executions>
                     <execution>
                         <id>Generate MyBatis Artifacts</id>
@@ -45,7 +45,7 @@
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
                         <artifactId>mybatis-generator-core</artifactId>
-                        <version>1.3.7</version>
+                        <version>1.4.0</version>
                     </dependency>
 
                     <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
