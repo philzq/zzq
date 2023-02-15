@@ -30,7 +30,10 @@ public class JsonTestController {
     @PostMapping("jsonTestEntity")
     private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity) {
 
-        logger.info("");
+        logger.info("infoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfo");
+        logger.warn("warnwarnwarnwarnwarnwarnwarnwarnwarnwarnwarnwarnwarnwarnwarn");
+        logger.debug("debugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebugdebug");
+        logger.error("errorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerrorerror");
 
         WebDigestLogEntity webDigestLogEntity = WebDigestLogEntity.builder()
                 .build();

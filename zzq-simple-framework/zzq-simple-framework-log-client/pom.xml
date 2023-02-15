@@ -14,7 +14,7 @@
     <artifactId>zzq-simple-framework-log-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>common-log-client</name>
+    <name>zzq-simple-framework-log-client</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
