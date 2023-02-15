@@ -9,12 +9,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Common utils-related generic wrapper.</description>
-    <developers>
-        <developer>
-            <name>zhouzhiqiang</name>
-            <email>zhouzhiqiang@kdniao.cn</email>
-        </developer>
-    </developers>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
