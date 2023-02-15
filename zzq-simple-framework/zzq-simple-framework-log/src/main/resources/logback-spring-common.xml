@@ -4,11 +4,14 @@
 
     <property name="log.path" value="/data/logs/${appName}"/>
     <!-- 日志输出格式 -->
-    <property name="log.pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
+    <property name="log.pattern"
+              value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
 
     <!--自定义消息转换-->
-    <conversionRule conversionWord="customInfoMessage" converterClass="zzq.zzqsimpleframeworklog.config.CustomInfoMessageConverter" />
-    <conversionRule conversionWord="customErrorMessage" converterClass="zzq.zzqsimpleframeworklog.config.CustomErrorMessageConverter" />
+    <conversionRule conversionWord="customInfoMessage"
+                    converterClass="com.kdniao.general.common.log.config.CustomInfoMessageConverter"/>
+    <conversionRule conversionWord="customErrorMessage"
+                    converterClass="com.kdniao.general.common.log.config.CustomErrorMessageConverter"/>
     <!-- 控制台输出日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -16,7 +19,7 @@
         </layout>
     </appender>
     <!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${log.path}/${appName}.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <FileNamePattern>${log.path}/${appName}.log.%i</FileNamePattern>
@@ -29,9 +32,9 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%customInfoMessage%n</Pattern>
         </layout>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <filter class="com.kdniao.general.common.log.config.CustomLevelFilter">
             <!-- 过滤的级别 -->
-            <level>INFO</level>
+            <level>WARN</level>
             <!-- 匹配时的操作：接收（记录） -->
             <onMatch>ACCEPT</onMatch>
             <!-- 不匹配时的操作：拒绝（不记录） -->
@@ -49,7 +52,7 @@
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>100MB</MaxFileSize>
         </triggeringPolicy>
-        <layout class="zzq.zzqsimpleframeworklog.config.CustomErrorLayout">
+        <layout class="com.kdniao.general.common.log.config.CustomErrorLayout">
             <Pattern>%customErrorMessage%n</Pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -66,12 +69,11 @@
     </appender>
 
     <root>
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
+        <appender-ref ref="WARN"/>
         <appender-ref ref="ERR"/>
     </root>
-
 
 
     <appender name="REMOTE-DIGEST" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -208,10 +210,10 @@
         <appender-ref ref="SYSTEM-ERROR"/>
     </logger>
 
-    <appender name="ORDER-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-order-monitor.log</File>
+    <appender name="TASK" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${appName}-task.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-order-monitor.log.%i</FileNamePattern>
+            <FileNamePattern>${log.path}/${appName}-task.log.%i</FileNamePattern>
             <MinIndex>1</MinIndex>
             <MaxIndex>12</MaxIndex>
         </rollingPolicy>
@@ -223,161 +225,8 @@
         </layout>
     </appender>
 
-    <logger name="order.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="ORDER-MONITOR"/>
+    <logger name="task" level="DEBUG" additivity="false">
+        <appender-ref ref="TASK"/>
     </logger>
-
-    <appender name="ACCOUNT-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-account-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-account-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="account.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="ACCOUNT-MONITOR"/>
-    </logger>
-
-    <appender name="API-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-api-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-api-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="api.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="API-MONITOR"/>
-    </logger>
-
-    <appender name="PULLING-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-pulling-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-pulling-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="pulling.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="PULLING-MONITOR"/>
-    </logger>
-
-    <appender name="PUSH-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-push-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-push-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="push.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="PUSH-MONITOR"/>
-    </logger>
-
-    <appender name="PUSHTIMELY-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-pushtimely-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-pushtimely-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="pushtimely.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="PUSHTIMELY-MONITOR"/>
-    </logger>
-
-    <appender name="RECEPTION-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-reception-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-reception-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="reception.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="RECEPTION-MONITOR"/>
-    </logger>
-
-    <appender name="ROUTING-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-routing-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-routing-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="routing.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="ROUTING-MONITOR"/>
-    </logger>
-
-    <appender name="TIMELY-MONITOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-timely-monitor.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-timely-monitor.log.%i</FileNamePattern>
-            <MinIndex>1</MinIndex>
-            <MaxIndex>12</MaxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%msg%n</Pattern>
-        </layout>
-    </appender>
-
-    <logger name="timely.monitor" level="DEBUG" additivity="false">
-        <appender-ref ref="TIMELY-MONITOR"/>
-    </logger>
-
 </included>
 

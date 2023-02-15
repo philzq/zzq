@@ -10,22 +10,38 @@ import lombok.Getter;
  * @date 2023_02_09 15:05
  */
 public enum LogTypeEnum {
+    /**
+     * 业务info日志
+     */
     SYSTEM_INFO("system.info"),
+    /**
+     * 业务error日志
+     */
     SYSTEM_ERROR("system.error"),
-    ORDER_MONITOR("order.monitor"),
+    /**
+     * 远程调用日志
+     */
     REMOTE_DIGEST("remote.digest"),
+    /**
+     * rpc调用日志
+     */
     RPC_DIGEST("rpc.digest"),
+    /**
+     * mongo 满语句日志
+     */
     MONGO("mongo"),
+    /**
+     * web日志
+     */
     WEB_DIGEST("web.digest"),
+    /**
+     * kafka日志
+     */
     KAFKA_CONSUMER("kafka.consumer"),
-    ACCOUNT_MONITOR("account.monitor"),
-    API_MONITOR("api.monitor"),
-    PULLING_MONITOR("pulling.monitor"),
-    PUSH_MONITOR("push.monitor"),
-    PUSHTIMELY_MONITOR("pushtimely.monitor"),
-    RECEPTION_MONITOR("reception.monitor"),
-    ROUTING_MONITOR("routing.monitor"),
-    TIMELY_MONITOR("timely.monitor"),
+    /**
+     * TASK日志
+     */
+    TASK("task"),
     ;
 
     /**

@@ -17,17 +17,20 @@ public class LogInitUtil {
      * @return
      */
     private static void getLogClassNameAndInitClassAndMethod(BaseLogEntity t) {
-        Thread thread = Thread.currentThread();
-        StackTraceElement[] stackTrace = thread.getStackTrace();
-        for (int i = 1; i < stackTrace.length; i++) {
-            StackTraceElement stackTraceElement = stackTrace[i];
-            String className = stackTraceElement.getClassName();
-            if (!className.contains(SystemConstant.PROJECT_PACKAGE)) {
-                t.setClassName(className);
-                t.setMethodName(stackTraceElement.getMethodName());
-                t.setLine(stackTraceElement.getLineNumber());
-                t.setFileName(stackTraceElement.getFileName());
-                break;
+        //如果已经传过了类名，则不填充类相关属性----如aop切面需要自己传值等
+        if (t.getClassName() == null) {
+            Thread thread = Thread.currentThread();
+            StackTraceElement[] stackTrace = thread.getStackTrace();
+            for (int i = 1; i < stackTrace.length; i++) {
+                StackTraceElement stackTraceElement = stackTrace[i];
+                String className = stackTraceElement.getClassName();
+                if (!className.contains(SystemConstant.PROJECT_PACKAGE)) {
+                    t.setClassName(className);
+                    t.setMethodName(stackTraceElement.getMethodName());
+                    t.setLine(stackTraceElement.getLineNumber());
+                    t.setFileName(stackTraceElement.getFileName());
+                    break;
+                }
             }
         }
     }

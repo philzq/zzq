@@ -27,4 +27,8 @@ public class SystemInfoLogEntity extends BaseLogEntity {
      */
     private String message;
 
+    /**
+     * 集成
+     */
+    private String level;
 }

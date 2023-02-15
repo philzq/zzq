@@ -6,7 +6,7 @@
 3.统一通用字段的收集
 4.统一的日志通用的定制化处理（如组件info，error日志的收集等）
 5.统一通用的日志配置，业务只需关注新增的业务日志
-6.日志类型分为通用日志和业务日志，通用日志组件已经定义好了，使用方式已定义好，业务日志可自行定义，通过组件提供的LogUtilFactory使用即可
+6.日志类型分为依赖组件日志、通用日志和业务日志，通用日志组件已经定义好了，使用方式已定义好，业务日志可自行定义，通过组件提供的LogUtilFactory使用即可
 ```
 
 ## 二、添加新的通用日志类型流程
@@ -50,7 +50,6 @@
 
 
 ## 三、使用
-具体用法可参考
 zzq-simple-framework-log-client
 
 1、添加依赖
@@ -65,7 +64,7 @@ zzq-simple-framework-log-client
 2、定义全局变量
 ```java
 全局变量
-System.setProperty("appName","zzq-simple-framework-log-client");
+System.setProperty("appName","zzq-simple-framework-json-client");
 ```
 3、配置logback-spring.xml 
 ```xml

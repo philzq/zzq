@@ -8,6 +8,7 @@ import zzq.zzqsimpleframeworklog.util.LogInitUtil;
 
 /**
  * 收集各种依赖组件输出的info日志
+ *
  * @author zhouzhiqiang
  * @version 1.0
  * @date 2023-02-13 13:55
@@ -18,6 +19,7 @@ public class CustomInfoMessageConverter extends MessageConverter {
         SystemInfoLogEntity systemInfoLogEntity = SystemInfoLogEntity.builder()
                 .title("依赖组件info日志")
                 .message(event.getMessage())
+                .level(event.getLevel().levelStr)
                 .className(event.getLoggerName())
                 .build();
 

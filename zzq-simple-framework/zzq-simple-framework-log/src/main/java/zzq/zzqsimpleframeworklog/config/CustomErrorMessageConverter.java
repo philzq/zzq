@@ -22,8 +22,8 @@ public class CustomErrorMessageConverter extends MessageConverter {
                 .title("依赖组件error日志")
                 .message(event.getMessage())
                 .className(event.getLoggerName())
-                .errorCode(500)   // 此处可根据业务自定义  依赖组件的异常code哦
-                .errorMessage("依赖组件异常")
+                .errorCode(500)
+                .errorMessage("依赖组件报错")
                 .build();
 
         //通过StackTrace初始化必要字段

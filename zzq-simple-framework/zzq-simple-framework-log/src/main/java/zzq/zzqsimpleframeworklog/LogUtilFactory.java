@@ -16,23 +16,15 @@ import org.slf4j.LoggerFactory;
  */
 public interface LogUtilFactory {
 
-    LogInfoBasicUtil SYSTEM_INFO = zzq.zzqsimpleframeworklog.LogUtilFactory.getSystemInfoLogUtil();
-    LogErrorBasicUtil SYSTEM_ERROR = zzq.zzqsimpleframeworklog.LogUtilFactory.getSystemErrorLogUtil();
+    zzq.zzqsimpleframeworklog.LogInfoBasicUtil SYSTEM_INFO = zzq.zzqsimpleframeworklog.LogUtilFactory.getSystemInfoLogUtil();
+    zzq.zzqsimpleframeworklog.LogErrorBasicUtil SYSTEM_ERROR = zzq.zzqsimpleframeworklog.LogUtilFactory.getSystemErrorLogUtil();
 
-    LogAdvancedUtil<WebDigestLogEntity> WEB_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.WEB_DIGEST, WebDigestLogEntity.class);
-    LogAdvancedUtil<AccountMonitorLogEntity> ACCOUNT_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.ACCOUNT_MONITOR, AccountMonitorLogEntity.class);
-    LogAdvancedUtil<ApiMonitorLogEntity> API_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.API_MONITOR, ApiMonitorLogEntity.class);
-    LogAdvancedUtil<KafkaConsumerLogEntity> KAFKA_CONSUMER = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.KAFKA_CONSUMER, KafkaConsumerLogEntity.class);
-    LogAdvancedUtil<MongoLogEntity> MONGO = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.MONGO, MongoLogEntity.class);
-    LogAdvancedUtil<OrderMonitorLogEntity> ORDER_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.ORDER_MONITOR, OrderMonitorLogEntity.class);
-    LogAdvancedUtil<PullingMonitorLogEntity> PULLING_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.PULLING_MONITOR, PullingMonitorLogEntity.class);
-    LogAdvancedUtil<PushMonitorLogEntity> PUSH_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.PUSH_MONITOR, PushMonitorLogEntity.class);
-    LogAdvancedUtil<PushTimelyMonitorLogEntity> PUSHTIMELY_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.PUSHTIMELY_MONITOR, PushTimelyMonitorLogEntity.class);
-    LogAdvancedUtil<ReceptionMonitorLogEntity> RECEPTION_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.RECEPTION_MONITOR, ReceptionMonitorLogEntity.class);
-    LogAdvancedUtil<RemoteDigestLogEntity> REMOTE_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.REMOTE_DIGEST, RemoteDigestLogEntity.class);
-    LogAdvancedUtil<RpcDigestLogEntity> RPC_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.RPC_DIGEST, RpcDigestLogEntity.class);
-    LogAdvancedUtil<TimelyMonitorLogEntity> TIMELY_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.TIMELY_MONITOR, TimelyMonitorLogEntity.class);
-    LogAdvancedUtil<RoutingMonitorLogEntity> ROUTING_MONITOR = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.ROUTING_MONITOR, RoutingMonitorLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<WebDigestLogEntity> WEB_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.WEB_DIGEST, WebDigestLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<KafkaConsumerLogEntity> KAFKA_CONSUMER = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.KAFKA_CONSUMER, KafkaConsumerLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<MongoLogEntity> MONGO = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.MONGO, MongoLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<RemoteDigestLogEntity> REMOTE_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.REMOTE_DIGEST, RemoteDigestLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<RpcDigestLogEntity> RPC_DIGEST = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.RPC_DIGEST, RpcDigestLogEntity.class);
+    zzq.zzqsimpleframeworklog.LogAdvancedUtil<TaskLogEntity> TASK = zzq.zzqsimpleframeworklog.LogUtilFactory.getLogUtil(LogTypeEnum.TASK, TaskLogEntity.class);
 
 
     /**
@@ -43,12 +35,12 @@ public interface LogUtilFactory {
      * @param <T>
      * @return
      */
-    static <T extends BaseLogEntity> LogAdvancedUtil<T> getBusinessLogUtil(String logTypeName, Class<T> paramClass) {
+    static <T extends BaseLogEntity> zzq.zzqsimpleframeworklog.LogAdvancedUtil<T> getBusinessLogUtil(String logTypeName, Class<T> paramClass) {
         if (logTypeName == null || logTypeName.trim().length() == 0 || paramClass == null) {
             throw new LogException("logTypeName和paramClass不能为null");
         }
         Logger logger = LoggerFactory.getLogger(logTypeName);
-        LogAdvancedUtil<T> logBusinessLogUtil = new LogAdvancedUtil<>(logger, paramClass);
+        zzq.zzqsimpleframeworklog.LogAdvancedUtil<T> logBusinessLogUtil = new zzq.zzqsimpleframeworklog.LogAdvancedUtil<>(logger, paramClass);
         return logBusinessLogUtil;
     }
 
@@ -59,9 +51,9 @@ public interface LogUtilFactory {
      * @param t
      * @return
      */
-    static <T extends BaseLogEntity> LogAdvancedUtil<T> getLogUtil(LogTypeEnum logTypeEnum, Class<T> t) {
+    private static <T extends BaseLogEntity> zzq.zzqsimpleframeworklog.LogAdvancedUtil<T> getLogUtil(LogTypeEnum logTypeEnum, Class<T> t) {
         Logger logger = LoggerFactory.getLogger(logTypeEnum.getLogTypeName());
-        LogAdvancedUtil<T> logAdvancedUtil = new LogAdvancedUtil<>(logger, t);
+        zzq.zzqsimpleframeworklog.LogAdvancedUtil<T> logAdvancedUtil = new zzq.zzqsimpleframeworklog.LogAdvancedUtil<>(logger, t);
         return logAdvancedUtil;
     }
 
@@ -70,9 +62,9 @@ public interface LogUtilFactory {
      *
      * @return
      */
-    static LogInfoBasicUtil getSystemInfoLogUtil() {
+    private static zzq.zzqsimpleframeworklog.LogInfoBasicUtil getSystemInfoLogUtil() {
         Logger logger = LoggerFactory.getLogger(LogTypeEnum.SYSTEM_INFO.getLogTypeName());
-        LogInfoBasicUtil logInfoBasicUtil = new LogInfoBasicUtil(logger);
+        zzq.zzqsimpleframeworklog.LogInfoBasicUtil logInfoBasicUtil = new zzq.zzqsimpleframeworklog.LogInfoBasicUtil(logger);
         return logInfoBasicUtil;
     }
 
@@ -81,9 +73,9 @@ public interface LogUtilFactory {
      *
      * @return
      */
-    static LogErrorBasicUtil getSystemErrorLogUtil() {
+    private static zzq.zzqsimpleframeworklog.LogErrorBasicUtil getSystemErrorLogUtil() {
         Logger logger = LoggerFactory.getLogger(LogTypeEnum.SYSTEM_ERROR.getLogTypeName());
-        LogErrorBasicUtil logErrorBasicUtil = new LogErrorBasicUtil(logger);
+        zzq.zzqsimpleframeworklog.LogErrorBasicUtil logErrorBasicUtil = new zzq.zzqsimpleframeworklog.LogErrorBasicUtil(logger);
         return logErrorBasicUtil;
     }
 

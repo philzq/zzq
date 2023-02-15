@@ -1,6 +1,5 @@
 package zzq.zzqsimpleframeworklog.config;
 
-
 import zzq.zzqsimpleframeworkcommon.util.IpUtils;
 import zzq.zzqsimpleframeworklog.exception.LogException;
 

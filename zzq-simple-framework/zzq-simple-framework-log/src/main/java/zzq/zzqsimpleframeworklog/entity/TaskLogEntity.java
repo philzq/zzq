@@ -7,20 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
+ * 任务日志
+ *
  * @author zhouzhiqiang
  * @version 1.0
- * @date 2023-02-09 19:38
+ * @date 2023-02-15 16:11
  */
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReceptionMonitorLogEntity extends BaseGlobalLogEntity {
+public class TaskLogEntity extends BaseGlobalLogEntity {
 
-    private String requestTypeCode;
-    private String productTypeCode;
-    private String partnerId;
-    private String resultCode;
-    private String resultDesc;
-
+    private String taskName;
 }
