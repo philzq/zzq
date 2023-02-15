@@ -9,9 +9,9 @@
 
     <!--自定义消息转换-->
     <conversionRule conversionWord="customInfoMessage"
-                    converterClass="com.kdniao.general.common.log.config.CustomInfoMessageConverter"/>
+                    converterClass="zzq.zzqsimpleframeworklog.config.CustomInfoMessageConverter"/>
     <conversionRule conversionWord="customErrorMessage"
-                    converterClass="com.kdniao.general.common.log.config.CustomErrorMessageConverter"/>
+                    converterClass="zzq.zzqsimpleframeworklog.config.CustomErrorMessageConverter"/>
     <!-- 控制台输出日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -32,7 +32,7 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%customInfoMessage%n</Pattern>
         </layout>
-        <filter class="com.kdniao.general.common.log.config.CustomLevelFilter">
+        <filter class="zzq.zzqsimpleframeworklog.config.CustomLevelFilter">
             <!-- 过滤的级别 -->
             <level>WARN</level>
             <!-- 匹配时的操作：接收（记录） -->
@@ -52,7 +52,7 @@
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>100MB</MaxFileSize>
         </triggeringPolicy>
-        <layout class="com.kdniao.general.common.log.config.CustomErrorLayout">
+        <layout class="zzq.zzqsimpleframeworklog.config.CustomErrorLayout">
             <Pattern>%customErrorMessage%n</Pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
