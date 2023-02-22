@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommonRQ<T> {
+public class CommonReq<T> {
 
     /**
      * 数据对象

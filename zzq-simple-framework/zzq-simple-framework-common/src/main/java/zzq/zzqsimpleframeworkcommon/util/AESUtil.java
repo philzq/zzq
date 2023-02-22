@@ -9,11 +9,11 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
- * AES加密解密
+ * 获取ip工具类
  *
  * @author zhouzhiqiang
  * @version 1.0
- * @date 2022-04-24 12:01
+ * @date 2023-01-03 11:17
  */
 public class AESUtil {
     public static String[] GetFixedKeys() {

@@ -1,5 +1,5 @@
 /**
- * 
+ * Kdniao.com Inc.
  * Copyright (c) 2014-2017 All Rights Reserved.
  */
 package zzq.zzqsimpleframeworkcommon.util;
@@ -13,11 +13,11 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * 压缩解压
+ * 压缩解压工具类
  *
  * @author zhouzhiqiang
  * @version 1.0
- * @date 2022-04-24 12:01
+ * @date 2023-01-03 11:17
  */
 public abstract class GZIPUtil {
 

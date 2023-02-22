@@ -1,8 +1,8 @@
 package zzq.zzqsimpleframeworkcommon.exception;
 
-import lombok.Getter;
 import zzq.zzqsimpleframeworkcommon.entity.CommonError;
 import zzq.zzqsimpleframeworkcommon.entity.HttpStatus;
+import lombok.Getter;
 
 /**
  * 通用异常

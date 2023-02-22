@@ -19,7 +19,7 @@ import java.util.UUID;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class KafkaMessageRS<T> {
+public class KafkaMessage<T> {
 
     @Builder.Default
     private String id = UUID.randomUUID().toString();
@@ -37,10 +37,10 @@ public class KafkaMessageRS<T> {
      * @param <T>
      * @return
      */
-    public static <T> KafkaMessageRS<T> getInstall(T data) {
-        KafkaMessageRS<T> kafkaMessageRS = new KafkaMessageRS<>();
-        kafkaMessageRS.setData(data);
-        return kafkaMessageRS;
+    public static <T> KafkaMessage<T> getInstall(T data) {
+        KafkaMessage<T> kafkaMessage = new KafkaMessage<>();
+        kafkaMessage.setData(data);
+        return kafkaMessage;
     }
 
 
