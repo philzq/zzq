@@ -1,4 +1,4 @@
-package zzq.simple.framework.cache.caffeine.config;
+package zzq.simple.framework.cache.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.context.annotation.Import;

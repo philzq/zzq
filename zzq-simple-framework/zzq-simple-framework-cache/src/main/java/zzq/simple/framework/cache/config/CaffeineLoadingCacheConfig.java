@@ -1,4 +1,4 @@
-package zzq.simple.framework.cache.caffeine.config;
+package zzq.simple.framework.cache.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import zzq.simple.framework.cache.ex.CommonCacheException;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -53,7 +54,7 @@ public class CaffeineLoadingCacheConfig {
                             return joinPoint.proceed(key.getParams());
                         } catch (Throwable throwable) {
                             Thread.sleep(config.timeout() * 1000);
-                            throw new RuntimeException("RefreshCacheException", throwable);
+                            throw new CommonCacheException("RefreshCacheException", throwable);
                         }
                     });
 

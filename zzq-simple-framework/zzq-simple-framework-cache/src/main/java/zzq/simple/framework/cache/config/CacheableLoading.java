@@ -1,4 +1,4 @@
-package zzq.simple.framework.cache.caffeine.config;
+package zzq.simple.framework.cache.config;
 
 import java.lang.annotation.*;
 
