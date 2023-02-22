@@ -14,7 +14,7 @@
 # 使用方法
 
 ### 配置pom.xml 
-```xml
+```
     <build>
         <plugins>
             <!--=====================================================================-->
@@ -75,7 +75,7 @@
 ```
 
 ### 配置src\main\resources\mybatis\mybatis-generator.xml
-```xml
+```
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >

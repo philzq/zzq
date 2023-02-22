@@ -2,14 +2,14 @@
 log日志组件的封装
 
 ## 二、添加新的通用日志类型流程
-```xml
+```
 1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum 中添加枚举
 2、zzq.zzqsimpleframeworklog.entity 中添加日志实体
 3、zzq.zzqsimpleframeworklog.LogUtilFactory 定义日志工具类
 4、src\main\resources\logback-spring.xml 定义日志文件
 ```
 ##### 以REMOTE-DIGEST为例
-```xml
+```
 1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum  
 添加了REMOTE_DIGEST("remote.digest")枚举
 
@@ -45,7 +45,7 @@ log日志组件的封装
 demo教程：zzq-simple-framework-log-client
 
 1、添加依赖
-```xml
+```
         <dependency>
             <groupId>zzq</groupId>
             <artifactId>zzq-simple-framework-log</artifactId>
@@ -54,15 +54,15 @@ demo教程：zzq-simple-framework-log-client
 ```
 
 2、定义全局变量
-```java
+```
 全局变量
 System.setProperty("appName","zzq-simple-framework-json-client");
 ```
 3、配置logback-spring.xml 
-```xml
+```
 注：<include resource="logback-spring-common.xml"/>这行是引入组件里面的配置，必不可少
 ```
-```xml
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="logback-spring-common.xml"/>
@@ -88,13 +88,13 @@ System.setProperty("appName","zzq-simple-framework-json-client");
 </configuration>
 ```
 4、全局日志使用(如RPC日志，REMOTE日志，WEB日志)
-```java
+```
 WebDigestLogEntity webDigestLogEntity = WebDigestLogEntity.builder()
         .build();
 LogUtilFactory.WEB_DIGEST.info(webDigestLogEntity);
 ```
 5、业务日志使用
-```java
+```
 LogAdvancedUtil<TestLog> testLogLogAdvancedUtil = LogUtilFactory.getBusinessLogUtil("test.log", TestLog.class);
 TestLog testLog = TestLog.builder()
         .test("测试呵呵呵哈哈哈哈哈哈哈")
@@ -102,7 +102,7 @@ TestLog testLog = TestLog.builder()
 testLogLogAdvancedUtil.info(testLog);
 ```
 6、业务中info与error日志的使用如下 （这么定义的目的是区分项目依赖组件打印的info与error日志）
-```xml
+```
         LogUtilFactory.SYSTEM_INFO.info("测试", "哦哦哦");
 
         LogUtilFactory.SYSTEM_ERROR.error("测试", "哦哦哦");

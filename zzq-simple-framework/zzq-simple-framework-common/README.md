@@ -3,7 +3,7 @@
 
 ## 二、使用教程
 1、添加依赖
-```xml
+```
         <dependency>
             <groupId>zzq</groupId>
             <artifactId>zzq-simple-framework-common</artifactId>
