@@ -109,7 +109,7 @@ testLogLogAdvancedUtil.info(testLog);
 ```
 
 ## 四、版本迭代内容
-1.0.1
+0.0.1-SNAPSHOT
 ```
 1、封装了下述的通用日志及使用
 SYSTEM_INFO("system.info"),//业务info日志

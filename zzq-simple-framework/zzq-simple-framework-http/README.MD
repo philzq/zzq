@@ -58,7 +58,7 @@ String response = httpClient.post("200");
  ```
  
 ## 三、版本迭代内容
-1.0.1
+0.0.1-SNAPSHOT
 ```
 1、基于RemoteDigestLogEntity日志实体，Request的tag，全面收集http请求的全链路日志
 2、封装HttpClient工具类，简化及统一http功能的使用

@@ -52,7 +52,7 @@ public class OrderLog {
 }
 ```
 ## 三、版本迭代内容
-1.0.1
+0.0.1-SNAPSHOT
 ```
 1.全局统一json序列化与反序列化的方式
 2.提供JacksonUtil工具类统一json的使用
