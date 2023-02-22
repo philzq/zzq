@@ -38,7 +38,7 @@ public class WebLogAspect {
      * 使用@Pointcut声明切入点表达式
      * 后面的通知直接使用方法名来引用当前的切点表达式；如果是其他类使用，加上包名即可
      */
-    @Pointcut("execution(public * com.kdniao..controller..*.*(..))")
+    @Pointcut("execution(public * zzq..controller..*.*(..))")
     public void methodPerformanceTracking() {
     }
 
