@@ -1,33 +1,19 @@
-## 官方网站
-id|desc|url
----|----|----
-1|jackson|https://github.com/FasterXML/jackson
-2|gson谷歌的|https://www.baeldung.com/jackson-vs-gson
-3|fastJson|https://github.com/alibaba/fastjson
+## 一、组件特点
+基于jackson的json使用
 
-## 使用教程
-测试demo查看zzq-simple-framework-json-client，测试数据
+## 二、使用教程
+demo教程：zzq-simple-framework-json-client
+
+1、添加依赖
 ```
-{
-  "aboolean": true,
-  "adouble": 0,
-  "localDate": "2023-01-04",
-  "localDateTime": "2023-01-04 06:24:39",
-  "localDateTime2": "2023-01-04 06:31:34.713",
-  "localTime": "06:24:39",
-  "look": {
-    "aboolean": true,
-    "adouble": 0,
-    "localDate": "2023-01-04",
-    "localDateTime": "2023-01-04 06:24:39",
-    "localTime": "06:24:39",
-    "str": "string"
-  },
-  "str": "string"
-}
+        <dependency>
+            <groupId>zzq</groupId>
+            <artifactId>zzq-simple-framework-json</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 ```
-```java
-一、开启注解@EnableJackson，全局设置spring的json序列化与反序列化
+2、开启注解@EnableJackson，全局设置spring的json序列化与反序列化
+```
 @SpringBootApplication
 @EnableJacksonConfigure
 public class ZzqSimpleFrameworkJsonClientApplication {
@@ -36,7 +22,9 @@ public class ZzqSimpleFrameworkJsonClientApplication {
         SpringApplication.run(ZzqSimpleFrameworkJsonClientApplication.class, args);
     }
 }
-二、使用
+```
+3、JacksonUtil使用
+```
 @PostMapping("jsonTestEntity")
 private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity){
 
@@ -49,8 +37,9 @@ private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity
 
     return parseJson;
 }
-
-三、自定义日期格式
+```
+4、自定义日期格式
+```
 // JacksonConfigure 有统一处理日期的格式，如果想自定义可以在字段的getXXX上单独指定
 public class OrderLog {
     private LocalDateTime operateTime;
@@ -61,6 +50,12 @@ public class OrderLog {
         return operateTime;
     }
 }
+```
+## 三、版本迭代内容
+1.0.1
+```
+1.全局统一json序列化与反序列化的方式
+2.提供JacksonUtil工具类统一json的使用
 ```
 
 
