@@ -3,20 +3,20 @@ log日志组件的封装
 
 ## 二、添加新的通用日志类型流程
 ```xml
-1、com.kdniao.general.common.log.enums.LogTypeEnum 中添加枚举
-2、com.kdniao.general.common.log.entity 中添加日志实体
-3、com.kdniao.general.common.log.LogUtilFactory 定义日志工具类
+1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum 中添加枚举
+2、zzq.zzqsimpleframeworklog.entity 中添加日志实体
+3、zzq.zzqsimpleframeworklog.LogUtilFactory 定义日志工具类
 4、src\main\resources\logback-spring.xml 定义日志文件
 ```
 ##### 以REMOTE-DIGEST为例
 ```xml
-1、com.kdniao.general.common.log.enums.LogTypeEnum  
+1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum  
 添加了REMOTE_DIGEST("remote.digest")枚举
 
-2、com.kdniao.general.common.log.entity 
+2、zzq.zzqsimpleframeworklog.entity 
 中添加RemoteDigestLogEntity日志实体
 
-3、com.kdniao.general.common.log.LogUtilFactory 
+3、zzq.zzqsimpleframeworklog.LogUtilFactory 
 定义日志工具类     LogAdvancedUtil<RemoteDigestLogEntity> REMOTE_DIGEST = LogUtilFactory.getLogUtil(LogTypeEnum.REMOTE_DIGEST, RemoteDigestLogEntity.class);
 
 4、src\main\resources\logback-spring.xml 定义日志文件

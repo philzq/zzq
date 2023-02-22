@@ -11,9 +11,9 @@ demo项目参考：zzq-simple-framework-web-client
             <version>0.0.1-SNAPSHOT</version>
         </dependency> 
 ```
-2、启动类扫描路径一定要加com.kdniao
+2、启动类扫描路径一定要加zzq
 ```
-@SpringBootApplication(scanBasePackages = "com.kdniao")
+@SpringBootApplication(scanBasePackages = "zzq")
 ```
 3、kafka生产者要指定生产拦截器
 ```
