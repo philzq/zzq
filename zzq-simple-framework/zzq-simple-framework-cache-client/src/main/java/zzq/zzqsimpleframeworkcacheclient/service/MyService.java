@@ -3,7 +3,7 @@ package zzq.zzqsimpleframeworkcacheclient.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zzq.simple.framework.cache.caffeine.config.CacheableLoading;
+import zzq.simple.framework.cache.config.CacheableLoading;
 import zzq.zzqsimpleframeworkcacheclient.common.Helper;
 
 import javax.annotation.PostConstruct;
