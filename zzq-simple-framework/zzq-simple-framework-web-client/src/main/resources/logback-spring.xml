@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="logback-spring-common.xml"/>
+
+    <appender name="TEST-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${appName}-test-log.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${log.path}/${appName}-test-log.log.%i</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>12</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="test.log" level="DEBUG" additivity="false">
+        <appender-ref ref="TEST-LOG"/>
+    </logger>
+</configuration>

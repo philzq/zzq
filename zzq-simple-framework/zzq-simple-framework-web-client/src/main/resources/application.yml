@@ -1,0 +1,97 @@
+server:
+  port: 9966
+  tomcat:
+    max-threads: 1000  # 处理请求任务的最大线程数
+    min-spare-threads: 10 # 处理请求任务的最小线程数
+    max-connections: 1000  # 最多可以有多少个socket连接到tomcat上
+    accept-count: 1000 # 当所有可能的请求处理线程都在使用时，传入连接请求的最大队列长度。
+    accesslog:
+      directory: 'logs' #创建日志文件的目录。可以绝对或相对于Tomcat基础目录。
+      prefix: 'access_log' #日志文件名前缀。
+      suffix: '.log' #日志文件名后缀。
+      pattern: 'common' #访问日志的格式模式。
+      buffered: true #是否缓冲输出，使其仅定期刷新。
+      enabled: false #启用访问日志。
+      file-date-format: '.yyyy-MM-dd' #要放在日志文件名中的日期格式。
+      rename-on-rotate: false #是否延迟在文件名中包含日期戳，直到旋转时间---设置为false，即刻会生成带有日期的日志文件名字
+      request-attributes-enabled: false #设置请求的IP地址，主机名，协议和端口的请求属性。
+      rotate: true #是否启用访问日志轮换。
+    additional-tld-skip-patterns: #逗号分隔的其他模式列表，这些模式匹配要忽略的TLD扫描的jar。
+    background-processor-delay: 10s #backgroundProcess 方法调用之间的延迟。如果未指定持续时间后缀，则将使用秒。
+    basedir: #Tomcat 基目录。如果未指定，则使用临时目录。
+    internal-proxies: '"10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" // 10/8
+                      + "192\\.168\\.\\d{1,3}\\.\\d{1,3}|" // 192.168/16
+                      + "169\\.254\\.\\d{1,3}\\.\\d{1,3}|" // 169.254/16
+                      + "127\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" // 127/8
+                      + "172\\.1[6-9]{1}\\.\\d{1,3}\\.\\d{1,3}|" // 172.16/12
+                      + "172\\.2[0-9]{1}\\.\\d{1,3}\\.\\d{1,3}|" + "172\\.3[0-1]{1}\\.\\d{1,3}\\.\\d{1,3}|" //
+                      + "0:0:0:0:0:0:0:1|::1"'#正则表达式匹配要信任的代理。
+    max-http-post-size: 2MB #HTTP 内容的最大大小。
+    max-swallow-size: 2MB #要吞咽的请求正文的最大数量。
+    port-header: 'X-Forwarded-Port' #用于覆盖原始端口值的HTTP头的名称。
+    protocol-header:  #包含传入协议的头文件，通常命名为“X-Forwarded-Proto”。
+    protocol-header-https-value: https #协议标头的值，指示传入请求是否使用SSL。
+    redirect-context-root: true #是否应通过在路径中附加/来重定向对上下文根的请求。
+    remote-ip-header:   #从中提取远程IP的HTTP头的名称。例如，`X-FORWARDED-FOR`。
+    resource:
+      allow-caching: true  #是否允许此Web应用程序使用静态资源缓存
+      cache-ttl: #静态资源缓存的生存时间。
+    uri-encoding: utf-8 #用于解码URI的字符编码。
+    use-relative-redirects:  #通过调用sendRedirect生成的HTTP 1.1和更高版本的位置标头是使用相对还是绝对重定向。
+
+# DATABASE CONFIG
+spring:
+  application:
+    name: common-web-client
+  kafka:
+    bootstrap-servers: 192.168.0.80:9092
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 0
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        interceptor.classes: zzq.zzqsimpleframeworkweb.kafka.KafkaProducerContextInterceptor
+    consumer:
+      # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
+      auto-commit-interval: 1S
+      # 该属性指定了消费者在读取一个没有偏移量的分区或者偏移量无效的情况下该作何处理：
+      # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
+      # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
+      auto-offset-reset: earliest
+      # 是否自动提交偏移量，默认值是true,为了避免出现重复数据和数据丢失，可以把它设置为false,然后手动提交偏移量
+      enable-auto-commit: false
+      # 键的反序列化方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 值的反序列化方式
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #每次最大消费消息数量
+      max-poll-records: 200
+      group-id: common-web-client
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      missing-topics-fatal: false
+      ack-mode: manual
+
+xxl:
+  job:
+    access-token: default_token
+    admin-addresses: http://192.168.0.42:8080/xxl-job-admin
+    executor:
+      address: ''
+      app-name: ${spring.application.name}
+      ip: 192.168.2.156
+      log-path: C:/data/logs/xxl-job/${spring.application.name}
+      log-retention-days: 7
+      port: 6990

@@ -25,6 +25,8 @@
         <module>zzq-simple-framework-common</module>
         <module>zzq-simple-framework-log</module>
         <module>zzq-simple-framework-log-client</module>
+        <module>zzq-simple-framework-web</module>
+        <module>zzq-simple-framework-web-client</module>
     </modules>
 
 
