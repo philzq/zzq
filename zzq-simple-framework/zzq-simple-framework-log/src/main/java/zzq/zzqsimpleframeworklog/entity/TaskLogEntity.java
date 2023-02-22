@@ -19,5 +19,18 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class TaskLogEntity extends BaseGlobalLogEntity {
 
-    private String taskName;
+    /**
+     * job id
+     */
+    private long jobId;
+
+    /**
+     * shard index
+     */
+    private int shardIndex;
+
+    /**
+     * shard total
+     */
+    private int shardTotal;
 }

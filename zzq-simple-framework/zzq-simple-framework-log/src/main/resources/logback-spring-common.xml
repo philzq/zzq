@@ -134,10 +134,10 @@
         <appender-ref ref="WEB-DIGEST"/>
     </logger>
 
-    <appender name="KAFKA-CONSUMER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}-kafka-consumer.log</File>
+    <appender name="KAFKA" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${appName}-kafka.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}-kafka-consumer.log.%i</FileNamePattern>
+            <FileNamePattern>${log.path}/${appName}-kafka.log.%i</FileNamePattern>
             <MinIndex>1</MinIndex>
             <MaxIndex>12</MaxIndex>
         </rollingPolicy>
@@ -149,8 +149,8 @@
         </layout>
     </appender>
 
-    <logger name="kafka.consumer" level="DEBUG" additivity="false">
-        <appender-ref ref="KAFKA-CONSUMER"/>
+    <logger name="kafka" level="DEBUG" additivity="false">
+        <appender-ref ref="KAFKA"/>
     </logger>
 
     <appender name="MONGO" class="ch.qos.logback.core.rolling.RollingFileAppender">

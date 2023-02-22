@@ -1,6 +1,8 @@
 package zzq.zzqsimpleframeworklog.util;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import zzq.zzqsimpleframeworkcommon.context.ProjectContext;
+import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
 import zzq.zzqsimpleframeworklog.config.SystemConstant;
 import zzq.zzqsimpleframeworklog.entity.common.BaseLogEntity;
 
@@ -17,8 +19,12 @@ public class LogInitUtil {
      * @return
      */
     private static void getLogClassNameAndInitClassAndMethod(BaseLogEntity t) {
-        //如果已经传过了类名，则不填充类相关属性----如aop切面需要自己传值等
-        if (t.getClassName() == null) {
+        //如果projectContextThreadLocal有值直接取projectContextThreadLocal里面的值
+        ProjectContext projectContext = ThreadLocalManager.projectContextThreadLocal.get();
+        if (projectContext.getClassName() != null) {
+            t.setClassName(projectContext.getClassName());
+            t.setMethodName(projectContext.getMethodName());
+        } else {
             Thread thread = Thread.currentThread();
             StackTraceElement[] stackTrace = thread.getStackTrace();
             for (int i = 1; i < stackTrace.length; i++) {
@@ -27,8 +33,6 @@ public class LogInitUtil {
                 if (!className.contains(SystemConstant.PROJECT_PACKAGE)) {
                     t.setClassName(className);
                     t.setMethodName(stackTraceElement.getMethodName());
-                    t.setLine(stackTraceElement.getLineNumber());
-                    t.setFileName(stackTraceElement.getFileName());
                     break;
                 }
             }
@@ -55,10 +59,8 @@ public class LogInitUtil {
     public static void initCommonByCallerData(ILoggingEvent event, BaseLogEntity baseLogEntity) {
         if (event.hasCallerData()) {
             StackTraceElement callerData = event.getCallerData()[0];
-            baseLogEntity.setLine(callerData.getLineNumber());
             baseLogEntity.setMethodName(callerData.getMethodName());
             baseLogEntity.setClassName(callerData.getClassName());
-            baseLogEntity.setFileName(callerData.getFileName());
         }
     }
 }

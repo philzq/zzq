@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class RpcDigestLogEntity extends BaseGlobalLogEntity {
 
     private String remoteAppName;
-    private String errorCode;
+    private int errorCode;
     private String errorDesc;
     private String remoteIp;
 }

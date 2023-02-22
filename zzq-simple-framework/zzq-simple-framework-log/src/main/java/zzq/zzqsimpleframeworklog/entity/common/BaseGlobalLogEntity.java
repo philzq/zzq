@@ -54,4 +54,9 @@ public class BaseGlobalLogEntity extends BaseLogEntity{
      * 响应参数  --  http请求则记录响应参数，非http请求则记录方法出参
      */
     private String response;
+
+    /**
+     * 堆栈信息  -- 如果执行失败，记录堆栈信息
+     */
+    private String stackTrace;
 }

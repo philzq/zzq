@@ -35,9 +35,9 @@ public enum LogTypeEnum {
      */
     WEB_DIGEST("web.digest"),
     /**
-     * kafka日志
+     * kafka生产日志
      */
-    KAFKA_CONSUMER("kafka.consumer"),
+    KAFKA("kafka"),
     /**
      * TASK日志
      */

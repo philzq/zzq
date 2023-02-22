@@ -1,30 +1,22 @@
-## 一、日志组件封装
-```xml
-特点：
-1.约束日志类型和日志参数
-2.统一日志的使用规范
-3.统一通用字段的收集
-4.统一的日志通用的定制化处理（如组件info，error日志的收集等）
-5.统一通用的日志配置，业务只需关注新增的业务日志
-6.日志类型分为依赖组件日志、通用日志和业务日志，通用日志组件已经定义好了，使用方式已定义好，业务日志可自行定义，通过组件提供的LogUtilFactory使用即可
-```
+## 一、组件描述
+log日志组件的封装
 
 ## 二、添加新的通用日志类型流程
 ```xml
-1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum 中添加枚举
-2、zzq.zzqsimpleframeworklog.entity 中添加日志实体
-3、zzq.zzqsimpleframeworklog.LogUtilFactory 定义日志工具类
+1、com.kdniao.general.common.log.enums.LogTypeEnum 中添加枚举
+2、com.kdniao.general.common.log.entity 中添加日志实体
+3、com.kdniao.general.common.log.LogUtilFactory 定义日志工具类
 4、src\main\resources\logback-spring.xml 定义日志文件
 ```
 ##### 以REMOTE-DIGEST为例
 ```xml
-1、zzq.zzqsimpleframeworklog.enums.LogTypeEnum  
+1、com.kdniao.general.common.log.enums.LogTypeEnum  
 添加了REMOTE_DIGEST("remote.digest")枚举
 
-2、zzq.zzqsimpleframeworklog.entity 
+2、com.kdniao.general.common.log.entity 
 中添加RemoteDigestLogEntity日志实体
 
-3、zzq.zzqsimpleframeworklog.LogUtilFactory 
+3、com.kdniao.general.common.log.LogUtilFactory 
 定义日志工具类     LogAdvancedUtil<RemoteDigestLogEntity> REMOTE_DIGEST = LogUtilFactory.getLogUtil(LogTypeEnum.REMOTE_DIGEST, RemoteDigestLogEntity.class);
 
 4、src\main\resources\logback-spring.xml 定义日志文件
@@ -50,7 +42,7 @@
 
 
 ## 三、使用
-zzq-simple-framework-log-client
+demo教程：zzq-simple-framework-log-client
 
 1、添加依赖
 ```xml
@@ -114,5 +106,24 @@ testLogLogAdvancedUtil.info(testLog);
         LogUtilFactory.SYSTEM_INFO.info("测试", "哦哦哦");
 
         LogUtilFactory.SYSTEM_ERROR.error("测试", "哦哦哦");
+```
+
+## 四、版本迭代内容
+1.0.1
+```
+1、封装了下述的通用日志及使用
+SYSTEM_INFO("system.info"),//业务info日志
+SYSTEM_ERROR("system.error"),//业务error日志
+REMOTE_DIGEST("remote.digest"),//远程调用日志
+RPC_DIGEST("rpc.digest"),//rpc调用日志
+MONGO("mongo"),//mongo 语句日志
+WEB_DIGEST("web.digest"),//web日志
+KAFKA("kafka"),//kafka生产日志
+TASK("task"),//TASK日志
+2、封装了日志基类，约束日志的结构，及日志全局属性的统一赋值
+3、基于CustomInfoMessageConverter，CustomErrorMessageConverter，封装默认的info日志和error输出的日志内容
+4、基于CustomErrorLayout处理error日志输出无结构的堆栈信息
+5、基于CustomLevelFilter自定义日志输出逻辑
+6、提供LogAdvancedUtil、LogErrorBasicUtil、LogInfoBasicUtil日志工具类及LogUtilFactory统一日志的使用入口
 ```
 

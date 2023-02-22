@@ -6,6 +6,7 @@ import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import ch.qos.logback.core.CoreConstants;
+import zzq.zzqsimpleframeworkcommon.enums.BusinessCodeEnum;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
 import zzq.zzqsimpleframeworklog.entity.SystemErrorLogEntity;
 
@@ -22,8 +23,8 @@ public class CustomErrorMessageConverter extends MessageConverter {
                 .title("依赖组件error日志")
                 .message(event.getMessage())
                 .className(event.getLoggerName())
-                .errorCode(500)
-                .errorMessage("依赖组件报错")
+                .errorCode(BusinessCodeEnum.SYSTEM_EXCEPTION.getBusinessCode())
+                .errorMessage(BusinessCodeEnum.SYSTEM_EXCEPTION.getMessage())
                 .build();
 
         //通过StackTrace初始化必要字段
@@ -55,10 +56,8 @@ public class CustomErrorMessageConverter extends MessageConverter {
 
             if (proxy.getStackTraceElementProxyArray() != null && proxy.getStackTraceElementProxyArray().length >= 1) {
                 StackTraceElement stackTraceElement = proxy.getStackTraceElementProxyArray()[0].getStackTraceElement();
-                systemErrorLogEntity.setLine(stackTraceElement.getLineNumber());
                 systemErrorLogEntity.setMethodName(stackTraceElement.getMethodName());
                 systemErrorLogEntity.setClassName(stackTraceElement.getClassName());
-                systemErrorLogEntity.setFileName(stackTraceElement.getFileName());
             }
         } catch (Exception e) {
             addError("exception trying to log exception", e);

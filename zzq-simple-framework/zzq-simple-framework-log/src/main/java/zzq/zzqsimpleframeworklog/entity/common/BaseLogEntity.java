@@ -1,11 +1,12 @@
 package zzq.zzqsimpleframeworklog.entity.common;
 
-import zzq.zzqsimpleframeworklog.config.SystemConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import zzq.zzqsimpleframeworkcommon.util.IpUtils;
+import zzq.zzqsimpleframeworkcommon.util.ProjectUtil;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class BaseLogEntity implements Serializable {
      * 应用名称
      */
     @Builder.Default
-    private String appName = SystemConstant.APP_NAME;
+    private String appName = ProjectUtil.getAppName();
 
     /**
      * 日志创建时间
@@ -45,7 +46,7 @@ public class BaseLogEntity implements Serializable {
      * 主机ip
      */
     @Builder.Default
-    private String hostIp = SystemConstant.HOST_IP;
+    private String hostIp = IpUtils.getHostIp();
 
     /**
      * 类名
@@ -56,15 +57,4 @@ public class BaseLogEntity implements Serializable {
      * 方法名
      */
     private String methodName;
-
-    /**
-     * 行数
-     */
-    private int line;
-
-    /**
-     * 文件名
-     */
-    private String fileName;
-
 }
