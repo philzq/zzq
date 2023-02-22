@@ -72,6 +72,8 @@ https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src
                         password="root">
             <!-- 新增下面这个属性-->
             <property name="useInformationSchema" value="true"/>
+            <!--            防止查到其他库表字段-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver type="zzq.plugins.mybatis.generator.plugins.JavaTypeResolverDefaultImpl">
