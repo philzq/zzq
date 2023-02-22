@@ -20,6 +20,21 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>zzq</groupId>
+            <artifactId>zzq-simple-framework-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>zzq</groupId>
+            <artifactId>zzq-simple-framework-json</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>zzq</groupId>
+            <artifactId>zzq-simple-framework-log</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -45,12 +60,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>zzq</groupId>
-            <artifactId>zzq-simple-framework-json</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->

@@ -1,7 +1,7 @@
 package zzq.zzqsimpleframeworkhttp;
 
-import okhttp3.Request;
 import zzq.zzqsimpleframeworkhttp.config.HttpClient;
+import okhttp3.Request;
 
 import java.util.HashMap;
 import java.util.Map;

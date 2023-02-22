@@ -1,10 +1,10 @@
 package zzq.zzqsimpleframeworkhttp;
 
+import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
-import zzq.zzqsimpleframeworkhttp.config.HttpClient;
 
 import java.io.IOException;
 

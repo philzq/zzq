@@ -4,8 +4,12 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
+import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
+import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * 日志拦截器
@@ -32,23 +36,22 @@ class LoggingInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        long t1 = System.currentTimeMillis();
+        LocalDateTime startTime = LocalDateTime.now();
         Request request = chain.request();
-        HttpLogEntity httpLogEntity = request.tag(HttpLogEntity.class);
-        if (httpLogEntity != null) {
-            httpLogEntity.getLog().append(String.format("Sending request %s %n%s",
-                    request.url(), request.headers()));
+        RemoteDigestLogEntity remoteDigestLogEntity = request.tag(RemoteDigestLogEntity.class);
+        if (remoteDigestLogEntity != null) {
+            String requestId = ThreadLocalManager.globalContextThreadLocal.get().getRequestId();
+            remoteDigestLogEntity.setRequestId(requestId);
+            remoteDigestLogEntity.setUri(request.url().toString());
         }
         Response response = chain.proceed(request);
 
-        long t2 = System.currentTimeMillis();
-        if (httpLogEntity != null) {
-            long elapsedTime = t2 - t1;
-            httpLogEntity.setElapsedTime(elapsedTime);
+        if (remoteDigestLogEntity != null) {
+            long elapseTime = Duration.between(startTime, LocalDateTime.now()).toMillis();
+            remoteDigestLogEntity.setElapseTime(elapseTime);
             //最大只取1M以内的数据，防止响应体太大影响日志组件
             String body = response.peekBody(1024 * 1024).string();
-            httpLogEntity.getLog().append(String.format("Received response for %s in %sms%n%s%s%n",
-                    request.url(), elapsedTime, response.headers(), body));
+            remoteDigestLogEntity.setResponse(body);
         }
         return response;
     }

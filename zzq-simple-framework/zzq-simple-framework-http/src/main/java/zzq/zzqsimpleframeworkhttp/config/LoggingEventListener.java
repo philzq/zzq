@@ -1,11 +1,14 @@
 package zzq.zzqsimpleframeworkhttp.config;
 
 import okhttp3.*;
+import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -21,21 +24,21 @@ class LoggingEventListener extends EventListener {
 
     private void addEventLog(Call call, String log) {
         Request request = call.request();
-        HttpLogEntity httpLogEntity = request.tag(HttpLogEntity.class);
-        if (httpLogEntity != null) {
-            long nowTime = System.currentTimeMillis();
+        RemoteDigestLogEntity remoteDigestLogEntity = request.tag(RemoteDigestLogEntity.class);
+        if (remoteDigestLogEntity != null) {
+            LocalDateTime nowTime = LocalDateTime.now();
             if (log.startsWith("callStart")) {
-                httpLogEntity.setStartTime(nowTime);
-                httpLogEntity.getLog().append("\n");
+                remoteDigestLogEntity.setStartTime(nowTime);
+                remoteDigestLogEntity.getRequestDetail().append("\n");
             }
-            long elapsedTime = nowTime - httpLogEntity.getStartTime();
-            httpLogEntity.getLog().append(String.format("%s %s %s%n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")), "【" + elapsedTime + "ms】", log));
+            long elapseTime = Duration.between(remoteDigestLogEntity.getStartTime(), nowTime).toMillis();
+            remoteDigestLogEntity.getRequestDetail().append(String.format("%s %s %s%n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")), "【" + elapseTime + "ms】", log));
         }
     }
 
     @Override
     public void callStart(Call call) {
-        addEventLog(call, "callStart:" + call.request());
+        addEventLog(call, "callStart:" + call.request().url() + "," + call.request().headers());
     }
 
     @Override

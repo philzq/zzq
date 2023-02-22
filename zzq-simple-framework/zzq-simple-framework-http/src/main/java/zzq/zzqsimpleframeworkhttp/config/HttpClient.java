@@ -1,12 +1,17 @@
 package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
+import zzq.zzqsimpleframeworkcommon.entity.ProjectConstant;
+import zzq.zzqsimpleframeworkcommon.enums.BusinessCodeEnum;
+import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
+import zzq.zzqsimpleframeworkhttp.utils.ExceptionUtil;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
-import zzq.zzqsimpleframeworkhttp.utils.ExceptionUtil;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
+import zzq.zzqsimpleframeworklog.LogUtilFactory;
+import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.time.Duration;
 import java.util.Map;
@@ -85,7 +90,7 @@ public class HttpClient {
                 .build();
     }
 
-    public okhttp3.OkHttpClient getOkHttpClient() {
+    public OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }
 
@@ -106,23 +111,31 @@ public class HttpClient {
      */
     private String send(Request request) {
         String rs = null;
+        boolean success = true;
         try {
-            Call r = okHttpClient.newCall(request);
+            //将上下文信息填充到header中
+            Request newRequest = request.newBuilder().header(ProjectConstant.GLOBAL_CONTEXT_HEADER_KEY, JacksonUtil.toJSon(ThreadLocalManager.globalContextThreadLocal.get())).build();
+            Call r = okHttpClient.newCall(newRequest);
             Response response = r.execute();
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
+            success = false;
             if (request != null) {
-                HttpLogEntity logTag = request.tag(HttpLogEntity.class);
+                RemoteDigestLogEntity logTag = request.tag(RemoteDigestLogEntity.class);
                 if (logTag != null) {
-                    logTag.getLog().append("\n").append(ExceptionUtil.getStackTrace(e));
+                    logTag.setErrorCode(BusinessCodeEnum.REMOTE_DIGEST_EXCEPTION.getBusinessCode());
+                    logTag.setErrorDesc(BusinessCodeEnum.REMOTE_DIGEST_EXCEPTION.getMessage() + "\r\n" + ExceptionUtil.getStackTrace(e));
                 }
             }
-            logger.error("【HTTP调用异常】", e);
+            throw new HttpClientException("【HTTP调用异常】", e);
         } finally {
             if (request != null) {
-                HttpLogEntity logTag = request.tag(HttpLogEntity.class);
+                RemoteDigestLogEntity logTag = request.tag(RemoteDigestLogEntity.class);
                 if (logTag != null) {
-                    logger.info(logTag.getLog().toString());
+                    logTag.setSuccess(success);
+                    logTag.setRemoteIp(hostName);
+                    logTag.setRemoteAppName(hostName);
+                    LogUtilFactory.REMOTE_DIGEST.info(logTag);
                 }
             }
         }
@@ -137,11 +150,11 @@ public class HttpClient {
             if (relativePath != null) {
                 url += relativePath;
             }
-            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity());
+            Request.Builder requestBuilder = new Request.Builder().headers(toHeader(header)).tag(RemoteDigestLogEntity.class, new RemoteDigestLogEntity());
             if (param != null) {
                 HttpUrl httpUrl = HttpUrl.parse(url);
                 if (httpUrl == null) {
-                    throw new RuntimeException("request url error: " + url);
+                    throw new HttpClientException("request url error: " + url);
                 }
                 HttpUrl.Builder urlBuilder = httpUrl.newBuilder();
                 param.forEach(urlBuilder::addQueryParameter);
@@ -151,7 +164,7 @@ public class HttpClient {
             }
             rs = send(request);
         } catch (Exception e) {
-            logger.error("【HTTP调用异常】", e);
+            throw new HttpClientException("【HTTP调用异常】", e);
         }
         return rs;
     }
@@ -163,12 +176,12 @@ public class HttpClient {
             if (relativePath != null) {
                 url += relativePath;
             }
-            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(RemoteDigestLogEntity.class, new RemoteDigestLogEntity())
                     .post(RequestBody.create(param instanceof String ? (String) param :
                             Objects.requireNonNull(JacksonUtil.toJSon(param)), jsonMediaType)).build();
             rs = send(request);
         } catch (Exception e) {
-            logger.error("【HTTP调用异常】", e);
+            throw new HttpClientException("【HTTP调用异常】", e);
         }
         return rs;
     }
@@ -182,11 +195,11 @@ public class HttpClient {
             }
             FormBody.Builder build = new FormBody.Builder();
             param.forEach(build::add);
-            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(HttpLogEntity.class, new HttpLogEntity())
+            Request request = new Request.Builder().url(url).headers(toHeader(header)).tag(RemoteDigestLogEntity.class, new RemoteDigestLogEntity())
                     .post(build.build()).build();
             rs = send(request);
         } catch (Exception e) {
-            logger.error("【HTTP调用异常】", e);
+            throw new HttpClientException("【HTTP调用异常】", e);
         }
         return rs;
     }
