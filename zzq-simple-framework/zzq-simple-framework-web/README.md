@@ -21,7 +21,7 @@ spring:
   kafka:
     producer:
       properties:
-        interceptor.classes: com.kdniao.general.common.web.kafka.KafkaProducerContextInterceptor
+        interceptor.classes: zzq.zzqsimpleframeworkweb.kafka.KafkaProducerContextInterceptor
 ```
 
 ## 三、版本迭代内容
