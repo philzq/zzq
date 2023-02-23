@@ -32,8 +32,7 @@ private JsonTestEntity jsonTestEntity(@RequestBody JsonTestEntity jsonTestEntity
 
     System.out.println("toJSon:\n" + toJSon);
 
-    JsonTestEntity parseJson = JacksonUtil.parseJson(toJSon, new TypeReference<JsonTestEntity>() {
-    });
+    JsonTestEntity parseJson = JacksonUtil.parseJson(toJSon, new CustomTypeReference<JsonTestEntity>());
 
     return parseJson;
 }
