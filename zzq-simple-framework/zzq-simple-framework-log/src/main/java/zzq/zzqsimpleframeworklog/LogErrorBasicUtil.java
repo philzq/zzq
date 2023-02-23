@@ -1,5 +1,6 @@
 package zzq.zzqsimpleframeworklog;
 
+import org.slf4j.helpers.MessageFormatter;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
 import zzq.zzqsimpleframeworklog.entity.SystemErrorLogEntity;
 import zzq.zzqsimpleframeworklog.util.LogInitUtil;
@@ -22,8 +23,9 @@ public class LogErrorBasicUtil {
     }
 
     /*******************************error*********************************/
-    public void error(String title, String message) {
-        error(title, message, null);
+    public void error(String title, String format, Object... args) {
+        String msg = MessageFormatter.arrayFormat(format, args).getMessage();
+        error(title, msg, 0, null);
     }
 
     public void error(String title, String message, Throwable throwable) {

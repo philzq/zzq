@@ -1,5 +1,6 @@
 package zzq.zzqsimpleframeworklog;
 
+import org.slf4j.helpers.MessageFormatter;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
 import zzq.zzqsimpleframeworklog.entity.SystemInfoLogEntity;
 import zzq.zzqsimpleframeworklog.util.LogInitUtil;
@@ -21,10 +22,11 @@ public class LogInfoBasicUtil {
     }
 
     /*******************************info*********************************/
-    public void info(String title, String message) {
+    public void info(String title, String format, Object... args) {
+        String msg = MessageFormatter.arrayFormat(format, args).getMessage();
         SystemInfoLogEntity systemInfoLogEntity = SystemInfoLogEntity.builder()
                 .title(title)
-                .message(message)
+                .message(msg)
                 .build();
         info(systemInfoLogEntity);
     }
