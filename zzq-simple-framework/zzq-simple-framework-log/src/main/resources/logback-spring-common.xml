@@ -188,6 +188,7 @@
     </appender>
 
     <logger name="system.info" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="SYSTEM-INFO"/>
     </logger>
 
@@ -207,6 +208,7 @@
     </appender>
 
     <logger name="system.error" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="SYSTEM-ERROR"/>
     </logger>
 
