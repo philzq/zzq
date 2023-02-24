@@ -5,7 +5,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -34,22 +33,20 @@ import java.time.LocalDateTime;
 public class WebLogAspect {
 
     /**
-     * 定义一个方法，用于声明切入点表达式，方法中一般不需要添加其他代码
-     * 使用@Pointcut声明切入点表达式
-     * 后面的通知直接使用方法名来引用当前的切点表达式；如果是其他类使用，加上包名即可
-     */
-    @Pointcut("execution(public * zzq..controller..*.*(..))")
-    public void methodPerformanceTracking() {
-    }
-
-    /**
      * 环绕通知(需要携带类型为ProceedingJoinPoint类型的参数)
      * 环绕通知包含前置、后置、返回、异常通知；ProceedingJoinPoin 类型的参数可以决定是否执行目标方法
      * 且环绕通知必须有返回值，返回值即目标方法的返回值
      *
      * @param point
      */
-    @Around(value = "methodPerformanceTracking()")
+    @Around(value =
+            "@annotation(org.springframework.web.bind.annotation.RequestMapping)" +
+                    " || @annotation(org.springframework.web.bind.annotation.GetMapping)" +
+                    " || @annotation(org.springframework.web.bind.annotation.PostMapping)" +
+                    " || @annotation(org.springframework.web.bind.annotation.PutMapping)" +
+                    " || @annotation(org.springframework.web.bind.annotation.DeleteMapping)" +
+                    " || @annotation(org.springframework.web.bind.annotation.PatchMapping)"
+    )
     public Object aroundMethod(ProceedingJoinPoint point) throws Throwable {
         boolean success = false;
         LocalDateTime startTime = LocalDateTime.now();
