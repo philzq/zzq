@@ -8,7 +8,6 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import zzq.zzqsimpleframeworkcommon.context.GlobalContext;
 import zzq.zzqsimpleframeworkcommon.context.ProjectContext;
@@ -51,7 +50,6 @@ public class KafkaListenerConsumerLogAspect {
         Throwable ex = null;
         KafkaLogEntity kafkaLogEntity = KafkaLogEntity.builder().build();
         ConsumerRecord consumerRecord = null;
-        Acknowledgment acknowledgment = null;
         try {
             String className = signature.getDeclaringType().getName();
             String methodName = point.getSignature().getName();
@@ -66,9 +64,6 @@ public class KafkaListenerConsumerLogAspect {
             Object[] args = point.getArgs();
             for (int i = 0; i < args.length; i++) {
                 Object arg = args[i];
-                if (arg instanceof Acknowledgment) {
-                    acknowledgment = (Acknowledgment) arg;
-                }
                 if (arg instanceof ConsumerRecord) {
                     consumerRecord = (ConsumerRecord) arg;
                 }
@@ -106,11 +101,6 @@ public class KafkaListenerConsumerLogAspect {
             LogUtilFactory.SYSTEM_ERROR.error("【kafka消费失败】", e.getMessage(), e);
             throw e;
         } finally {
-            //执行成功提交信息
-            if (success && acknowledgment != null) {
-                acknowledgment.acknowledge();
-            }
-
             //清空上下文信息
             ThreadLocalManager.clear();
 
