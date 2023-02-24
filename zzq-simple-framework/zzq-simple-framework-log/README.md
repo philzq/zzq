@@ -36,6 +36,7 @@ log日志组件的封装
     </appender>
 
     <logger name="remote.digest" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="REMOTE-DIGEST"/>
     </logger>
 ```
@@ -83,6 +84,7 @@ System.setProperty("appName","zzq-simple-framework-json-client");
     </appender>
 
     <logger name="test.log" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="TEST-LOG"/>
     </logger>
 </configuration>

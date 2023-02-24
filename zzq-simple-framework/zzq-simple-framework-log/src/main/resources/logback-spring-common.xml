@@ -92,6 +92,7 @@
     </appender>
 
     <logger name="remote.digest" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="REMOTE-DIGEST"/>
     </logger>
 
@@ -112,6 +113,7 @@
     </appender>
 
     <logger name="rpc.digest" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="RPC-DIGEST"/>
     </logger>
 
@@ -131,6 +133,7 @@
     </appender>
 
     <logger name="web.digest" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="WEB-DIGEST"/>
     </logger>
 
@@ -150,6 +153,7 @@
     </appender>
 
     <logger name="kafka" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="KAFKA"/>
     </logger>
 
@@ -169,6 +173,7 @@
     </appender>
 
     <logger name="mongo" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="MONGO"/>
     </logger>
 
@@ -228,6 +233,7 @@
     </appender>
 
     <logger name="task" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="TASK"/>
     </logger>
 </included>
