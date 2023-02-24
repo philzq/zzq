@@ -5,6 +5,8 @@
 ## 二、使用方法
 demo教程：zzq-simple-framework-http-client
 
+#### a、 HttpClient使用教程
+
 1、添加依赖
 ```
         <dependency>
@@ -56,10 +58,50 @@ Object response = httpClient.post("200", new TypeReference<Object>() {
 ```
 String response = httpClient.post("200");
  ```
+
+#### b、 FeignClient使用教程
+1、不基于@FeignClient注解，直接调用的使用方式
+ ```
+    public static void main(String[] args) {
+        Hello target = Feign.builder()
+                .client(new OkHttpFeignClient(100))
+                .target(Hello.class, "http://httpstat.us/");
+        String name = target.hello();
+        System.out.println(name);
+    }
+
+    interface Hello {
+
+        @RequestLine(value = "POST /200")
+        String hello();
+    }
+ ```
+ 
+ 2、基于@FeignClient注解使用方式
+ 
+ 注入client
+  ```
+ @Configuration
+ public class TestFeignCustomClientConfig {
+ 
+     @Bean("userFacadeOkHttpFeignClient")
+     public OkHttpFeignClient testOkHttpFeignClient(LoadBalancerClient loadBalancerClient, LoadBalancerClientFactory loadBalancerClientFactory){
+         OkHttpFeignClient okHttpFeignClient = new OkHttpFeignClient(100);
+         okHttpFeignClient.setLoadBalancerClient(loadBalancerClient);
+         okHttpFeignClient.setLoadBalancerClientFactory(loadBalancerClientFactory);
+         return okHttpFeignClient;
+     }  
+ }
+  ```
+ 配置client
+  ```
+ @FeignClient(name = "user-api", contextId = "userFacadeOkHttpFeignClient")
+  ```
  
 ## 三、版本迭代内容
 0.0.1-SNAPSHOT
 ```
 1、基于RemoteDigestLogEntity日志实体，Request的tag，全面收集http请求的全链路日志
 2、封装HttpClient工具类，简化及统一http功能的使用
+3、集成feignclient与okhttpclient,feignclient集成注册中心
 ```

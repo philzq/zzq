@@ -1,16 +1,12 @@
 package zzq.zzqsimpleframeworkhttp.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
-import zzq.zzqsimpleframeworkcommon.entity.ProjectConstant;
-import zzq.zzqsimpleframeworkcommon.enums.BusinessCodeEnum;
-import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
-import zzq.zzqsimpleframeworkhttp.utils.ExceptionUtil;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zzq.zzqsimpleframeworkhttp.exception.HttpClientException;
+import zzq.zzqsimpleframeworkhttp.utils.HttpUtil;
 import zzq.zzqsimpleframeworkjson.JacksonUtil;
-import zzq.zzqsimpleframeworklog.LogUtilFactory;
 import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.time.Duration;
@@ -111,33 +107,11 @@ public class HttpClient {
      */
     private String send(Request request) {
         String rs = null;
-        boolean success = true;
         try {
-            //将上下文信息填充到header中
-            Request newRequest = request.newBuilder().header(ProjectConstant.GLOBAL_CONTEXT_HEADER_KEY, JacksonUtil.toJSon(ThreadLocalManager.globalContextThreadLocal.get())).build();
-            Call r = okHttpClient.newCall(newRequest);
-            Response response = r.execute();
+            Response response = HttpUtil.sendWithResponse(request, okHttpClient);
             rs = response.body() != null ? response.body().string() : null;
         } catch (Exception e) {
-            success = false;
-            if (request != null) {
-                RemoteDigestLogEntity logTag = request.tag(RemoteDigestLogEntity.class);
-                if (logTag != null) {
-                    logTag.setErrorCode(BusinessCodeEnum.REMOTE_DIGEST_EXCEPTION.getBusinessCode());
-                    logTag.setErrorDesc(BusinessCodeEnum.REMOTE_DIGEST_EXCEPTION.getMessage() + "\r\n" + ExceptionUtil.getStackTrace(e));
-                }
-            }
             throw new HttpClientException("【HTTP调用异常】", e);
-        } finally {
-            if (request != null) {
-                RemoteDigestLogEntity logTag = request.tag(RemoteDigestLogEntity.class);
-                if (logTag != null) {
-                    logTag.setSuccess(success);
-                    logTag.setRemoteIp(hostName);
-                    logTag.setRemoteAppName(hostName);
-                    LogUtilFactory.REMOTE_DIGEST.info(logTag);
-                }
-            }
         }
         return rs;
     }
