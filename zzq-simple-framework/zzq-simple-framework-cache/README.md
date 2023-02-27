@@ -38,7 +38,7 @@ Caffeine核心参数介绍
   maximumSize: 缓存的最大数量
   expireAfterAccess: 最后一次读或写操作后经过指定时间过期
   expireAfterWrite: 最后一次写操作后经过指定时间过期
-  refreshAfterWrite: 创建缓存或者最近一次更新缓存后经过指定时间间隔，刷新缓存
+  refreshAfterWrite: 创建缓存或者最近一次更新缓存后经过指定时间间隔才能刷新缓存
   recordStats：开发统计功能
   timeout : 出错后要等几秒再尝试，默认10秒，防止出错后不停的发起穿透请求。
 ```
