@@ -1,5 +1,6 @@
 package zzq.zzqsimpleframeworkjson;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,5 +57,24 @@ public class JacksonUtil {
             logger.error("parseJson exception", e);
         }
         return null;
+    }
+
+    /**
+     * 判断是不是一个json
+     *
+     * @param json
+     * @return
+     */
+    public static boolean isJson(String json) {
+        boolean valid = false;
+        try {
+            JsonParser parser = objectMapper.createParser(json);
+            while (parser.nextToken() != null) {
+            }
+            valid = true;
+        } catch (Exception e) {
+            logger.error("isJson exception", e);
+        }
+        return valid;
     }
 }
