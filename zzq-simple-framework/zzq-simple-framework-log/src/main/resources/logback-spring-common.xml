@@ -43,9 +43,9 @@
     </appender>
 
     <appender name="ERR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${log.path}/${appName}_error.log</File>
+        <File>${log.path}/${appName}-error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${log.path}/${appName}_error.log.%i</FileNamePattern>
+            <FileNamePattern>${log.path}/${appName}-error.log.%i</FileNamePattern>
             <MinIndex>1</MinIndex>
             <MaxIndex>12</MaxIndex>
         </rollingPolicy>
