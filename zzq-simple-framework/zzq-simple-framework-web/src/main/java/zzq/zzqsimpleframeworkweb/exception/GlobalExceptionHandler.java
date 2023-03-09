@@ -19,7 +19,7 @@ import zzq.zzqsimpleframeworklog.LogUtilFactory;
  * @date 2022-10-26 11:24
  */
 @ControllerAdvice
-public class GlobalException {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
