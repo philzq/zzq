@@ -14,6 +14,7 @@ public enum BusinessCodeEnum {
     FAIL_AUTHENTICATION(500901, "认证不通过"),
     NO_AUTHORITY(500902, "无权限"),
     REMOTE_DIGEST_EXCEPTION(500903,"Remote调用失败"),
+    BAD_REQUEST(400999,"请求参数异常，如参数缺失、格式不匹配、数据类型不匹配"),
     ;
 
 

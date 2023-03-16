@@ -1,5 +1,6 @@
 package zzq.zzqsimpleframeworkweb.exception;
 
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,9 +42,19 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonRsp<Object> methodArgumentNotValidExceptionHandler(Exception e) {
-        LogUtilFactory.SYSTEM_ERROR.error(HttpStatus.BAD_REQUEST.getMessage(), e.getMessage(), e);
-        CommonRsp<Object> errorCommonRsp = CommonRsp.error(HttpStatus.BAD_REQUEST.getCode(), 0, e.getMessage());
+    public CommonRsp<Object> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        String defaultMessage = e.getBindingResult().getFieldError().getDefaultMessage();
+        LogUtilFactory.SYSTEM_ERROR.error(HttpStatus.BAD_REQUEST.getMessage(), defaultMessage, e);
+        CommonRsp<Object> errorCommonRsp = CommonRsp.error(HttpStatus.BAD_REQUEST.getCode(), BusinessCodeEnum.BAD_REQUEST.getBusinessCode(), defaultMessage);
+        return errorCommonRsp;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BindException.class)
+    public CommonRsp<Object> bindExceptionHandler(BindException e) {
+        String defaultMessage = e.getFieldError().getDefaultMessage();
+        LogUtilFactory.SYSTEM_ERROR.error(HttpStatus.BAD_REQUEST.getMessage(), defaultMessage, e);
+        CommonRsp<Object> errorCommonRsp = CommonRsp.error(HttpStatus.BAD_REQUEST.getCode(), BusinessCodeEnum.BAD_REQUEST.getBusinessCode(), defaultMessage);
         return errorCommonRsp;
     }
 }
