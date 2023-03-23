@@ -2,7 +2,9 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 import org.jetbrains.annotations.NotNull;
 import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
 import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
@@ -43,6 +45,18 @@ class LoggingInterceptor implements Interceptor {
             String requestId = ThreadLocalManager.globalContextThreadLocal.get().getRequestId();
             remoteDigestLogEntity.setRequestId(requestId);
             remoteDigestLogEntity.setUri(request.url().toString());
+
+            //设置请求参数
+            RequestBody body = request.body();
+            if (body != null) {
+                long bodyLength = body.contentLength();
+                if (bodyLength > 0) {
+                    Buffer buffer = new Buffer();
+                    body.writeTo(buffer);
+                    String bodyStr = buffer.readUtf8();
+                    remoteDigestLogEntity.setRequest(bodyStr);
+                }
+            }
         }
         Response response = chain.proceed(request);
 
