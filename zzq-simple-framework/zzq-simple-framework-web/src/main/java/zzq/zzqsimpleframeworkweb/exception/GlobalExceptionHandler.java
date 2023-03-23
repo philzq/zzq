@@ -2,6 +2,7 @@ package zzq.zzqsimpleframeworkweb.exception;
 
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,6 +54,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public CommonRsp<Object> bindExceptionHandler(BindException e) {
         String defaultMessage = e.getFieldError().getDefaultMessage();
+        LogUtilFactory.SYSTEM_ERROR.error(HttpStatus.BAD_REQUEST.getMessage(), defaultMessage, e);
+        CommonRsp<Object> errorCommonRsp = CommonRsp.error(HttpStatus.BAD_REQUEST.getCode(), BusinessCodeEnum.BAD_REQUEST.getBusinessCode(), defaultMessage);
+        return errorCommonRsp;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public CommonRsp<Object> methodMissingServletRequestParameterExceptionHandler(MissingServletRequestParameterException e) {
+        String defaultMessage = e.getMessage();
         LogUtilFactory.SYSTEM_ERROR.error(HttpStatus.BAD_REQUEST.getMessage(), defaultMessage, e);
         CommonRsp<Object> errorCommonRsp = CommonRsp.error(HttpStatus.BAD_REQUEST.getCode(), BusinessCodeEnum.BAD_REQUEST.getBusinessCode(), defaultMessage);
         return errorCommonRsp;
