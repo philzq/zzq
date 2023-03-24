@@ -82,7 +82,7 @@ public class WebLogAspect {
                     .sessionId(customHttpServletRequestWrapper.getSessionId(false))
                     .remoteOs(userAgent != null ? userAgent.getOperatingSystem().getName() : null)
                     .browserName(userAgent != null ? userAgent.getBrowser().getName() : null)
-                    .request(customHttpServletRequestWrapper.getQueryString())
+                    .request(JacksonUtil.toJSon(point.getArgs()))
                     .response(JacksonUtil.toJSon(result))
                     .success(success)
                     .build();
