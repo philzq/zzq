@@ -5,6 +5,8 @@ import zzq.zzqsimpleframeworkcommon.exception.CustomUncaughtExceptionHandler;
 import zzq.zzqsimpleframeworkcommon.exception.GeneralException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.TimeZone;
+
 /**
  * 项目工具类
  *
@@ -33,5 +35,7 @@ public class ProjectUtil {
         System.setProperty(ProjectConstant.APP_NAME_KEY, appName);
         //线程异常全局捕获
         Thread.setDefaultUncaughtExceptionHandler(new CustomUncaughtExceptionHandler());
+        //设置项目时区为东八区
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
     }
 }
