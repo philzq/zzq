@@ -45,6 +45,7 @@ public class LogErrorBasicUtil {
                 .build();
         if (throwable != null) {
             systemErrorLogEntity.setStackTrace(ExceptionUtils.getStackTrace(throwable));
+            throwable.printStackTrace();
         }
         error(systemErrorLogEntity);
     }
