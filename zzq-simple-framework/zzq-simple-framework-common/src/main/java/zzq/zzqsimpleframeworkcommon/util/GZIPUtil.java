@@ -1,4 +1,5 @@
 /**
+ * Kdniao.com Inc.
  * Copyright (c) 2014-2017 All Rights Reserved.
  */
 package zzq.zzqsimpleframeworkcommon.util;
@@ -38,7 +39,7 @@ public abstract class GZIPUtil {
     }
 
     public static byte[] decompress(byte[] source) throws IOException {
-        if (source == null | source.length == 0) {
+        if (source == null || source.length == 0 || !isGZIPMagic(source)) {
             return source;
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -57,5 +58,19 @@ public abstract class GZIPUtil {
             IOUtils.closeQuietly(gzipIn);
             IOUtils.closeQuietly(out);
         }
+    }
+
+    /**
+     * 判断是不是gzip压缩的
+     *
+     * @param magic
+     * @return
+     */
+    public static boolean isGZIPMagic(byte[] magic) {
+        return (magic != null &&
+                magic.length > 2 &&
+                magic[0] == (byte) 0x1F &&
+                magic[1] == (byte) 0x8B &&
+                magic[2] == (byte) 0x08);
     }
 }
