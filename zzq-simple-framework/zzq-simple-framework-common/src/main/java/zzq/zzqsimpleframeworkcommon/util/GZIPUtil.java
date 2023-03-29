@@ -1,7 +1,3 @@
-/**
- * Kdniao.com Inc.
- * Copyright (c) 2014-2017 All Rights Reserved.
- */
 package zzq.zzqsimpleframeworkcommon.util;
 
 import org.apache.commons.io.IOUtils;
