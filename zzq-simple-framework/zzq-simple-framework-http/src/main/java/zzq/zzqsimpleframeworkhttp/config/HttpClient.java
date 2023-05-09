@@ -90,6 +90,11 @@ public class HttpClient {
         return okHttpClient;
     }
 
+    private HttpClient(OkHttpClient okHttpClient, String hostName) {
+        this.okHttpClient = okHttpClient;
+        this.hostName = hostName;
+    }
+
     private final MediaType jsonMediaType = MediaType.parse("application/json;charset=UTF-8");
 
     private Headers toHeader(Map<String, String> header) {
@@ -97,6 +102,15 @@ public class HttpClient {
             return Headers.of();
         }
         return Headers.of(header);
+    }
+
+    /**
+     * 用于okHttpClient.newBuilder()场景
+     * @param newOkHttpClient
+     * @return
+     */
+    public HttpClient getNewHttpClient(OkHttpClient newOkHttpClient){
+        return new HttpClient(newOkHttpClient,hostName);
     }
 
     /**

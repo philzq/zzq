@@ -45,7 +45,8 @@ public class HttpClientUtils {
 
 4、使用newBuilder基于原有OkHttpClient自定义配置，如代理
  ```
-httpClient.getOkHttpClient().newBuilder().proxy(null).build();
+OkHttpClient okHttpClient = httpClient.getOkHttpClient().newBuilder().proxy(null).build();
+HttpClient newHttpClient = httpClient.getNewHttpClient(okHttpClient);
  ```
 
 #### 注意
