@@ -2,28 +2,18 @@ package zzq.zzqsimpleframeworkhttp.config;
 
 import feign.Client;
 import okhttp3.*;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.*;
-import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.Assert;
 import zzq.zzqsimpleframeworkhttp.utils.HttpUtil;
 import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.URI;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static feign.Util.enumForName;
@@ -32,18 +22,6 @@ import static feign.Util.enumForName;
 public class OkHttpFeignClient implements Client {
 
     private static final Log LOG = LogFactory.getLog(OkHttpFeignClient.class);
-
-    private LoadBalancerClient loadBalancerClient;
-
-    private LoadBalancerClientFactory loadBalancerClientFactory;
-
-    public void setLoadBalancerClient(LoadBalancerClient loadBalancerClient) {
-        this.loadBalancerClient = loadBalancerClient;
-    }
-
-    public void setLoadBalancerClientFactory(LoadBalancerClientFactory loadBalancerClientFactory) {
-        this.loadBalancerClientFactory = loadBalancerClientFactory;
-    }
 
     private final OkHttpClient okHttpClient;
 
@@ -120,76 +98,9 @@ public class OkHttpFeignClient implements Client {
 
     @Override
     public feign.Response execute(feign.Request request, feign.Request.Options options) throws IOException {
-        //如果有注册中心，需要对url进行处理@FeignClient(name = "user-api")
-        if (loadBalancerClient != null && loadBalancerClientFactory != null) {
-            //有注册中心走的逻辑
-            final URI originalUri = URI.create(request.url());
-            String serviceId = originalUri.getHost();
-            Assert.state(serviceId != null, "Request URI does not contain a valid hostname: " + originalUri);
-            String hint = getHint(serviceId);
-            DefaultRequest<RequestDataContext> lbRequest = new DefaultRequest<>(
-                    new RequestDataContext(buildRequestData(request), hint));
-            Set<LoadBalancerLifecycle> supportedLifecycleProcessors = LoadBalancerLifecycleValidator
-                    .getSupportedLifecycleProcessors(
-                            loadBalancerClientFactory.getInstances(serviceId, LoadBalancerLifecycle.class),
-                            RequestDataContext.class, ResponseData.class, ServiceInstance.class);
-            supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(lbRequest));
-            ServiceInstance instance = loadBalancerClient.choose(serviceId, lbRequest);
-            org.springframework.cloud.client.loadbalancer.Response<ServiceInstance> lbResponse = new DefaultResponse(
-                    instance);
-            if (instance == null) {
-                String message = "Load balancer does not contain an instance for the service " + serviceId;
-                if (LOG.isWarnEnabled()) {
-                    LOG.warn(message);
-                }
-                supportedLifecycleProcessors.forEach(lifecycle -> lifecycle
-                        .onComplete(new CompletionContext<ResponseData, ServiceInstance, RequestDataContext>(
-                                CompletionContext.Status.DISCARD, lbRequest, lbResponse)));
-                return feign.Response.builder().request(request).status(HttpStatus.SERVICE_UNAVAILABLE.value())
-                        .body(message, StandardCharsets.UTF_8).build();
-            }
-            String reconstructedUrl = loadBalancerClient.reconstructURI(instance, originalUri).toString();
-
-            request = buildRequest(request, reconstructedUrl);
-        }
         Request okRequest = toOkHttpRequest(request);
         Response response = HttpUtil.sendWithResponse(okRequest, okHttpClient);
         return toFeignResponse(response, request).toBuilder().request(request).build();
-    }
-
-    static RequestData buildRequestData(feign.Request request) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        request.headers().forEach((key, value) -> requestHeaders.put(key, new ArrayList<>(value)));
-        return new RequestData(HttpMethod.resolve(request.httpMethod().name()), URI.create(request.url()),
-                requestHeaders, null, new HashMap<>());
-    }
-
-    protected feign.Request buildRequest(feign.Request request, String reconstructedUrl) {
-        return feign.Request.create(request.httpMethod(), reconstructedUrl, request.headers(), request.body(),
-                request.charset(), request.requestTemplate());
-    }
-
-    private String getHint(String serviceId) {
-        LoadBalancerProperties properties = loadBalancerClientFactory.getProperties(serviceId);
-        String defaultHint = properties.getHint().getOrDefault("default", "default");
-        String hintPropertyValue = properties.getHint().get(serviceId);
-        return hintPropertyValue != null ? hintPropertyValue : defaultHint;
-    }
-
-    private OkHttpClient getClient(feign.Request.Options options) {
-        OkHttpClient requestScoped;
-        if (okHttpClient.connectTimeoutMillis() != options.connectTimeoutMillis()
-                || okHttpClient.readTimeoutMillis() != options.readTimeoutMillis()
-                || okHttpClient.followRedirects() != options.isFollowRedirects()) {
-            requestScoped = okHttpClient.newBuilder()
-                    .connectTimeout(options.connectTimeoutMillis(), TimeUnit.MILLISECONDS)
-                    .readTimeout(options.readTimeoutMillis(), TimeUnit.MILLISECONDS)
-                    .followRedirects(options.isFollowRedirects())
-                    .build();
-        } else {
-            requestScoped = okHttpClient;
-        }
-        return requestScoped;
     }
 
     private Request toOkHttpRequest(feign.Request input) {

@@ -79,24 +79,29 @@ String response = httpClient.post("200");
  ```
  
  2、基于@FeignClient注解使用方式
- 
  注入client
   ```
  @Configuration
  public class TestFeignCustomClientConfig {
  
-     @Bean("userFacadeOkHttpFeignClient")
-     public OkHttpFeignClient testOkHttpFeignClient(LoadBalancerClient loadBalancerClient, LoadBalancerClientFactory loadBalancerClientFactory){
-         OkHttpFeignClient okHttpFeignClient = new OkHttpFeignClient(100);
-         okHttpFeignClient.setLoadBalancerClient(loadBalancerClient);
-         okHttpFeignClient.setLoadBalancerClientFactory(loadBalancerClientFactory);
-         return okHttpFeignClient;
-     }  
+    @Bean
+    public Client feignClient(LoadBalancerClient loadBalancerClient,
+                               LoadBalancerClientFactory loadBalancerClientFactory) {
+        FeignBlockingLoadBalancerFactoryClient feignBlockingLoadBalancerFactoryClient = new FeignBlockingLoadBalancerFactoryClient(loadBalancerClient, loadBalancerClientFactory);
+
+        OkHttpFeignClient userApiClient = new OkHttpFeignClient(50);
+        OkHttpFeignClient userApiClient2 = new OkHttpFeignClient(100);
+        feignBlockingLoadBalancerFactoryClient.addOkHttpFeignClient("user-api", userApiClient);
+        feignBlockingLoadBalancerFactoryClient.addOkHttpFeignClient("user-api2", userApiClient2);
+
+        return feignBlockingLoadBalancerFactoryClient;
+    }
  }
   ```
  配置client
   ```
- @FeignClient(name = "user-api", contextId = "userFacadeOkHttpFeignClient")
+ @FeignClient(name = "user-api")
+ @FeignClient(name = "user-api2")
   ```
  
 ## 三、版本迭代内容
