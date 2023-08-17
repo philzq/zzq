@@ -10,6 +10,8 @@ import zzq.zzqsimpleframeworkcommon.context.ThreadLocalManager;
 import zzq.zzqsimpleframeworklog.entity.RemoteDigestLogEntity;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -44,7 +46,7 @@ class LoggingInterceptor implements Interceptor {
         if (remoteDigestLogEntity != null) {
             String requestId = ThreadLocalManager.globalContextThreadLocal.get().getRequestId();
             remoteDigestLogEntity.setRequestId(requestId);
-            remoteDigestLogEntity.setUri(request.url().toString());
+            remoteDigestLogEntity.setUri(URLDecoder.decode(request.url().toString(), StandardCharsets.UTF_8.name()));
 
             //设置请求参数
             RequestBody body = request.body();
@@ -54,7 +56,7 @@ class LoggingInterceptor implements Interceptor {
                     Buffer buffer = new Buffer();
                     body.writeTo(buffer);
                     String bodyStr = buffer.readUtf8();
-                    remoteDigestLogEntity.setRequest(bodyStr);
+                    remoteDigestLogEntity.setRequest(URLDecoder.decode(bodyStr, StandardCharsets.UTF_8.name()));
                 }
             }
         }
