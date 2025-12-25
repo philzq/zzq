@@ -81,7 +81,6 @@ CREATE TABLE `sys_menu` (
 CREATE TABLE `sys_role` (
                             `role_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '角色ID',
                             `tenant_id` BIGINT DEFAULT NULL COMMENT '租户ID（NULL表示系统角色，非NULL表示租户角色）',
-                            `role_type` TINYINT NOT NULL DEFAULT 1 COMMENT '角色类型：1-系统角色 2-租户角色',
                             `name` VARCHAR(50) NOT NULL COMMENT '角色名称',
                             `level` INT DEFAULT 999 COMMENT '角色级别',
                             `description` VARCHAR(255) DEFAULT NULL COMMENT '描述',
@@ -93,8 +92,7 @@ CREATE TABLE `sys_role` (
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`role_id`),
                             UNIQUE KEY `uk_name_tenant` (`name`, `tenant_id`) COMMENT '同一租户下角色名唯一',
-                            INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_role_type` (`role_type`)
+                            INDEX `idx_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系）';
 
 -- 5. 用户角色关联表
