@@ -190,8 +190,6 @@ CREATE TABLE `sys_order_type` (
 CREATE TABLE `biz_order` (
                              `order_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '订单ID',
                              `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
-                             `user_id` BIGINT NOT NULL COMMENT '创建用户ID',
-                             `order_no` VARCHAR(50) NOT NULL COMMENT '订单编号',
                              `shop_id` BIGINT NOT NULL COMMENT '店铺ID',
                              `type_id` BIGINT NOT NULL COMMENT '订单类型ID',
                              `order_status` TINYINT NOT NULL DEFAULT 0 COMMENT '订单状态：0-待开始 1-进行中 2-待确认 3-已完成 4-已取消',
@@ -208,9 +206,7 @@ CREATE TABLE `biz_order` (
                              `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
                              `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                              PRIMARY KEY (`order_id`),
-                             UNIQUE KEY `uk_order_no` (`order_no`),
                              INDEX `idx_tenant_id` (`tenant_id`),
-                             INDEX `idx_user_id` (`user_id`),
                              INDEX `idx_shop_id` (`shop_id`),
                              INDEX `idx_order_status` (`order_status`),
                              INDEX `idx_start_date` (`start_date`),
