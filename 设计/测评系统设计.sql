@@ -27,7 +27,8 @@ CREATE TABLE `sys_tenant` (
 -- 2. 用户表（支持多租户）
 CREATE TABLE `sys_user` (
                             `user_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                            `tenant_id` BIGINT DEFAULT NULL COMMENT '所属租户ID（NULL表示系统用户）',
+                            `tenant_id` BIGINT DEFAULT NULL COMMENT '所属租户ID（NULL表示系统用户，非NULL表示租户用户）',
+                            `user_type` TINYINT NOT NULL DEFAULT 2 COMMENT '用户类型：1-系统管理员 2-系统员工 3-租户管理员 4-租户员工',
                             `username` VARCHAR(50) NOT NULL COMMENT '用户名',
                             `nick_name` VARCHAR(50) DEFAULT NULL COMMENT '昵称',
                             `email` VARCHAR(100) DEFAULT NULL COMMENT '邮箱',
@@ -48,8 +49,11 @@ CREATE TABLE `sys_user` (
                             UNIQUE KEY `uk_phone` (`phone`),
                             UNIQUE KEY `uk_email` (`email`),
                             INDEX `idx_tenant_id` (`tenant_id`),
+                            INDEX `idx_user_type` (`user_type`),
+                            INDEX `idx_tenant_user_type` (`tenant_id`, `user_type`),
+                            INDEX `idx_tenant_enabled` (`tenant_id`, `enabled`),
                             INDEX `idx_enabled` (`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（多租户）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（多租户：支持系统用户和租户用户两套体系）';
 
 -- 3. 菜单表（支持两套菜单体系）
 CREATE TABLE `sys_menu` (
@@ -72,6 +76,8 @@ CREATE TABLE `sys_menu` (
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`menu_id`),
                             INDEX `idx_menu_type` (`menu_type`),
+                            INDEX `idx_menu_type_hidden` (`menu_type`, `hidden`, `menu_sort`),
+                            INDEX `idx_menu_type_sort` (`menu_type`, `menu_sort`),
                             INDEX `idx_pid` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系：系统菜单、租户菜单）';
 
@@ -90,15 +96,18 @@ CREATE TABLE `sys_role` (
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`role_id`),
                             UNIQUE KEY `uk_name_tenant` (`name`, `tenant_id`) COMMENT '同一租户下角色名唯一',
-                            INDEX `idx_tenant_id` (`tenant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系）';
+                            INDEX `idx_tenant_id` (`tenant_id`),
+                            INDEX `idx_tenant_system` (`tenant_id`, `is_system`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系：系统角色、租户角色）';
 
 -- 5. 用户角色关联表
 CREATE TABLE `sys_users_roles` (
                                    `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                    `role_id` BIGINT NOT NULL COMMENT '角色ID',
                                    PRIMARY KEY (`user_id`, `role_id`),
-                                   INDEX `idx_role_id` (`role_id`)
+                                   INDEX `idx_user_id` (`user_id`),
+                                   INDEX `idx_role_id` (`role_id`),
+                                   INDEX `idx_user_role` (`user_id`, `role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户角色关联';
 
 -- 6. 角色菜单关联表
@@ -106,7 +115,9 @@ CREATE TABLE `sys_roles_menus` (
                                    `role_id` BIGINT NOT NULL COMMENT '角色ID',
                                    `menu_id` BIGINT NOT NULL COMMENT '菜单ID',
                                    PRIMARY KEY (`role_id`, `menu_id`),
-                                   INDEX `idx_menu_id` (`menu_id`)
+                                   INDEX `idx_role_id` (`role_id`),
+                                   INDEX `idx_menu_id` (`menu_id`),
+                                   INDEX `idx_role_menu` (`role_id`, `menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单关联';
 
 -- ==================== 业务表（租户数据隔离） ====================
@@ -275,4 +286,198 @@ CREATE TABLE `sys_help_doc` (
                                 FULLTEXT KEY `ft_title_content` (`title`, `content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助文档表';
 
+-- ==================== 设计优化：支持两套用户体系和两套菜单体系 ====================
+
+-- 说明：索引已在表定义中直接创建，此处保留用于已有表的优化脚本
+/*
+-- 【优化】如果表已存在，可以使用以下ALTER TABLE语句添加索引
+ALTER TABLE `sys_user` 
+    ADD INDEX IF NOT EXISTS `idx_user_type` (`user_type`),
+    ADD INDEX IF NOT EXISTS `idx_tenant_user_type` (`tenant_id`, `user_type`),
+    ADD INDEX IF NOT EXISTS `idx_tenant_enabled` (`tenant_id`, `enabled`);
+
+ALTER TABLE `sys_menu` 
+    ADD INDEX IF NOT EXISTS `idx_menu_type_hidden` (`menu_type`, `hidden`, `menu_sort`),
+    ADD INDEX IF NOT EXISTS `idx_menu_type_sort` (`menu_type`, `menu_sort`);
+
+ALTER TABLE `sys_role` 
+    ADD INDEX IF NOT EXISTS `idx_tenant_system` (`tenant_id`, `is_system`);
+
+ALTER TABLE `sys_users_roles` 
+    ADD INDEX IF NOT EXISTS `idx_user_role` (`user_id`, `role_id`);
+
+ALTER TABLE `sys_roles_menus` 
+    ADD INDEX IF NOT EXISTS `idx_role_menu` (`role_id`, `menu_id`);
+*/
+
+-- ==================== 视图：简化常用查询 ====================
+
+-- 【视图1】系统用户视图（tenant_id IS NULL）
+CREATE OR REPLACE VIEW `v_system_users` AS
+SELECT 
+    u.*,
+    CASE 
+        WHEN u.is_admin = 1 THEN 1  -- 系统管理员
+        ELSE 2                       -- 系统员工
+    END AS user_type_name
+FROM `sys_user` u
+WHERE u.tenant_id IS NULL AND u.enabled = 1;
+
+-- 【视图2】租户用户视图（tenant_id IS NOT NULL）
+CREATE OR REPLACE VIEW `v_tenant_users` AS
+SELECT 
+    u.*,
+    t.tenant_name,
+    t.company_name,
+    CASE 
+        WHEN u.is_admin = 1 THEN 3  -- 租户管理员
+        ELSE 4                       -- 租户员工
+    END AS user_type_name
+FROM `sys_user` u
+LEFT JOIN `sys_tenant` t ON u.tenant_id = t.tenant_id
+WHERE u.tenant_id IS NOT NULL AND u.enabled = 1;
+
+-- 【视图3】系统菜单视图（menu_type = 1）
+CREATE OR REPLACE VIEW `v_system_menus` AS
+SELECT 
+    m.*,
+    pm.title AS parent_title
+FROM `sys_menu` m
+LEFT JOIN `sys_menu` pm ON m.pid = pm.menu_id
+WHERE m.menu_type = 1 AND m.hidden = 0
+ORDER BY m.menu_sort ASC, m.menu_id ASC;
+
+-- 【视图4】租户菜单视图（menu_type = 2）
+CREATE OR REPLACE VIEW `v_tenant_menus` AS
+SELECT 
+    m.*,
+    pm.title AS parent_title
+FROM `sys_menu` m
+LEFT JOIN `sys_menu` pm ON m.pid = pm.menu_id
+WHERE m.menu_type = 2 AND m.hidden = 0
+ORDER BY m.menu_sort ASC, m.menu_id ASC;
+
+-- 【视图5】系统角色视图
+CREATE OR REPLACE VIEW `v_system_roles` AS
+SELECT r.*
+FROM `sys_role` r
+WHERE r.tenant_id IS NULL;
+
+-- 【视图6】租户角色视图
+CREATE OR REPLACE VIEW `v_tenant_roles` AS
+SELECT 
+    r.*,
+    t.tenant_name,
+    t.company_name
+FROM `sys_role` r
+LEFT JOIN `sys_tenant` t ON r.tenant_id = t.tenant_id
+WHERE r.tenant_id IS NOT NULL;
+
+-- ==================== 常用查询SQL模板 ====================
+
+/*
+【查询模板1】获取系统用户的菜单（根据用户角色）
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+WHERE ur.user_id = ? 
+    AND m.menu_type = 1  -- 系统菜单
+    AND m.hidden = 0
+    AND r.tenant_id IS NULL  -- 系统角色
+ORDER BY m.menu_sort;
+*/
+
+/*
+【查询模板2】获取租户用户的菜单（根据用户角色）
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+INNER JOIN sys_user u ON ur.user_id = u.user_id
+WHERE ur.user_id = ? 
+    AND m.menu_type = 2  -- 租户菜单
+    AND m.hidden = 0
+    AND r.tenant_id = u.tenant_id  -- 租户角色
+ORDER BY m.menu_sort;
+*/
+
+/*
+【查询模板3】判断用户类型
+-- 系统用户：tenant_id IS NULL
+-- 租户用户：tenant_id IS NOT NULL
+-- 系统管理员：tenant_id IS NULL AND is_admin = 1 (或 user_type = 1)
+-- 系统员工：tenant_id IS NULL AND is_admin = 0 (或 user_type = 2)
+-- 租户管理员：tenant_id IS NOT NULL AND is_admin = 1 (或 user_type = 3)
+-- 租户员工：tenant_id IS NOT NULL AND is_admin = 0 (或 user_type = 4)
+*/
+
+/*
+【查询模板4】获取用户可访问的菜单（统一查询）
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+INNER JOIN sys_user u ON ur.user_id = u.user_id
+WHERE ur.user_id = ?
+    AND m.hidden = 0
+    AND (
+        -- 系统用户：只能访问系统菜单和系统角色
+        (u.tenant_id IS NULL AND m.menu_type = 1 AND r.tenant_id IS NULL)
+        OR
+        -- 租户用户：只能访问租户菜单和本租户的角色
+        (u.tenant_id IS NOT NULL AND m.menu_type = 2 AND r.tenant_id = u.tenant_id)
+    )
+ORDER BY m.menu_sort;
+*/
+
+-- ==================== 数据一致性规则说明 ====================
+
+/*
+【规则1】用户与租户的关系
+- 系统用户：tenant_id 必须为 NULL
+- 租户用户：tenant_id 必须不为 NULL，且必须存在于 sys_tenant 表中
+
+【规则2】用户与角色的关系
+- 系统用户（tenant_id IS NULL）只能分配系统角色（tenant_id IS NULL）
+- 租户用户（tenant_id IS NOT NULL）只能分配租户角色（tenant_id = 用户的tenant_id）
+
+【规则3】角色与菜单的关系
+- 系统角色（tenant_id IS NULL）只能关联系统菜单（menu_type = 1）
+- 租户角色（tenant_id IS NOT NULL）只能关联租户菜单（menu_type = 2）
+
+【规则4】用户类型判断逻辑（在应用层实现）
+- user_type = 1：系统管理员（tenant_id IS NULL AND is_admin = 1）
+- user_type = 2：系统员工（tenant_id IS NULL AND is_admin = 0）
+- user_type = 3：租户管理员（tenant_id IS NOT NULL AND is_admin = 1）
+- user_type = 4：租户员工（tenant_id IS NOT NULL AND is_admin = 0）
+
+注意：这些一致性规则需要在应用层严格校验，建议使用触发器或在Service层统一封装校验逻辑。
+*/
+
+-- ==================== 初始化user_type字段数据的SQL（如果表已有数据）====================
+
+/*
+-- 步骤1：先添加字段，允许NULL
+ALTER TABLE `sys_user` 
+    ADD COLUMN `user_type` TINYINT DEFAULT NULL COMMENT '用户类型：1-系统管理员 2-系统员工 3-租户管理员 4-租户员工' 
+    AFTER `tenant_id`;
+
+-- 步骤2：更新已有数据
+UPDATE `sys_user` 
+SET `user_type` = CASE
+    WHEN tenant_id IS NULL AND is_admin = 1 THEN 1  -- 系统管理员
+    WHEN tenant_id IS NULL AND is_admin = 0 THEN 2  -- 系统员工
+    WHEN tenant_id IS NOT NULL AND is_admin = 1 THEN 3  -- 租户管理员
+    WHEN tenant_id IS NOT NULL AND is_admin = 0 THEN 4  -- 租户员工
+    ELSE 2  -- 默认值
+END;
+
+-- 步骤3：修改字段为NOT NULL
+ALTER TABLE `sys_user` 
+    MODIFY COLUMN `user_type` TINYINT NOT NULL DEFAULT 2 COMMENT '用户类型：1-系统管理员 2-系统员工 3-租户管理员 4-租户员工';
+*/
 
