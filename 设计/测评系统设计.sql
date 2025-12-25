@@ -27,8 +27,7 @@ CREATE TABLE `sys_tenant` (
 -- 2. 用户表（支持多租户）
 CREATE TABLE `sys_user` (
                             `user_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                            `tenant_id` BIGINT DEFAULT NULL COMMENT '所属租户ID（NULL表示系统用户，非NULL表示租户用户）',
-                            `user_type` TINYINT NOT NULL DEFAULT 2 COMMENT '用户类型：1-系统管理员 2-系统员工 3-租户管理员 4-租户员工',
+                            `tenant_id` BIGINT DEFAULT NULL COMMENT '所属租户ID（NULL表示系统用户，非NULL表示租户用户，根据创建者自动确定）',
                             `username` VARCHAR(50) NOT NULL COMMENT '用户名',
                             `nick_name` VARCHAR(50) DEFAULT NULL COMMENT '昵称',
                             `email` VARCHAR(100) DEFAULT NULL COMMENT '邮箱',
@@ -37,7 +36,7 @@ CREATE TABLE `sys_user` (
                             `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像',
                             `password` VARCHAR(100) NOT NULL COMMENT '密码',
                             `enabled` TINYINT(1) DEFAULT 1 COMMENT '状态：1-启用 0-禁用',
-                            `is_admin` TINYINT(1) DEFAULT 0 COMMENT '是否为租户管理员',
+                            `is_admin` TINYINT(1) DEFAULT 0 COMMENT '是否为超管：系统用户时is_admin=1表示系统超管，租户用户时is_admin=1表示租户超管',
                             `last_login_time` DATETIME DEFAULT NULL COMMENT '最后登录时间',
                             `pwd_reset_time` DATETIME DEFAULT NULL COMMENT '密码重置时间',
                             `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
@@ -49,11 +48,10 @@ CREATE TABLE `sys_user` (
                             UNIQUE KEY `uk_phone` (`phone`),
                             UNIQUE KEY `uk_email` (`email`),
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_user_type` (`user_type`),
-                            INDEX `idx_tenant_user_type` (`tenant_id`, `user_type`),
                             INDEX `idx_tenant_enabled` (`tenant_id`, `enabled`),
+                            INDEX `idx_tenant_admin` (`tenant_id`, `is_admin`),
                             INDEX `idx_enabled` (`enabled`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（多租户：支持系统用户和租户用户两套体系）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（两套用户体系：系统用户tenant_id=NULL，租户用户tenant_id!=NULL）';
 
 -- 3. 菜单表（支持两套菜单体系）
 CREATE TABLE `sys_menu` (
@@ -76,10 +74,10 @@ CREATE TABLE `sys_menu` (
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`menu_id`),
                             INDEX `idx_menu_type` (`menu_type`),
-                            INDEX `idx_menu_type_hidden` (`menu_type`, `hidden`, `menu_sort`),
-                            INDEX `idx_menu_type_sort` (`menu_type`, `menu_sort`),
+                            INDEX `idx_menu_type_hidden_sort` (`menu_type`, `hidden`, `menu_sort`),
+                            INDEX `idx_menu_type_pid` (`menu_type`, `pid`),
                             INDEX `idx_pid` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系：系统菜单、租户菜单）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系：系统菜单menu_type=1、租户菜单menu_type=2）';
 
 -- 4. 角色表（支持系统角色和租户角色）
 CREATE TABLE `sys_role` (
@@ -98,7 +96,7 @@ CREATE TABLE `sys_role` (
                             UNIQUE KEY `uk_name_tenant` (`name`, `tenant_id`) COMMENT '同一租户下角色名唯一',
                             INDEX `idx_tenant_id` (`tenant_id`),
                             INDEX `idx_tenant_system` (`tenant_id`, `is_system`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系：系统角色、租户角色）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系：系统角色tenant_id=NULL，租户角色tenant_id!=NULL）';
 
 -- 5. 用户角色关联表
 CREATE TABLE `sys_users_roles` (
@@ -118,7 +116,7 @@ CREATE TABLE `sys_roles_menus` (
                                    INDEX `idx_role_id` (`role_id`),
                                    INDEX `idx_menu_id` (`menu_id`),
                                    INDEX `idx_role_menu` (`role_id`, `menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单关联';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单关联（需保证：系统角色关联系统菜单，租户角色关联租户菜单）';
 
 -- ==================== 业务表（租户数据隔离） ====================
 
@@ -285,4 +283,145 @@ CREATE TABLE `sys_help_doc` (
                                 INDEX `idx_category` (`category`),
                                 FULLTEXT KEY `ft_title_content` (`title`, `content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助文档表';
+
+-- ==================== 设计说明：两套用户体系和两套菜单体系 ====================
+
+/*
+【核心设计原则】
+1. 一套系统：所有数据在同一数据库中，通过字段区分不同体系
+2. 两套用户体系：系统用户（tenant_id IS NULL）和租户用户（tenant_id IS NOT NULL）
+3. 两套菜单体系：系统菜单（menu_type=1）和租户菜单（menu_type=2）
+
+【用户体系设计】
+- sys_user.tenant_id = NULL  → 系统用户（由系统超管、系统用户创建）
+- sys_user.tenant_id != NULL → 租户用户（由系统用户创建租户时同步创建，或由租户用户创建）
+- 用户类型通过创建者自动确定：
+  * 系统超管、系统用户创建的用户 → tenant_id = NULL（系统用户）
+  * 系统超管、系统用户创建租户时同步创建租户超管 → tenant_id = 租户ID（租户超管，is_admin = 1）
+  * 租户用户创建的用户 → tenant_id = 创建者的tenant_id（租户用户，is_admin = 0）
+- is_admin字段含义：
+  * 系统用户（tenant_id IS NULL）：is_admin = 1 表示系统超管，is_admin = 0 表示系统普通用户
+  * 租户用户（tenant_id IS NOT NULL）：is_admin = 1 表示租户超管，is_admin = 0 表示租户普通用户
+
+【菜单体系设计】
+- sys_menu.menu_type = 1 → 系统菜单（供系统用户使用）
+- sys_menu.menu_type = 2 → 租户菜单（供租户用户使用）
+
+【角色体系设计】
+- sys_role.tenant_id = NULL  → 系统角色（供系统用户使用）
+- sys_role.tenant_id != NULL → 租户角色（供租户用户使用，需匹配用户的tenant_id）
+
+【数据一致性规则】（应用层必须严格校验）
+1. 用户与角色关系：
+   - 系统用户（tenant_id IS NULL）只能分配系统角色（tenant_id IS NULL）
+   - 租户用户（tenant_id IS NOT NULL）只能分配租户角色（tenant_id = 用户的tenant_id）
+
+2. 角色与菜单关系：
+   - 系统角色（tenant_id IS NULL）只能关联系统菜单（menu_type = 1）
+   - 租户角色（tenant_id IS NOT NULL）只能关联租户菜单（menu_type = 2）
+
+3. 用户创建规则：
+   - 系统用户（tenant_id IS NULL）创建的用户 → tenant_id = NULL（系统用户）
+   - 系统超管创建租户时 → 同步创建租户超管，tenant_id = 租户ID，is_admin = 1
+   - 租户用户（tenant_id IS NOT NULL）创建的用户 → tenant_id = 创建者的tenant_id（租户用户），is_admin = 0
+4. is_admin字段规则：
+   - 系统用户（tenant_id IS NULL）：is_admin = 1 表示系统超管，is_admin = 0 表示系统普通用户
+   - 租户用户（tenant_id IS NOT NULL）：is_admin = 1 表示租户超管，is_admin = 0 表示租户普通用户
+
+【常用查询SQL】
+
+1. 查询系统用户列表：
+SELECT * FROM sys_user WHERE tenant_id IS NULL AND enabled = 1;
+
+2. 查询租户用户列表：
+SELECT * FROM sys_user WHERE tenant_id IS NOT NULL AND enabled = 1;
+
+3. 查询系统菜单（树形结构）：
+SELECT * FROM sys_menu 
+WHERE menu_type = 1 AND hidden = 0 
+ORDER BY menu_sort ASC, menu_id ASC;
+
+4. 查询租户菜单（树形结构）：
+SELECT * FROM sys_menu 
+WHERE menu_type = 2 AND hidden = 0 
+ORDER BY menu_sort ASC, menu_id ASC;
+
+5. 查询系统用户的菜单（根据角色）：
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+INNER JOIN sys_user u ON ur.user_id = u.user_id
+WHERE ur.user_id = ?
+    AND u.tenant_id IS NULL
+    AND m.menu_type = 1
+    AND m.hidden = 0
+    AND r.tenant_id IS NULL
+ORDER BY m.menu_sort;
+
+6. 查询租户用户的菜单（根据角色）：
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+INNER JOIN sys_user u ON ur.user_id = u.user_id
+WHERE ur.user_id = ?
+    AND u.tenant_id IS NOT NULL
+    AND m.menu_type = 2
+    AND m.hidden = 0
+    AND r.tenant_id = u.tenant_id
+ORDER BY m.menu_sort;
+
+7. 统一查询用户菜单（兼容两种用户类型）：
+SELECT DISTINCT m.*
+FROM sys_menu m
+INNER JOIN sys_roles_menus rm ON m.menu_id = rm.menu_id
+INNER JOIN sys_users_roles ur ON rm.role_id = ur.role_id
+INNER JOIN sys_role r ON ur.role_id = r.role_id
+INNER JOIN sys_user u ON ur.user_id = u.user_id
+WHERE ur.user_id = ?
+    AND m.hidden = 0
+    AND (
+        (u.tenant_id IS NULL AND m.menu_type = 1 AND r.tenant_id IS NULL)
+        OR
+        (u.tenant_id IS NOT NULL AND m.menu_type = 2 AND r.tenant_id = u.tenant_id)
+    )
+ORDER BY m.menu_sort;
+
+8. 查询系统角色列表：
+SELECT * FROM sys_role WHERE tenant_id IS NULL;
+
+9. 查询租户角色列表：
+SELECT * FROM sys_role WHERE tenant_id = ?;
+
+10. 判断用户是否为系统用户：
+SELECT CASE WHEN tenant_id IS NULL THEN 1 ELSE 0 END AS is_system_user FROM sys_user WHERE user_id = ?;
+
+【索引优化说明】
+1. 用户表索引：
+   - idx_tenant_id: 区分系统用户和租户用户
+   - idx_tenant_enabled: 按租户和启用状态查询
+   - idx_tenant_admin: 按租户和管理员标识查询
+
+2. 菜单表索引：
+   - idx_menu_type_hidden_sort: 按菜单类型、隐藏状态、排序查询（最常用）
+   - idx_menu_type_pid: 按菜单类型和父菜单查询（树形结构）
+
+3. 角色表索引：
+   - idx_tenant_id: 区分系统角色和租户角色
+   - idx_tenant_system: 按租户和系统角色标识查询
+
+4. 关联表索引：
+   - 已为所有关联表添加必要的索引，优化关联查询性能
+
+【应用层实现建议】
+1. 在Service层统一封装用户类型判断逻辑
+2. 在Service层统一封装菜单查询逻辑，根据用户类型自动选择对应的菜单
+3. 在数据保存时严格校验数据一致性规则
+4. 建议使用枚举类定义：用户类型、菜单类型等常量
+5. 建议在拦截器或AOP中统一处理用户类型和菜单类型的权限校验
+
+*/
 
