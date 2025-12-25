@@ -197,8 +197,7 @@ CREATE TABLE `biz_order` (
                              `commission_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '佣金金额',
                              `paid_amount` DECIMAL(10,2) DEFAULT 0.00 COMMENT '已支付金额',
                              `payment_status` TINYINT DEFAULT 0 COMMENT '支付状态：0-未支付 1-已支付 2-部分支付',
-                             `start_date` DATE DEFAULT NULL COMMENT '开始日期',
-                             `end_date` DATE DEFAULT NULL COMMENT '结束日期',
+                             `order_dates` VARCHAR(2000) DEFAULT NULL COMMENT '订单日期（多个日期用逗号分隔，格式：YYYY-MM-DD）',
                              `keywords` VARCHAR(1000) DEFAULT NULL COMMENT '关键词（多个用逗号分隔）',
                              `remark` VARCHAR(1000) DEFAULT NULL COMMENT '备注',
                              `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
@@ -209,8 +208,6 @@ CREATE TABLE `biz_order` (
                              INDEX `idx_tenant_id` (`tenant_id`),
                              INDEX `idx_shop_id` (`shop_id`),
                              INDEX `idx_order_status` (`order_status`),
-                             INDEX `idx_start_date` (`start_date`),
-                             INDEX `idx_end_date` (`end_date`),
                              INDEX `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单主表（租户隔离）';
 
