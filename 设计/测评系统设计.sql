@@ -175,17 +175,15 @@ CREATE TABLE `biz_product` (
 -- 10. 订单类型表（全局共享，系统管理员可编辑，客户只读）
 CREATE TABLE `sys_order_type` (
                                   `type_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '类型ID',
-                                  `type_code` VARCHAR(50) NOT NULL COMMENT '类型编码',
                                   `type_name` VARCHAR(100) NOT NULL COMMENT '类型名称',
                                   `description` VARCHAR(500) DEFAULT NULL COMMENT '描述',
                                   `commission_rate` DECIMAL(5,2) DEFAULT 0.00 COMMENT '佣金比例',
-                                  `sort` INT DEFAULT 0 COMMENT '排序',
                                   `enabled` TINYINT(1) DEFAULT 1 COMMENT '是否启用',
-                                  `is_system` TINYINT(1) DEFAULT 1 COMMENT '是否为系统数据',
+                                  `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
                                   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
                                   `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                                  PRIMARY KEY (`type_id`),
-                                  UNIQUE KEY `uk_type_code` (`type_code`)
+                                  PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单类型表（全局共享，客户只读）';
 
 -- 11. 订单主表（租户隔离）
