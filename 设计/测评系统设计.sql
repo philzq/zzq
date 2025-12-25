@@ -14,6 +14,7 @@ CREATE TABLE `sys_tenant` (
                               `contact_phone` VARCHAR(20) DEFAULT NULL COMMENT '联系电话',
                               `contact_email` VARCHAR(100) DEFAULT NULL COMMENT '联系邮箱',
                               `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1-正常 0-禁用',
+                              `menu_type` TINYINT NOT NULL DEFAULT 2 COMMENT '菜单类型：1-超管和员工菜单 2-客户菜单',
                               `max_users` INT DEFAULT 10 COMMENT '最大用户数',
                               `expire_date` DATE DEFAULT NULL COMMENT '到期日期',
                               `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
@@ -24,6 +25,7 @@ CREATE TABLE `sys_tenant` (
                               PRIMARY KEY (`tenant_id`),
                               UNIQUE KEY `uk_tenant_code` (`tenant_code`),
                               INDEX `idx_status` (`status`),
+                              INDEX `idx_menu_type` (`menu_type`),
                               INDEX `idx_tenant_name` (`tenant_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='租户表（客户主表）';
 
