@@ -135,18 +135,10 @@ CREATE TABLE `sys_platform` (
 CREATE TABLE `biz_shop` (
                             `shop_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '店铺ID',
                             `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
-                            `user_id` BIGINT NOT NULL COMMENT '创建用户ID',
                             `shop_kr_name` VARCHAR(200) NOT NULL COMMENT '店铺韩文名称',
                             `shop_custom_name` VARCHAR(200) NOT NULL COMMENT '店铺自定义名称',
-                            `shop_code` VARCHAR(100) DEFAULT NULL COMMENT '店铺编码',
                             `platform_id` BIGINT NOT NULL COMMENT '平台ID',
-                            `contact_person` VARCHAR(50) DEFAULT NULL COMMENT '联系人',
-                            `contact_phone` VARCHAR(20) DEFAULT NULL COMMENT '联系电话',
-                            `contact_address` VARCHAR(500) DEFAULT NULL COMMENT '联系地址',
                             `status` TINYINT DEFAULT 1 COMMENT '状态：1-正常 0-停用',
-                            `is_deleted_on_client` TINYINT(1) DEFAULT 0 COMMENT '客户端是否删除',
-                            `order_count` INT DEFAULT 0 COMMENT '订单数量',
-                            `last_order_time` DATETIME DEFAULT NULL COMMENT '最后订单时间',
                             `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
                             `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                             `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
@@ -154,9 +146,7 @@ CREATE TABLE `biz_shop` (
                             PRIMARY KEY (`shop_id`),
                             UNIQUE KEY `uk_tenant_kr_name` (`tenant_id`, `shop_kr_name`, `platform_id`) COMMENT '同一租户下平台内韩文名唯一',
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_user_id` (`user_id`),
-                            INDEX `idx_platform_id` (`platform_id`),
-                            INDEX `idx_deleted_client` (`is_deleted_on_client`)
+                            INDEX `idx_platform_id` (`platform_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺表（租户隔离）';
 
 -- 9. 产品表（租户隔离）
