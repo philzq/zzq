@@ -40,9 +40,6 @@ CREATE TABLE `sys_user` (
                             `gender` TINYINT(1) DEFAULT 1 COMMENT '性别 1-男 0-女',
                             `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像',
                             `password` VARCHAR(100) NOT NULL COMMENT '密码',
-                            `user_type` TINYINT NOT NULL DEFAULT 3 COMMENT '用户类型：1-超级管理员 2-系统员工 3-客户管理员 4-客户子账号',
-                            `parent_user_id` BIGINT DEFAULT NULL COMMENT '父用户ID（用于子账户）',
-                            `data_scope` VARCHAR(20) DEFAULT 'SELF' COMMENT '数据权限范围：SELF-仅自己 CHILDREN-自己及子账号 ALL-全部',
                             `enabled` TINYINT(1) DEFAULT 1 COMMENT '状态：1-启用 0-禁用',
                             `is_admin` TINYINT(1) DEFAULT 0 COMMENT '是否为租户管理员',
                             `last_login_time` DATETIME DEFAULT NULL COMMENT '最后登录时间',
@@ -57,8 +54,6 @@ CREATE TABLE `sys_user` (
                             UNIQUE KEY `uk_phone` (`phone`),
                             UNIQUE KEY `uk_email` (`email`),
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_user_type` (`user_type`),
-                            INDEX `idx_parent_user` (`parent_user_id`),
                             INDEX `idx_enabled` (`enabled`),
                             FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（多租户）';
