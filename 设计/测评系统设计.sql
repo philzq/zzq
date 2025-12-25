@@ -122,7 +122,6 @@ CREATE TABLE `sys_platform` (
                                 `description` VARCHAR(500) DEFAULT NULL COMMENT '描述',
                                 `sort` INT DEFAULT 0 COMMENT '排序',
                                 `enabled` TINYINT(1) DEFAULT 1 COMMENT '是否启用',
-                                `is_system` TINYINT(1) DEFAULT 1 COMMENT '是否为系统数据（1-是 0-租户自定义）',
                                 `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
                                 `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                 `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
