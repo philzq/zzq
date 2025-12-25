@@ -14,7 +14,7 @@ CREATE TABLE `sys_tenant` (
                               `contact_phone` VARCHAR(20) DEFAULT NULL COMMENT '联系电话',
                               `contact_email` VARCHAR(100) DEFAULT NULL COMMENT '联系邮箱',
                               `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1-正常 0-禁用',
-                              `menu_type` TINYINT NOT NULL DEFAULT 2 COMMENT '菜单类型：1-超管和员工菜单 2-客户菜单',
+                              `menu_type` TINYINT NOT NULL DEFAULT 2 COMMENT '菜单类型：1-系统菜单 2-租户菜单',
                               `max_users` INT DEFAULT 10 COMMENT '最大用户数',
                               `expire_date` DATE DEFAULT NULL COMMENT '到期日期',
                               `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
@@ -66,7 +66,6 @@ CREATE TABLE `sys_user` (
 -- 3. 菜单表（支持两套菜单体系）
 CREATE TABLE `sys_menu` (
                             `menu_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-                            `tenant_id` BIGINT DEFAULT NULL COMMENT '租户ID（NULL表示系统菜单，非NULL表示租户自定义菜单）',
                             `pid` BIGINT DEFAULT NULL COMMENT '上级菜单ID',
                             `menu_type` TINYINT NOT NULL DEFAULT 1 COMMENT '菜单类型：1-系统菜单 2-租户菜单',
                             `title` VARCHAR(50) NOT NULL COMMENT '菜单标题',
@@ -84,12 +83,10 @@ CREATE TABLE `sys_menu` (
                             `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`menu_id`),
-                            INDEX `idx_tenant_id` (`tenant_id`),
                             INDEX `idx_menu_type` (`menu_type`),
                             INDEX `idx_pid` (`pid`),
-                            FOREIGN KEY (`pid`) REFERENCES `sys_menu` (`menu_id`),
-                            FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系）';
+                            FOREIGN KEY (`pid`) REFERENCES `sys_menu` (`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系：系统菜单、租户菜单）';
 
 -- 4. 角色表（支持系统角色和租户角色）
 CREATE TABLE `sys_role` (
