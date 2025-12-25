@@ -15,14 +15,12 @@ CREATE TABLE `sys_tenant` (
                               `company_name` VARCHAR(100) DEFAULT NULL COMMENT '公司名称',
                               `manager_wechat` VARCHAR(100) DEFAULT NULL COMMENT '企业负责人微信号码',
                               `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1-正常 0-禁用',
-                              `menu_type` TINYINT NOT NULL DEFAULT 2 COMMENT '菜单类型：1-系统菜单 2-租户菜单',
                               `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
                               `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
                               `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                               PRIMARY KEY (`tenant_id`),
                               INDEX `idx_status` (`status`),
-                              INDEX `idx_menu_type` (`menu_type`),
                               INDEX `idx_tenant_name` (`tenant_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='租户表（客户主表）';
 
