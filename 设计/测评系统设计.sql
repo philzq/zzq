@@ -8,7 +8,6 @@ USE evaluation_system;
 -- 1. 租户表（客户主表）
 CREATE TABLE `sys_tenant` (
                               `tenant_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '租户ID',
-                              `tenant_code` VARCHAR(50) NOT NULL COMMENT '租户编码（唯一）',
                               `tenant_name` VARCHAR(100) NOT NULL COMMENT '租户名称（公司名称）',
                               `contact_person` VARCHAR(50) DEFAULT NULL COMMENT '联系人',
                               `contact_phone` VARCHAR(20) DEFAULT NULL COMMENT '联系电话',
@@ -22,7 +21,6 @@ CREATE TABLE `sys_tenant` (
                               `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
                               `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                               PRIMARY KEY (`tenant_id`),
-                              UNIQUE KEY `uk_tenant_code` (`tenant_code`),
                               INDEX `idx_status` (`status`),
                               INDEX `idx_menu_type` (`menu_type`),
                               INDEX `idx_tenant_name` (`tenant_name`)
@@ -52,8 +50,7 @@ CREATE TABLE `sys_user` (
                             UNIQUE KEY `uk_phone` (`phone`),
                             UNIQUE KEY `uk_email` (`email`),
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_enabled` (`enabled`),
-                            FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE
+                            INDEX `idx_enabled` (`enabled`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表（多租户）';
 
 -- 3. 菜单表（支持两套菜单体系）
@@ -77,8 +74,7 @@ CREATE TABLE `sys_menu` (
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`menu_id`),
                             INDEX `idx_menu_type` (`menu_type`),
-                            INDEX `idx_pid` (`pid`),
-                            FOREIGN KEY (`pid`) REFERENCES `sys_menu` (`menu_id`)
+                            INDEX `idx_pid` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单表（两套菜单体系：系统菜单、租户菜单）';
 
 -- 4. 角色表（支持系统角色和租户角色）
@@ -98,8 +94,7 @@ CREATE TABLE `sys_role` (
                             PRIMARY KEY (`role_id`),
                             UNIQUE KEY `uk_name_tenant` (`name`, `tenant_id`) COMMENT '同一租户下角色名唯一',
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_role_type` (`role_type`),
-                            FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE
+                            INDEX `idx_role_type` (`role_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表（两套角色体系）';
 
 -- 5. 用户角色关联表
@@ -107,9 +102,7 @@ CREATE TABLE `sys_users_roles` (
                                    `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                    `role_id` BIGINT NOT NULL COMMENT '角色ID',
                                    PRIMARY KEY (`user_id`, `role_id`),
-                                   INDEX `idx_role_id` (`role_id`),
-                                   FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE CASCADE,
-                                   FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE CASCADE
+                                   INDEX `idx_role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户角色关联';
 
 -- 6. 角色菜单关联表
@@ -117,9 +110,7 @@ CREATE TABLE `sys_roles_menus` (
                                    `role_id` BIGINT NOT NULL COMMENT '角色ID',
                                    `menu_id` BIGINT NOT NULL COMMENT '菜单ID',
                                    PRIMARY KEY (`role_id`, `menu_id`),
-                                   INDEX `idx_menu_id` (`menu_id`),
-                                   FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE CASCADE,
-                                   FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menu_id`) ON DELETE CASCADE
+                                   INDEX `idx_menu_id` (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单关联';
 
 -- ==================== 业务表（租户数据隔离） ====================
@@ -168,10 +159,7 @@ CREATE TABLE `biz_shop` (
                             INDEX `idx_tenant_id` (`tenant_id`),
                             INDEX `idx_user_id` (`user_id`),
                             INDEX `idx_platform_id` (`platform_id`),
-                            INDEX `idx_deleted_client` (`is_deleted_on_client`),
-                            FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE,
-                            FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`),
-                            FOREIGN KEY (`platform_id`) REFERENCES `sys_platform` (`platform_id`)
+                            INDEX `idx_deleted_client` (`is_deleted_on_client`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺表（租户隔离）';
 
 -- 9. 产品表（租户隔离）
@@ -198,9 +186,7 @@ CREATE TABLE `biz_product` (
                                INDEX `idx_tenant_id` (`tenant_id`),
                                INDEX `idx_shop_id` (`shop_id`),
                                INDEX `idx_status` (`status`),
-                               FULLTEXT KEY `ft_product_title` (`product_title`),
-                               FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE,
-                               FOREIGN KEY (`shop_id`) REFERENCES `biz_shop` (`shop_id`)
+                               FULLTEXT KEY `ft_product_title` (`product_title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='产品表（租户隔离）';
 
 -- 10. 订单类型表（全局共享，系统管理员可编辑，客户只读）
@@ -248,11 +234,7 @@ CREATE TABLE `biz_order` (
                              INDEX `idx_order_status` (`order_status`),
                              INDEX `idx_start_date` (`start_date`),
                              INDEX `idx_end_date` (`end_date`),
-                             INDEX `idx_create_time` (`create_time`),
-                             FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE,
-                             FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`),
-                             FOREIGN KEY (`shop_id`) REFERENCES `biz_shop` (`shop_id`),
-                             FOREIGN KEY (`type_id`) REFERENCES `sys_order_type` (`type_id`)
+                             INDEX `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单主表（租户隔离）';
 
 -- 12. 订单明细表（租户隔离）
@@ -275,10 +257,7 @@ CREATE TABLE `biz_order_detail` (
                                     INDEX `idx_order_id` (`order_id`),
                                     INDEX `idx_product_id` (`product_id`),
                                     INDEX `idx_date` (`date`),
-                                    UNIQUE KEY `uk_order_product_date` (`order_id`, `product_id`, `date`),
-                                    FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE,
-                                    FOREIGN KEY (`order_id`) REFERENCES `biz_order` (`order_id`),
-                                    FOREIGN KEY (`product_id`) REFERENCES `biz_product` (`product_id`)
+                                    UNIQUE KEY `uk_order_product_date` (`order_id`, `product_id`, `date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单明细表（租户隔离）';
 
 -- 13. 财务账单表（租户隔离）
@@ -303,10 +282,7 @@ CREATE TABLE `biz_bill` (
                             INDEX `idx_user_id` (`user_id`),
                             INDEX `idx_bill_type` (`bill_type`),
                             INDEX `idx_order_id` (`order_id`),
-                            INDEX `idx_payment_time` (`payment_time`),
-                            FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE,
-                            FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`),
-                            FOREIGN KEY (`order_id`) REFERENCES `biz_order` (`order_id`)
+                            INDEX `idx_payment_time` (`payment_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='财务账单表（租户隔离）';
 
 -- 14. 帮助文档表（系统级）
@@ -328,8 +304,7 @@ CREATE TABLE `sys_help_doc` (
                                 INDEX `idx_doc_type` (`doc_type`),
                                 INDEX `idx_tenant_id` (`tenant_id`),
                                 INDEX `idx_category` (`category`),
-                                FULLTEXT KEY `ft_title_content` (`title`, `content`),
-                                FOREIGN KEY (`tenant_id`) REFERENCES `sys_tenant` (`tenant_id`) ON DELETE CASCADE
+                                FULLTEXT KEY `ft_title_content` (`title`, `content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助文档表';
 
 -- 15. 短信/邮箱验证码表
@@ -392,6 +367,5 @@ CREATE TABLE `sys_dict_detail` (
                                    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
                                    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                                    PRIMARY KEY (`detail_id`),
-                                   INDEX `idx_dict_id` (`dict_id`),
-                                   FOREIGN KEY (`dict_id`) REFERENCES `sys_dict` (`dict_id`)
+                                   INDEX `idx_dict_id` (`dict_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典详情表';
