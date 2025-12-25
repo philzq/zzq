@@ -262,27 +262,34 @@ CREATE TABLE `bt_bill` (
                             INDEX `idx_payment_time` (`payment_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='财务账单表（租户隔离）';
 
--- 14. 帮助文档表（系统级）
+-- 14. 帮助文档表
 CREATE TABLE `sys_help_doc` (
                                 `doc_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '文档ID',
-                                `doc_type` TINYINT NOT NULL DEFAULT 1 COMMENT '文档类型：1-系统帮助 2-租户帮助',
-                                `tenant_id` BIGINT DEFAULT NULL COMMENT '租户ID（NULL表示系统帮助）',
+                                `menu_id` BIGINT DEFAULT NULL COMMENT '关联菜单ID（可选，关联到具体功能模块）',
                                 `title` VARCHAR(200) NOT NULL COMMENT '标题',
-                                `content` LONGTEXT NOT NULL COMMENT '内容',
-                                `category` VARCHAR(50) DEFAULT NULL COMMENT '分类',
+                                `summary` VARCHAR(500) DEFAULT NULL COMMENT '摘要/简介（用于列表展示）',
+                                `content` LONGTEXT NOT NULL COMMENT '内容（支持Markdown或HTML）',
+                                `content_type` TINYINT DEFAULT 1 COMMENT '内容类型：1-纯文本 2-Markdown 3-HTML',
+                                `category` VARCHAR(50) DEFAULT NULL COMMENT '分类（如：快速开始、功能说明、常见问题、操作指南等）',
+                                `tags` VARCHAR(200) DEFAULT NULL COMMENT '标签（多个用逗号分隔，用于搜索）',
+                                `icon` VARCHAR(100) DEFAULT NULL COMMENT '图标（用于分类展示）',
                                 `sort` INT DEFAULT 0 COMMENT '排序',
+                                `level` TINYINT DEFAULT 1 COMMENT '重要级别：1-普通 2-重要 3-置顶',
                                 `view_count` INT DEFAULT 0 COMMENT '查看次数',
+                                `helpful_count` INT DEFAULT 0 COMMENT '有帮助次数（用户反馈）',
+                                `unhelpful_count` INT DEFAULT 0 COMMENT '无帮助次数（用户反馈）',
                                 `enabled` TINYINT(1) DEFAULT 1 COMMENT '是否启用',
                                 `create_by` VARCHAR(50) DEFAULT NULL COMMENT '创建人',
                                 `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                 `update_by` VARCHAR(50) DEFAULT NULL COMMENT '更新人',
                                 `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                                 PRIMARY KEY (`doc_id`),
-                                INDEX `idx_doc_type` (`doc_type`),
-                                INDEX `idx_tenant_id` (`tenant_id`),
+                                INDEX `idx_menu_id` (`menu_id`),
                                 INDEX `idx_category` (`category`),
-                                FULLTEXT KEY `ft_title_content` (`title`, `content`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助文档表';
+                                INDEX `idx_category_sort` (`category`, `sort`),
+                                INDEX `idx_level_sort` (`level`, `sort`),
+                                FULLTEXT KEY `ft_title_content` (`title`, `content`, `tags`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帮助文档表（全局共享，所有用户共用）';
 
 -- ==================== 设计说明：两套用户体系和两套菜单体系 ====================
 /*
@@ -327,4 +334,6 @@ CREATE TABLE `sys_help_doc` (
    - 系统用户（tenant_id IS NULL）：is_admin = 1 表示系统超管，is_admin = 0 表示系统普通用户
    - 租户用户（tenant_id IS NOT NULL）：is_admin = 1 表示租户超管，is_admin = 0 表示租户普通用户
 */
+
+
 
