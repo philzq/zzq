@@ -132,7 +132,7 @@ CREATE TABLE `sys_platform` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='平台表（全局共享，客户只读）';
 
 -- 8. 店铺表（租户隔离）
-CREATE TABLE `biz_shop` (
+CREATE TABLE `bt_shop` (
                             `shop_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '店铺ID',
                             `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
                             `shop_kr_name` VARCHAR(200) NOT NULL COMMENT '店铺韩文名称',
@@ -150,7 +150,7 @@ CREATE TABLE `biz_shop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺表（租户隔离）';
 
 -- 9. 产品表（租户隔离）
-CREATE TABLE `biz_product` (
+CREATE TABLE `bt_product` (
                                `product_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '产品ID',
                                `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
                                `shop_id` BIGINT NOT NULL COMMENT '所属店铺ID',
@@ -187,7 +187,7 @@ CREATE TABLE `sys_order_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单类型表（全局共享，客户只读）';
 
 -- 11. 订单主表（租户隔离）
-CREATE TABLE `biz_order` (
+CREATE TABLE `bt_order` (
                              `order_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '订单ID',
                              `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
                              `shop_id` BIGINT NOT NULL COMMENT '店铺ID',
@@ -212,7 +212,7 @@ CREATE TABLE `biz_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单主表（租户隔离）';
 
 -- 12. 订单明细表（租户隔离）
-CREATE TABLE `biz_order_detail` (
+CREATE TABLE `bt_order_detail` (
                                     `detail_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '明细ID',
                                     `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
                                     `order_id` BIGINT NOT NULL COMMENT '订单ID',
@@ -235,7 +235,7 @@ CREATE TABLE `biz_order_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单明细表（租户隔离）';
 
 -- 13. 财务账单表（租户隔离）
-CREATE TABLE `biz_bill` (
+CREATE TABLE `bt_bill` (
                             `bill_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '账单ID',
                             `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
                             `bill_type` TINYINT NOT NULL COMMENT '账单类型：1-订单佣金 2-充值 3-退款',
