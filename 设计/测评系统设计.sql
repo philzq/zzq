@@ -238,8 +238,6 @@ CREATE TABLE `biz_order_detail` (
 CREATE TABLE `biz_bill` (
                             `bill_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '账单ID',
                             `tenant_id` BIGINT NOT NULL COMMENT '租户ID',
-                            `bill_no` VARCHAR(50) NOT NULL COMMENT '账单编号',
-                            `user_id` BIGINT NOT NULL COMMENT '用户ID',
                             `bill_type` TINYINT NOT NULL COMMENT '账单类型：1-订单佣金 2-充值 3-退款',
                             `amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '金额',
                             `balance` DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '余额',
@@ -251,9 +249,7 @@ CREATE TABLE `biz_bill` (
                             `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                             `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                             PRIMARY KEY (`bill_id`),
-                            UNIQUE KEY `uk_bill_no` (`bill_no`),
                             INDEX `idx_tenant_id` (`tenant_id`),
-                            INDEX `idx_user_id` (`user_id`),
                             INDEX `idx_bill_type` (`bill_type`),
                             INDEX `idx_order_id` (`order_id`),
                             INDEX `idx_payment_time` (`payment_time`)
