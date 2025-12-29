@@ -2,7 +2,7 @@
 -- 测评后台管理系统数据库设计
 -- 基于 eladmin 框架
 -- 管理员和员工使用
--- 只包含：租户表、平台表、帮助文档表、测评账号表、账单表
+-- 包含：租户表、平台表、订单类型表、订单状态表、支付状态表、帮助文档表、测评账号表、账单表
 -- ============================================
 
 -- 设置字符集
@@ -193,7 +193,67 @@ CREATE TABLE `bt_bill_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单明细表-后台管理系统';
 
 -- ============================================
--- 5. 帮助和公共管理表
+-- 5. 订单类型和状态管理表
+-- ============================================
+
+-- 订单类型表
+DROP TABLE IF EXISTS `bt_order_type`;
+CREATE TABLE `bt_order_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `type_code` varchar(50) NOT NULL COMMENT '类型编码',
+  `type_name` varchar(100) NOT NULL COMMENT '类型名称',
+  `commission_type` varchar(50) DEFAULT 'percentage' COMMENT '佣金计算方式：percentage-按比例，fixed-固定金额',
+  `commission_rate` decimal(10,4) DEFAULT NULL COMMENT '佣金率（百分比，如10.5表示10.5%）',
+  `commission_amount` decimal(10,2) DEFAULT NULL COMMENT '固定佣金金额（当commission_type为fixed时使用）',
+  `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_type_code` (`type_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单类型表-后台管理系统';
+
+-- 订单状态表
+DROP TABLE IF EXISTS `bt_order_status`;
+CREATE TABLE `bt_order_status` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `status_code` varchar(50) NOT NULL COMMENT '状态编码',
+  `status_name` varchar(100) NOT NULL COMMENT '状态名称',
+  `status_category` varchar(50) DEFAULT NULL COMMENT '状态分类：batch-批次，detail-明细',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_status_code` (`status_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单状态表-后台管理系统';
+
+-- 支付状态表
+DROP TABLE IF EXISTS `bt_payment_status`;
+CREATE TABLE `bt_payment_status` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `status_code` varchar(50) NOT NULL COMMENT '状态编码',
+  `status_name` varchar(100) NOT NULL COMMENT '状态名称',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_status_code` (`status_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付状态表-后台管理系统';
+
+-- ============================================
+-- 6. 帮助和公共管理表
 -- ============================================
 
 -- 帮助文档表
@@ -223,5 +283,33 @@ CREATE TABLE `bt_help_document` (
 INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `create_by`) VALUES
 ('coupang', 'Coupang', 1, 1, 'system'),
 ('naver', 'Naver', 1, 2, 'system');
+
+-- 初始化订单类型数据
+INSERT INTO `bt_order_type` (`type_code`, `type_name`, `sort`, `status`, `create_by`) VALUES
+('click', '点击', 1, 1, 'system'),
+('add_cart', '加购', 2, 1, 'system'),
+('review', '测评', 3, 1, 'system');
+
+-- 初始化订单状态数据（批次）
+INSERT INTO `bt_order_status` (`status_code`, `status_name`, `status_category`, `sort`, `status`, `create_by`) VALUES
+('pending_payment', '待支付佣金', 'batch', 1, 1, 'system'),
+('pending_start', '待开始', 'batch', 2, 1, 'system'),
+('in_progress', '进行中', 'batch', 3, 1, 'system'),
+('completed', '已完成', 'batch', 4, 1, 'system'),
+('cancelled', '已取消', 'batch', 5, 1, 'system');
+
+-- 初始化订单状态数据（明细）
+INSERT INTO `bt_order_status` (`status_code`, `status_name`, `status_category`, `sort`, `status`, `create_by`) VALUES
+('pending_start', '待开始', 'detail', 1, 1, 'system'),
+('in_progress', '进行中', 'detail', 2, 1, 'system'),
+('pending_confirm', '待确认', 'detail', 3, 1, 'system'),
+('completed', '已完成', 'detail', 4, 1, 'system');
+
+-- 初始化支付状态数据
+INSERT INTO `bt_payment_status` (`status_code`, `status_name`, `sort`, `status`, `create_by`) VALUES
+('unpaid', '未支付', 1, 1, 'system'),
+('paid', '已支付', 2, 1, 'system'),
+('partial_paid', '部分支付', 3, 1, 'system'),
+('refunded', '已退款', 4, 1, 'system');
 
 SET FOREIGN_KEY_CHECKS = 1;

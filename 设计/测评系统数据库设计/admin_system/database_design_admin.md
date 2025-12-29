@@ -118,9 +118,47 @@
   - `actual_amount`：实际金额
   - `currency`：币种
 
-### 3.5 帮助和公共管理模块
+### 3.5 订单类型和状态管理模块
 
-#### 3.5.1 帮助文档表 (bt_help_document)
+#### 3.5.1 订单类型表 (bt_order_type)
+- 存储订单类型信息（点击、加购、测评等）
+- 支持根据订单类型计算佣金
+- **管理员权限**：创建、编辑、禁用/启用订单类型，配置佣金参数
+- **字段说明**：
+  - `type_code`：类型编码（唯一）
+  - `type_name`：类型名称
+  - `commission_type`：佣金计算方式（percentage-按比例，fixed-固定金额）
+  - `commission_rate`：佣金率（百分比，如10.5表示10.5%）
+  - `commission_amount`：固定佣金金额（当commission_type为fixed时使用）
+  - `currency`：币种（默认KRW）
+  - `sort`：排序
+  - `status`：状态（0-禁用，1-启用）
+- **佣金计算逻辑**：
+  - 按比例计算：佣金 = 订单金额 × commission_rate / 100
+  - 固定金额：佣金 = commission_amount
+
+#### 3.5.2 订单状态表 (bt_order_status)
+- 存储订单状态枚举值
+- **管理员权限**：创建、编辑、禁用/启用订单状态
+- **字段说明**：
+  - `status_code`：状态编码（唯一）
+  - `status_name`：状态名称
+  - `status_category`：状态分类（batch-批次，detail-明细）
+  - `sort`：排序
+  - `status`：状态（0-禁用，1-启用）
+
+#### 3.5.3 支付状态表 (bt_payment_status)
+- 存储支付状态枚举值
+- **管理员权限**：创建、编辑、禁用/启用支付状态
+- **字段说明**：
+  - `status_code`：状态编码（唯一）
+  - `status_name`：状态名称
+  - `sort`：排序
+  - `status`：状态（0-禁用，1-启用）
+
+### 3.6 帮助和公共管理模块
+
+#### 3.6.1 帮助文档表 (bt_help_document)
 - 存储帮助文档信息
 - **管理员权限**：创建、编辑帮助文档
 - **字段说明**：
@@ -175,6 +213,10 @@ bt_account_device (账号设备绑定表)
 bt_account_capability (账号能力标签表)
     ↓ (1:N)
 bt_account_task_queue (账号任务队列表)
+
+bt_order_type (订单类型表) - 独立表，供测评系统关联引用
+bt_order_status (订单状态表) - 独立表，供测评系统关联引用
+bt_payment_status (支付状态表) - 独立表，供测评系统关联引用
 ```
 
 ### 6.2 与测评系统的关联
@@ -182,6 +224,9 @@ bt_account_task_queue (账号任务队列表)
 - `bt_bill.order_batch_id` → 关联测评系统的批次订单
 - `bt_bill_detail.order_detail_id` → 关联测评系统的明细订单
 - `bt_account_task_queue.order_detail_id` → 关联测评系统的明细订单
+- `bt_order_type.id` → 测评系统的订单表通过 `order_type_id` 关联
+- `bt_order_status.id` → 测评系统的订单表通过 `order_status_id` 关联
+- `bt_payment_status.id` → 测评系统的订单表通过 `payment_status_id` 关联
 
 ## 七、数据字典
 
