@@ -123,7 +123,14 @@
   - `selling_price`：售价（冗余字段，冗余bt_product表）
   - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
   - `platform_order_no`：平台订单号
+  - `express_company`：快递公司
+  - `tracking_number`：物流单号
+  - `actual_order_price`：实际下单价格
+  - `order_account`：下单账号
   - `keyword`：关键词
+  - `review_date`：上评日期
+  - `review_text_content`：评论文字内容
+  - `review_image_content`：评论图片内容
 - **业务逻辑**：冗余字段用于保存订单创建时的快照数据，即使关联表的数据发生变化，订单表中的冗余字段保持不变，保证历史数据的准确性
 
 ### 3.6 订单查询模块
