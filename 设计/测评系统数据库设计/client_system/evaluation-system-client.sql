@@ -73,8 +73,7 @@ CREATE TABLE `bt_order_batch` (
   `batch_no` varchar(100) NOT NULL COMMENT '批次订单号',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
   `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID（关联后台系统）',
-  `order_status` varchar(50) DEFAULT 'pending' COMMENT '订单状态：pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成',
-  `payment_status` varchar(50) DEFAULT 'unpaid' COMMENT '支付状态：unpaid-未支付，paid-已支付，partial_paid-部分支付，refunded-已退款',
+  `batch_order_status` varchar(50) DEFAULT 'pending_payment' COMMENT '批次订单状态：pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
   `total_quantity` int(11) DEFAULT 0 COMMENT '总数量',
   `total_amount` decimal(10,2) DEFAULT 0.00 COMMENT '总金额（预算）',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
@@ -90,7 +89,7 @@ CREATE TABLE `bt_order_batch` (
   UNIQUE KEY `uk_batch_no` (`batch_no`),
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_order_type_id` (`order_type_id`),
-  KEY `idx_order_status` (`order_status`)
+  KEY `idx_batch_order_status` (`batch_order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批次订单表-测评系统';
 
 -- 订单表（客户填写）

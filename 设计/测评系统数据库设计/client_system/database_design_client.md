@@ -57,8 +57,7 @@
   - `batch_no`：批次订单号（唯一）
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `order_type_id`：订单类型ID（关联后台系统）
-  - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
-  - `payment_status`：支付状态（unpaid-未支付，paid-已支付，partial_paid-部分支付，refunded-已退款）
+  - `batch_order_status`：批次订单状态（pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）
   - `total_quantity`：总数量
   - `total_amount`：总金额（预算）
   - `actual_amount`：实际金额
