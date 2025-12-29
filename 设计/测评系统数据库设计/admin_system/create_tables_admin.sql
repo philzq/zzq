@@ -195,8 +195,10 @@ CREATE TABLE `bt_order_type` (
 DROP TABLE IF EXISTS `bt_help_document`;
 CREATE TABLE `bt_help_document` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `doc_title` varchar(200) NOT NULL COMMENT '文档标题',
-  `doc_content` text DEFAULT NULL COMMENT '文档内容',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父级ID（用于构建目录层级结构，NULL表示根目录）',
+  `is_directory` tinyint(1) DEFAULT 0 COMMENT '是否是目录：0-文档，1-目录',
+  `doc_title` varchar(200) NOT NULL COMMENT '文档标题/目录名称',
+  `doc_content` text DEFAULT NULL COMMENT '文档内容（目录时可为空）',
   `doc_type` varchar(50) DEFAULT NULL COMMENT '文档类型',
   `doc_category` varchar(50) DEFAULT NULL COMMENT '文档分类',
   `sort` int(11) DEFAULT 0 COMMENT '排序',
@@ -207,7 +209,9 @@ CREATE TABLE `bt_help_document` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_parent_id` (`parent_id`),
+  KEY `idx_is_directory` (`is_directory`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帮助文档表-后台管理系统';
 
 -- ============================================
