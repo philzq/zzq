@@ -15,7 +15,7 @@
 │   └── evaluation-system-admin.sql  # 建表SQL脚本
 ├── client_system/                   # 测评系统
 │   ├── database_design_client.md    # 数据库设计文档
-│   └── create_tables_client.sql     # 建表SQL脚本
+│   └── evaluation-system-client.sql # 建表SQL脚本
 ├── system_relationship.md           # 系统间数据关系说明
 └── README.md                        # 本文件
 ```
@@ -71,7 +71,7 @@
 source admin_system/evaluation-system-admin.sql;
 
 -- 再执行测评系统的SQL
-source client_system/create_tables_client.sql;
+source client_system/evaluation-system-client.sql;
 ```
 
 #### 方式二：统一执行
@@ -79,7 +79,7 @@ source client_system/create_tables_client.sql;
 ```sql
 -- 在MySQL中依次执行两个SQL文件
 source admin_system/evaluation-system-admin.sql;
-source client_system/create_tables_client.sql;
+source client_system/evaluation-system-client.sql;
 ```
 
 **注意**：后台管理系统只包含5个核心表（租户表、平台表、帮助文档表、测评账号表、账单表），其他业务数据（店铺、产品、订单等）由测评系统管理。
@@ -208,7 +208,7 @@ source client_system/create_tables_client.sql;
 - `admin_system/database_design_admin.md` - 后台管理系统数据库设计文档
 - `admin_system/evaluation-system-admin.sql` - 后台管理系统建表SQL
 - `client_system/database_design_client.md` - 测评系统数据库设计文档
-- `client_system/create_tables_client.sql` - 测评系统建表SQL
+- `client_system/evaluation-system-client.sql` - 测评系统建表SQL
 - `system_relationship.md` - 系统间数据关系说明文档
 
 ## 联系方式
