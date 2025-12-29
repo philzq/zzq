@@ -88,6 +88,7 @@ CREATE TABLE `bt_device` (
   `device_name` varchar(200) DEFAULT NULL COMMENT '设备名称',
   `device_type` varchar(50) DEFAULT NULL COMMENT '设备类型',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
+  `has_pending_orders` tinyint(1) DEFAULT 0 COMMENT '是否存在待执行订单：0-否，1-是',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -96,7 +97,8 @@ CREATE TABLE `bt_device` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_device_id` (`device_id`),
   KEY `idx_status` (`status`),
-  KEY `idx_device_type` (`device_type`)
+  KEY `idx_device_type` (`device_type`),
+  KEY `idx_has_pending_orders` (`has_pending_orders`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表-后台管理系统';
 
 -- ============================================

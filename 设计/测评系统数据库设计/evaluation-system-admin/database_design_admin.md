@@ -95,10 +95,12 @@
   - `device_name`：设备名称
   - `device_type`：设备类型
   - `status`：状态（0-禁用，1-启用）
+  - `has_pending_orders`：是否存在待执行订单（0-否，1-是）
 - **索引**：
   - `uk_device_id`：设备ID唯一索引
   - `idx_status`：状态索引
   - `idx_device_type`：设备类型索引
+  - `idx_has_pending_orders`：是否存在待执行订单索引
 - **业务逻辑**：注意设备的均匀分布，确保账号分配时设备负载均衡
 
 ### 3.3 财务账单管理模块
