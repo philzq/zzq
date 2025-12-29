@@ -174,7 +174,6 @@ CREATE TABLE `bt_bill_detail` (
 DROP TABLE IF EXISTS `bt_order_type`;
 CREATE TABLE `bt_order_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `type_code` varchar(50) NOT NULL COMMENT '类型编码',
   `type_name` varchar(100) NOT NULL COMMENT '类型名称',
   `commission_type` varchar(50) DEFAULT 'percentage' COMMENT '佣金计算方式：percentage-按比例，fixed-固定金额',
   `commission_rate` decimal(10,4) DEFAULT NULL COMMENT '佣金率（百分比，如10.5表示10.5%）',
@@ -187,8 +186,7 @@ CREATE TABLE `bt_order_type` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_type_code` (`type_code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单类型表-后台管理系统';
 
 -- 订单状态表
@@ -259,10 +257,10 @@ INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `
 ('naver', 'Naver', 1, 2, 'system');
 
 -- 初始化订单类型数据
-INSERT INTO `bt_order_type` (`type_code`, `type_name`, `sort`, `status`, `create_by`) VALUES
-('click', '点击', 1, 1, 'system'),
-('add_cart', '加购', 2, 1, 'system'),
-('review', '测评', 3, 1, 'system');
+INSERT INTO `bt_order_type` (`type_name`, `sort`, `status`, `create_by`) VALUES
+('点击', 1, 1, 'system'),
+('加购', 2, 1, 'system'),
+('测评', 3, 1, 'system');
 
 -- 初始化订单状态数据（批次）
 INSERT INTO `bt_order_status` (`status_code`, `status_name`, `status_category`, `sort`, `status`, `create_by`) VALUES
