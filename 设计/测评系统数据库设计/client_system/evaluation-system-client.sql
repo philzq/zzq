@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `bt_store`;
 CREATE TABLE `bt_store` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
-  `platform_id` bigint(20) NOT NULL COMMENT '平台ID（关联后台系统的平台）',
+  `platform_code` varchar(50) NOT NULL COMMENT '平台编码（关联后台系统的bt_platform表的platform_code）',
   `store_name_kr` varchar(200) NOT NULL COMMENT '店铺韩文名称',
   `store_name_custom` varchar(200) NOT NULL COMMENT '店铺自定义备注名称',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
@@ -30,7 +30,7 @@ CREATE TABLE `bt_store` (
   `deleted` tinyint(1) DEFAULT 0 COMMENT '是否删除：0-未删除，1-已删除（客户端删除）',
   PRIMARY KEY (`id`),
   KEY `idx_tenant_id` (`tenant_id`),
-  KEY `idx_platform_id` (`platform_id`)
+  KEY `idx_platform_code` (`platform_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表-测评系统';
 
 -- ============================================

@@ -23,7 +23,7 @@
 - **客户权限**：添加、修改自定义备注名称、删除店铺
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
-  - `platform_id`：平台ID（关联后台系统的平台）
+  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
   - `store_name_kr`：店铺韩文名称
   - `store_name_custom`：店铺自定义备注名称
   - `status`：状态（0-禁用，1-启用）
@@ -154,13 +154,13 @@
 - **租户关联**：通过 `tenant_id` 关联后台系统的 `bt_tenant` 表
   - `bt_store.tenant_id` → `bt_tenant.id`
   - `bt_order_batch.tenant_id` → `bt_tenant.id`
-- **平台关联**：通过 `platform_id` 关联后台系统的 `bt_platform` 表
+- **平台关联**：通过 `platform_code` 关联后台系统的 `bt_platform` 表
 - **订单类型关联**：通过 `order_type_id` 关联后台系统的 `bt_order_type` 表
 
 ### 6.2 数据同步
 
 - 租户数据：由后台系统创建，客户端通过 tenant_id 关联
-- 平台数据：由后台系统管理，客户端通过 platform_id 关联
+- 平台数据：由后台系统管理，客户端通过 platform_code 关联
 - 订单类型数据：由后台系统管理，客户端通过 order_type_id 关联
 - 订单数据：由客户端创建，后台系统通过订单ID关联查看和管理
 
