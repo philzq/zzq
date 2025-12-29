@@ -33,16 +33,16 @@
 
 #### 3.2.1 产品表 (bt_product)
 - 存储客户自己的产品信息
-- 支持自动添加（输入产品链接爬取）和手动添加
 - **客户权限**：添加、修改、删除产品
 - **字段说明**：
   - `store_id`：店铺ID
-  - `platform_id`：平台ID
+  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
   - `product_id`：产品ID（唯一，不可修改）
   - `product_title`：产品标题
   - `product_link`：产品链接
   - `selling_price`：售价
-  - `add_type`：添加方式（1-自动添加，2-手动添加）
+  - `attribute_name`：属性名称
+  - `main_image_url`：产品主图URL
   - `status`：状态（0-禁用，1-启用）
 - **业务逻辑**：已下单的产品信息不随产品修改而改变
 

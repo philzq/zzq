@@ -41,12 +41,13 @@ DROP TABLE IF EXISTS `bt_product`;
 CREATE TABLE `bt_product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
-  `platform_id` bigint(20) NOT NULL COMMENT '平台ID',
+  `platform_code` varchar(50) NOT NULL COMMENT '平台编码（关联后台系统的bt_platform表的platform_code）',
   `product_id` varchar(100) NOT NULL COMMENT '产品ID（唯一，不可修改）',
   `product_title` varchar(500) NOT NULL COMMENT '产品标题',
   `product_link` varchar(1000) DEFAULT NULL COMMENT '产品链接',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '售价',
-  `add_type` tinyint(1) DEFAULT 1 COMMENT '添加方式：1-自动添加，2-手动添加',
+  `attribute_name` varchar(200) DEFAULT NULL COMMENT '属性名称',
+  `main_image_url` varchar(1000) DEFAULT NULL COMMENT '产品主图URL',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
@@ -56,7 +57,7 @@ CREATE TABLE `bt_product` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_product_id` (`product_id`),
   KEY `idx_store_id` (`store_id`),
-  KEY `idx_platform_id` (`platform_id`)
+  KEY `idx_platform_code` (`platform_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品表-测评系统';
 
 -- 产品属性表
