@@ -175,6 +175,8 @@ CREATE TABLE `bt_order` (
   `execution_date` date DEFAULT NULL COMMENT '执行日期',
   `review_text_content` text DEFAULT NULL COMMENT '评论文字内容',
   `review_image_content` text DEFAULT NULL COMMENT '评论图片内容',
+  `execution_result` tinyint(1) DEFAULT NULL COMMENT '执行结果：0-失败，1-成功',
+  `execution_result_desc` varchar(500) DEFAULT NULL COMMENT '执行结果描述',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -191,7 +193,8 @@ CREATE TABLE `bt_order` (
   KEY `idx_platform_order_no` (`platform_order_no`),
   KEY `idx_device_id` (`device_id`),
   KEY `idx_execution_date` (`execution_date`),
-  KEY `idx_operation_scene` (`operation_scene`)
+  KEY `idx_operation_scene` (`operation_scene`),
+  KEY `idx_execution_result` (`execution_result`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
 -- ============================================

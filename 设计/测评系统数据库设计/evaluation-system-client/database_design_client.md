@@ -183,6 +183,8 @@
   - `execution_date`：执行日期
   - `review_text_content`：评论文字内容
   - `review_image_content`：评论图片内容
+  - `execution_result`：执行结果（0-失败，1-成功）
+  - `execution_result_desc`：执行结果描述
 - **索引**：
   - `idx_tenant_id`：租户ID索引
   - `idx_order_batch_id`：批次订单ID索引
@@ -195,6 +197,7 @@
   - `idx_device_id`：设备ID索引
   - `idx_execution_date`：执行日期索引
   - `idx_operation_scene`：操作场景索引
+  - `idx_execution_result`：执行结果索引
 - **业务逻辑**：
   - **填写订单**：支持多种填写方式
     - 某一天，单一产品的订单信息，提交产品的关键词和测评订单类型可能不一样
