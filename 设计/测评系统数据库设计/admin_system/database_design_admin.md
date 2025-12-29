@@ -49,7 +49,7 @@
   - `account_name`：账号名称
   - `password`：账号密码（明文存储）
   - `account_type`：账号类型
-  - `platform_id`：平台ID（关联平台表）
+  - `platform_code`：平台编码（关联平台表的platform_code）
   - `is_auto_assign`：是否自动分配（0-否，1-是）
   - `execution_status`：执行状态（idle-空闲，executing-执行中）
   - `max_concurrent_tasks`：最大并发任务数

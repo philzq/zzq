@@ -64,7 +64,7 @@ CREATE TABLE `bt_review_account` (
   `account_name` varchar(100) NOT NULL COMMENT '账号名称',
   `password` varchar(255) DEFAULT NULL COMMENT '账号密码（明文存储）',
   `account_type` varchar(50) DEFAULT NULL COMMENT '账号类型',
-  `platform_id` bigint(20) DEFAULT NULL COMMENT '平台ID',
+  `platform_code` varchar(50) DEFAULT NULL COMMENT '平台编码（关联平台表的platform_code）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` varchar(50) DEFAULT 'idle' COMMENT '执行状态：idle-空闲，executing-执行中',
   `max_concurrent_tasks` int(11) DEFAULT 1 COMMENT '最大并发任务数',
@@ -76,7 +76,7 @@ CREATE TABLE `bt_review_account` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_platform_id` (`platform_id`),
+  KEY `idx_platform_code` (`platform_code`),
   KEY `idx_execution_status` (`execution_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';
 
