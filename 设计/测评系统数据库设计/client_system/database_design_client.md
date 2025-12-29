@@ -113,7 +113,9 @@
   - `platform_code`：平台编码（关联本系统的bt_platform表的platform_code）
   - `platform_name`：平台名称（冗余字段，冗余bt_platform表）
   - `order_type_id`：订单类型ID（关联本系统的bt_order_type表）
-  - `order_type_name`：订单类型名称（冗余字段，冗余bt_order_type表）
+  - `operation_scene`：操作场景（冗余字段，冗余bt_order_type表）
+  - `first_level_type_name`：一级类型名称（冗余字段，冗余bt_order_type表）
+  - `second_level_type_name`：二级类型名称（冗余字段，冗余bt_order_type表）
   - `product_title`：产品标题（冗余字段，冗余bt_product表）
   - `product_link`：产品链接（冗余字段，冗余bt_product表）
   - `attribute_name`：属性名称（冗余字段，冗余bt_product表）
