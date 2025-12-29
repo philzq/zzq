@@ -95,22 +95,6 @@ CREATE TABLE `bt_review_account_order_type` (
   KEY `idx_order_type_id` (`order_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号订单类型关联表-后台管理系统';
 
--- 账号能力标签表
-DROP TABLE IF EXISTS `bt_account_capability`;
-CREATE TABLE `bt_account_capability` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `review_account_id` bigint(20) NOT NULL COMMENT '测评账号ID',
-  `capability_tag` varchar(100) NOT NULL COMMENT '能力标签',
-  `capability_value` varchar(200) DEFAULT NULL COMMENT '能力值',
-  `sort` int(11) DEFAULT 0 COMMENT '排序',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `idx_review_account_id` (`review_account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号能力标签表-后台管理系统';
-
 -- 账号设备绑定表
 DROP TABLE IF EXISTS `bt_account_device`;
 CREATE TABLE `bt_account_device` (

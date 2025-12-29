@@ -38,7 +38,7 @@
 2. **平台表** (`bt_platform`) - 存储平台信息
 3. **帮助文档表** (`bt_help_document`) - 存储帮助文档信息
 4. **测评账号表** (`bt_review_account`) - 存储测评账号信息
-   - 账号能力标签表 (`bt_account_capability`)
+   - 账号订单类型关联表 (`bt_review_account_order_type`)
    - 账号设备绑定表 (`bt_account_device`)
    - 账号任务队列表 (`bt_account_task_queue`)
 5. **账单表** (`bt_bill`) - 存储账单信息
@@ -148,7 +148,7 @@ source client_system/create_tables_client.sql;
 - 客户在测评系统可以创建子账户并分配权限
 
 ### 订单分配
-- 自动分配：根据账号能力标签、是否自动分配、执行状态等条件
+- 自动分配：根据账号订单类型匹配、是否自动分配、执行状态等条件
 - 人工处理：管理员点击人工处理按钮，进入人工处理流程
 - 任务队列：支持店铺均分排序
 
