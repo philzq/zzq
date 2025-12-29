@@ -42,7 +42,6 @@ CREATE TABLE `bt_platform` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `platform_code` varchar(50) NOT NULL COMMENT '平台编码（coupang、naver等）',
   `platform_name` varchar(100) NOT NULL COMMENT '平台名称',
-  `platform_name_en` varchar(100) DEFAULT NULL COMMENT '平台英文名称',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `sort` int(11) DEFAULT 0 COMMENT '排序',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
@@ -221,8 +220,8 @@ CREATE TABLE `bt_help_document` (
 -- ============================================
 
 -- 初始化平台数据
-INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `platform_name_en`, `status`, `sort`, `create_by`) VALUES
-('coupang', 'Coupang', 'Coupang', 1, 1, 'system'),
-('naver', 'Naver', 'Naver', 1, 2, 'system');
+INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `create_by`) VALUES
+('coupang', 'Coupang', 1, 1, 'system'),
+('naver', 'Naver', 1, 2, 'system');
 
 SET FOREIGN_KEY_CHECKS = 1;

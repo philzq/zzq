@@ -36,7 +36,6 @@
 - **字段说明**：
   - `platform_code`：平台编码（唯一）
   - `platform_name`：平台名称
-  - `platform_name_en`：平台英文名称
   - `status`：状态（0-禁用，1-启用）
   - `sort`：排序
 
