@@ -132,7 +132,7 @@
 - **客户权限**：创建批次订单、查看自己的批次订单、取消未开始的订单
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
-  - `batch_order_status`：批次订单状态（pending_submit-待提交，pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）
+  - `batch_order_status`：批次订单状态（0-待提交，1-待支付佣金，2-已取消，3-已支付佣金）
   - `total_quantity`：总数量
   - `total_amount`：总金额（预算）
   - `actual_amount`：实际金额
@@ -168,7 +168,7 @@
   - `attribute_name`：属性名称（冗余字段，冗余bt_product表）
   - `main_image_url`：产品主图URL（冗余字段，冗余bt_product表）
   - `selling_price`：售价（冗余字段，冗余bt_product表）
-  - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
+  - `order_status`：订单状态（0-待开始，1-进行中，2-待确认，3-已完成）
   - `platform_order_no`：平台订单号
   - `express_company`：快递公司
   - `tracking_number`：物流单号
@@ -210,10 +210,10 @@
 ### 3.6 订单查询模块
 
 #### 3.6.1 订单查询视图
-- **待开始订单**：提前填写，但还未到日期开始（order_status = 'pending'）
-- **进行中订单**：当天订单，订单任务已经分配（order_status = 'processing'）
-- **待确认订单**：还未上评的订单（order_status = 'pending_confirm'）
-- **已完成订单**：订单已经评价完毕，订单终结（order_status = 'completed'）
+- **待开始订单**：提前填写，但还未到日期开始（order_status = 0）
+- **进行中订单**：当天订单，订单任务已经分配（order_status = 1）
+- **待确认订单**：还未上评的订单（order_status = 2）
+- **已完成订单**：订单已经评价完毕，订单终结（order_status = 3）
   - 包含成交订单号、实际成交价格等返回信息
 - **批次订单**：查看批次订单汇总
 - **明细订单**：查看订单详情

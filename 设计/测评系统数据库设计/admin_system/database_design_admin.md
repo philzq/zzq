@@ -113,7 +113,7 @@
   - `budget_amount`：预算金额（根据订单类型计算公式得出）
   - `actual_amount`：实际金额（实际支付后填写）
   - `currency`：币种（默认KRW）
-  - `payment_status`：支付状态（unpaid-未支付，paid-已支付，partial_paid-部分支付，refunded-已退款）
+  - `payment_status`：支付状态（0-未支付，1-已支付，2-部分支付，3-已退款）
   - `payment_time`：支付时间
   - `payment_method`：支付方式
   - `payment_remark`：支付备注

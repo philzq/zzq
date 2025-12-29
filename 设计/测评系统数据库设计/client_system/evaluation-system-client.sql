@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `bt_order_batch`;
 CREATE TABLE `bt_order_batch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
-  `batch_order_status` varchar(50) DEFAULT 'pending_submit' COMMENT '批次订单状态：pending_submit-待提交，pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
+  `batch_order_status` tinyint(1) DEFAULT 0 COMMENT '批次订单状态：0-待提交，1-待支付佣金，2-已取消，3-已支付佣金',
   `total_quantity` int(11) DEFAULT 0 COMMENT '总数量',
   `total_amount` decimal(10,2) DEFAULT 0.00 COMMENT '总金额（预算）',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
@@ -160,7 +160,7 @@ CREATE TABLE `bt_order` (
   `attribute_name` varchar(200) DEFAULT NULL COMMENT '属性名称（冗余字段）',
   `main_image_url` varchar(1000) DEFAULT NULL COMMENT '产品主图URL（冗余字段）',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '售价（冗余字段）',
-  `order_status` varchar(50) DEFAULT 'pending' COMMENT '订单状态：pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成',
+  `order_status` tinyint(1) DEFAULT 0 COMMENT '订单状态：0-待开始，1-进行中，2-待确认，3-已完成',
   `platform_order_no` varchar(200) DEFAULT NULL COMMENT '平台订单号',
   `express_company` varchar(100) DEFAULT NULL COMMENT '快递公司',
   `tracking_number` varchar(200) DEFAULT NULL COMMENT '物流单号',

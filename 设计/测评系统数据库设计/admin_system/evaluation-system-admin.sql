@@ -113,7 +113,7 @@ CREATE TABLE `bt_bill` (
   `budget_amount` decimal(10,2) DEFAULT 0.00 COMMENT '预算金额',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
   `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
-  `payment_status` varchar(50) DEFAULT 'unpaid' COMMENT '支付状态：unpaid-未支付，paid-已支付，partial_paid-部分支付，refunded-已退款',
+  `payment_status` tinyint(1) DEFAULT 0 COMMENT '支付状态：0-未支付，1-已支付，2-部分支付，3-已退款',
   `payment_time` datetime DEFAULT NULL COMMENT '支付时间',
   `payment_method` varchar(50) DEFAULT NULL COMMENT '支付方式',
   `payment_remark` varchar(500) DEFAULT NULL COMMENT '支付备注',
