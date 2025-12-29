@@ -68,10 +68,7 @@
 - **管理员权限**：绑定设备，注意设备均匀分布
 - **字段说明**：
   - `review_account_id`：测评账号ID（可为空，表示设备未绑定账号）
-  - `device_id`：设备ID（唯一）
   - `device_name`：设备名称
-  - `device_type`：设备类型
-  - `device_info`：设备信息JSON
   - **业务逻辑**：设备可以绑定账号，也可以不绑定（review_account_id为空），需均匀分布
 
 #### 3.3.3 账号任务队列表 (bt_account_task_queue)
