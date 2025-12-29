@@ -52,7 +52,6 @@
   - `platform_code`：平台编码（关联平台表的platform_code）
   - `is_auto_assign`：是否自动分配（0-否，1-是）
   - `execution_status`：执行状态（idle-空闲，executing-执行中）
-  - `max_concurrent_tasks`：最大并发任务数
   - `current_tasks`：当前任务数
 
 #### 3.3.2 账号能力标签表 (bt_account_capability)

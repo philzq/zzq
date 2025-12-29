@@ -67,7 +67,6 @@ CREATE TABLE `bt_review_account` (
   `platform_code` varchar(50) DEFAULT NULL COMMENT '平台编码（关联平台表的platform_code）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` varchar(50) DEFAULT 'idle' COMMENT '执行状态：idle-空闲，executing-执行中',
-  `max_concurrent_tasks` int(11) DEFAULT 1 COMMENT '最大并发任务数',
   `current_tasks` int(11) DEFAULT 0 COMMENT '当前任务数',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
