@@ -29,7 +29,9 @@ CREATE TABLE `bt_tenant` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_email` (`email`)
+  UNIQUE KEY `uk_email` (`email`),
+  KEY `idx_status` (`status`),
+  KEY `idx_expire_time` (`expire_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='租户表-后台管理系统';
 
 -- ============================================
@@ -56,7 +58,9 @@ CREATE TABLE `bt_review_account` (
   PRIMARY KEY (`id`),
   KEY `idx_platform_code` (`platform_code`),
   KEY `idx_execution_status` (`execution_status`),
-  KEY `idx_device_id` (`device_id`)
+  KEY `idx_device_id` (`device_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_is_auto_assign` (`is_auto_assign`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';
 
 -- 账号订单类型关联表（支持一个账号多个订单类型）
@@ -90,7 +94,9 @@ CREATE TABLE `bt_device` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_device_id` (`device_id`)
+  UNIQUE KEY `uk_device_id` (`device_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_device_type` (`device_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表-后台管理系统';
 
 -- ============================================
@@ -119,7 +125,10 @@ CREATE TABLE `bt_bill` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_tenant_id` (`tenant_id`),
-  KEY `idx_order_batch_id` (`order_batch_id`)
+  KEY `idx_order_batch_id` (`order_batch_id`),
+  KEY `idx_bill_scene` (`bill_scene`),
+  KEY `idx_payment_status` (`payment_status`),
+  KEY `idx_bill_date` (`bill_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单表-后台管理系统';
 
 -- 账单明细表
@@ -167,7 +176,10 @@ CREATE TABLE `bt_help_document` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_parent_id` (`parent_id`),
-  KEY `idx_is_directory` (`is_directory`)
+  KEY `idx_is_directory` (`is_directory`),
+  KEY `idx_status` (`status`),
+  KEY `idx_doc_type` (`doc_type`),
+  KEY `idx_doc_category` (`doc_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帮助文档表-后台管理系统';
 
 SET FOREIGN_KEY_CHECKS = 1;

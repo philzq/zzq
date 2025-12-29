@@ -27,7 +27,8 @@ CREATE TABLE `bt_platform` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_platform_code` (`platform_code`)
+  UNIQUE KEY `uk_platform_code` (`platform_code`),
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='平台表-测评系统';
 
 -- ============================================
@@ -52,7 +53,9 @@ CREATE TABLE `bt_order_type` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_operation_scene` (`operation_scene`),
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单类型表-测评系统';
 
 -- ============================================
@@ -75,7 +78,8 @@ CREATE TABLE `bt_store` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_tenant_id` (`tenant_id`),
-  KEY `idx_platform_code` (`platform_code`)
+  KEY `idx_platform_code` (`platform_code`),
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='店铺表-测评系统';
 
 -- ============================================
@@ -105,7 +109,8 @@ CREATE TABLE `bt_product` (
   UNIQUE KEY `uk_platform_product_id` (`platform_product_id`),
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_store_id` (`store_id`),
-  KEY `idx_platform_code` (`platform_code`)
+  KEY `idx_platform_code` (`platform_code`),
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品表-测评系统';
 
 -- ============================================
@@ -177,7 +182,12 @@ CREATE TABLE `bt_order` (
   KEY `idx_product_id` (`product_id`),
   KEY `idx_store_id` (`store_id`),
   KEY `idx_platform_code` (`platform_code`),
-  KEY `idx_order_status` (`order_status`)
+  KEY `idx_order_status` (`order_status`),
+  KEY `idx_order_type_id` (`order_type_id`),
+  KEY `idx_platform_order_no` (`platform_order_no`),
+  KEY `idx_device_id` (`device_id`),
+  KEY `idx_review_date` (`review_date`),
+  KEY `idx_operation_scene` (`operation_scene`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
 -- ============================================
