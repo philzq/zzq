@@ -115,11 +115,12 @@ DROP TABLE IF EXISTS `bt_order_batch`;
 CREATE TABLE `bt_order_batch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
-  `batch_order_status` varchar(50) DEFAULT 'pending_payment' COMMENT '批次订单状态：pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
+  `batch_order_status` varchar(50) DEFAULT 'pending_submit' COMMENT '批次订单状态：pending_submit-待提交，pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
   `total_quantity` int(11) DEFAULT 0 COMMENT '总数量',
   `total_amount` decimal(10,2) DEFAULT 0.00 COMMENT '总金额（预算）',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
   `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
+  `batch_text_content` longtext DEFAULT NULL COMMENT '批次文本内容（记录提交的完整数据）',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

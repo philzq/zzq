@@ -85,11 +85,12 @@
 - **客户权限**：创建批次订单、查看自己的批次订单、取消未开始的订单
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
-  - `batch_order_status`：批次订单状态（pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）
+  - `batch_order_status`：批次订单状态（pending_submit-待提交，pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）
   - `total_quantity`：总数量
   - `total_amount`：总金额（预算）
   - `actual_amount`：实际金额
   - `currency`：币种
+  - `batch_text_content`：批次文本内容（记录提交的完整数据）
 
 #### 3.3.2 订单表 (bt_order)
 - 存储客户填写的订单
