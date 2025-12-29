@@ -178,7 +178,7 @@
   - `keyword`：关键词
   - `click_count`：点击数量
   - `cart_count`：加购数量
-  - `review_date`：上评日期
+  - `execution_date`：执行日期
   - `review_text_content`：评论文字内容
   - `review_image_content`：评论图片内容
 - **索引**：
@@ -191,7 +191,7 @@
   - `idx_order_type_id`：订单类型ID索引
   - `idx_platform_order_no`：平台订单号索引
   - `idx_device_id`：设备ID索引
-  - `idx_review_date`：上评日期索引
+  - `idx_execution_date`：执行日期索引
   - `idx_operation_scene`：操作场景索引
 - **业务逻辑**：
   - **填写订单**：支持多种填写方式
@@ -299,7 +299,7 @@
 所有关键查询字段都已建立索引，包括：
 - 外键字段索引（tenant_id、order_batch_id、product_id、store_id等）
 - 状态字段索引（status、order_status、batch_order_status等）
-- 日期字段索引（review_date等）
+- 日期字段索引（execution_date等）
 - 业务查询字段索引（platform_code、platform_order_no、device_id、operation_scene等）
 
 索引设计遵循以下原则：

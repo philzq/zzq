@@ -170,7 +170,7 @@ CREATE TABLE `bt_order` (
   `keyword` varchar(200) DEFAULT NULL COMMENT '关键词',
   `click_count` int(11) DEFAULT 0 COMMENT '点击数量',
   `cart_count` int(11) DEFAULT 0 COMMENT '加购数量',
-  `review_date` date DEFAULT NULL COMMENT '上评日期',
+  `execution_date` date DEFAULT NULL COMMENT '执行日期',
   `review_text_content` text DEFAULT NULL COMMENT '评论文字内容',
   `review_image_content` text DEFAULT NULL COMMENT '评论图片内容',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
@@ -188,7 +188,7 @@ CREATE TABLE `bt_order` (
   KEY `idx_order_type_id` (`order_type_id`),
   KEY `idx_platform_order_no` (`platform_order_no`),
   KEY `idx_device_id` (`device_id`),
-  KEY `idx_review_date` (`review_date`),
+  KEY `idx_execution_date` (`execution_date`),
   KEY `idx_operation_scene` (`operation_scene`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
