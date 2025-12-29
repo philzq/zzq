@@ -75,12 +75,22 @@
   - `order_batch_id`：批次订单ID
   - `product_id`：产品ID
   - `store_id`：店铺ID
+  - `store_name_kr`：店铺韩文名称（冗余字段，冗余bt_store表）
+  - `store_name_custom`：店铺自定义备注名称（冗余字段，冗余bt_store表）
   - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
+  - `platform_name`：平台名称（冗余字段，冗余bt_platform表）
   - `order_type_id`：订单类型ID（关联后台系统）
+  - `order_type_name`：订单类型名称（冗余字段，冗余bt_order_type表）
+  - `product_title`：产品标题（冗余字段，冗余bt_product表）
+  - `product_link`：产品链接（冗余字段，冗余bt_product表）
+  - `attribute_name`：属性名称（冗余字段，冗余bt_product表）
+  - `main_image_url`：产品主图URL（冗余字段，冗余bt_product表）
+  - `selling_price`：售价（冗余字段，冗余bt_product表）
   - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
   - `order_date`：订单日期
   - `keyword`：关键词
   - `original_detail_id`：原订单ID（重新提交时关联）
+- **业务逻辑**：冗余字段用于保存订单创建时的快照数据，即使关联表的数据发生变化，订单表中的冗余字段保持不变，保证历史数据的准确性
 
 ### 3.4 订单查询模块
 
