@@ -179,10 +179,4 @@ INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `
 ('coupang', 'Coupang', 1, 1, 'system'),
 ('naver', 'Naver', 1, 2, 'system');
 
--- 初始化订单类型数据
-INSERT INTO `bt_order_type` (`sort`, `status`, `create_by`) VALUES
-(1, 1, 'system'),
-(2, 1, 'system'),
-(3, 1, 'system');
-
 SET FOREIGN_KEY_CHECKS = 1;
