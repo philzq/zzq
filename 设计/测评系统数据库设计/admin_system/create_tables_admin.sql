@@ -120,7 +120,6 @@ CREATE TABLE `bt_account_device` (
 DROP TABLE IF EXISTS `bt_bill`;
 CREATE TABLE `bt_bill` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `bill_no` varchar(100) NOT NULL COMMENT '账单号',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID',
   `order_batch_id` bigint(20) DEFAULT NULL COMMENT '批次订单ID（关联测评系统的订单）',
   `bill_type` varchar(50) DEFAULT NULL COMMENT '账单类型',
@@ -138,7 +137,6 @@ CREATE TABLE `bt_bill` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_bill_no` (`bill_no`),
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_order_batch_id` (`order_batch_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单表-后台管理系统';

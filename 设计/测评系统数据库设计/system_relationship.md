@@ -188,7 +188,7 @@ bt_tenant.id ←→ client_customer.id (通过 tenant_id/customer_id 关联)
 ### 7.2 账单数据映射
 
 ```
-bt_bill.bill_no ←→ client_bill.bill_no (唯一标识)
+bt_bill.id ←→ client_bill.id (通过ID关联)
 bt_bill.order_batch_id ←→ client_order_batch.id (关联测评系统的订单)
 bt_bill_detail.order_detail_id ←→ client_order_detail.id (关联测评系统的订单)
 ```
