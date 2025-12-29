@@ -152,7 +152,6 @@ CREATE TABLE `bt_order` (
   `main_image_url` varchar(1000) DEFAULT NULL COMMENT '产品主图URL（冗余字段）',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '售价（冗余字段）',
   `order_status` varchar(50) DEFAULT 'pending' COMMENT '订单状态：pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成',
-  `order_date` date NOT NULL COMMENT '订单日期',
   `keyword` varchar(200) DEFAULT NULL COMMENT '关键词',
   `original_detail_id` bigint(20) DEFAULT NULL COMMENT '原订单ID（重新提交时关联）',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
@@ -166,7 +165,6 @@ CREATE TABLE `bt_order` (
   KEY `idx_product_id` (`product_id`),
   KEY `idx_store_id` (`store_id`),
   KEY `idx_platform_code` (`platform_code`),
-  KEY `idx_order_date` (`order_date`),
   KEY `idx_order_status` (`order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
