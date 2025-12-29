@@ -88,7 +88,6 @@
 - **管理员权限**：查看账单明细
 - **字段说明**：
   - `bill_id`：账单ID
-  - `order_detail_id`：明细订单ID（关联测评系统的订单）
   - `item_name`：明细项名称
   - `item_type`：明细项类型
   - `quantity`：数量
@@ -162,7 +161,6 @@ bt_order_type (订单类型表) - 位于测评系统客户端
 ### 6.2 与测评系统的关联
 
 - `bt_bill.order_batch_id` → 关联测评系统的批次订单
-- `bt_bill_detail.order_detail_id` → 关联测评系统的明细订单
 - `bt_review_account_order_type.order_type_id` → 关联测评系统客户端的 `bt_order_type.id`
 
 ## 七、数据字典

@@ -127,7 +127,6 @@ DROP TABLE IF EXISTS `bt_bill_detail`;
 CREATE TABLE `bt_bill_detail` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `bill_id` bigint(20) NOT NULL COMMENT '账单ID',
-  `order_detail_id` bigint(20) DEFAULT NULL COMMENT '明细订单ID（关联测评系统的订单）',
   `item_name` varchar(200) DEFAULT NULL COMMENT '明细项名称',
   `item_type` varchar(50) DEFAULT NULL COMMENT '明细项类型',
   `quantity` int(11) DEFAULT 1 COMMENT '数量',
@@ -141,8 +140,7 @@ CREATE TABLE `bt_bill_detail` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_bill_id` (`bill_id`),
-  KEY `idx_order_detail_id` (`order_detail_id`)
+  KEY `idx_bill_id` (`bill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单明细表-后台管理系统';
 
 -- ============================================

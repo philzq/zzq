@@ -213,7 +213,6 @@ bt_order_type.id ←→ bt_review_account_order_type.order_type_id (测评账号
 
 ```
 bt_bill.order_batch_id ←→ bt_order_batch.id (后台账单关联测评系统的批次订单)
-bt_bill_detail.order_detail_id ←→ bt_order.id (后台账单明细关联测评系统的订单)
 ```
 
 
