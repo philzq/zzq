@@ -99,6 +99,7 @@ CREATE TABLE `bt_review_account_order_type` (
 DROP TABLE IF EXISTS `bt_account_device`;
 CREATE TABLE `bt_account_device` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（设备唯一标识）',
   `review_account_id` bigint(20) DEFAULT NULL COMMENT '测评账号ID（可为空，表示设备未绑定账号）',
   `device_name` varchar(200) DEFAULT NULL COMMENT '设备名称',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
@@ -109,6 +110,7 @@ CREATE TABLE `bt_account_device` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_device_id` (`device_id`),
   KEY `idx_review_account_id` (`review_account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号设备绑定表-后台管理系统';
 
