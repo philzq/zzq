@@ -48,11 +48,20 @@
 - **字段说明**：
   - `account_name`：账号名称
   - `password`：账号密码（明文存储）
-  - `account_type`：账号类型
   - `platform_code`：平台编码（关联平台表的platform_code）
   - `is_auto_assign`：是否自动分配（0-否，1-是）
   - `execution_status`：执行状态（idle-空闲，executing-执行中）
   - `current_tasks`：当前任务数
+- **订单类型关联**：通过 `bt_review_account_order_type` 关联表支持一个账号关联多个订单类型
+
+#### 3.3.1.1 账号订单类型关联表 (bt_review_account_order_type)
+- 存储账号与订单类型的多对多关联关系
+- **管理员权限**：为账号分配订单类型
+- **字段说明**：
+  - `review_account_id`：测评账号ID
+  - `order_type_id`：订单类型ID（关联订单类型表）
+  - `sort`：排序
+- **业务逻辑**：一个账号可以关联多个订单类型，用于订单分配时的匹配
 
 #### 3.3.2 账号能力标签表 (bt_account_capability)
 - 存储账号能力标签
@@ -211,6 +220,10 @@ bt_review_account (测评账号表)
 bt_account_device (账号设备绑定表)
     ↓ (1:N)
 bt_account_capability (账号能力标签表)
+    ↓ (N:M)
+bt_review_account_order_type (账号订单类型关联表)
+    ↓ (N:1)
+bt_order_type (订单类型表)
     ↓ (1:N)
 bt_account_task_queue (账号任务队列表)
 

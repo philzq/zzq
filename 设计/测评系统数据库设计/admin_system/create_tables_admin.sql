@@ -63,7 +63,6 @@ CREATE TABLE `bt_review_account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `account_name` varchar(100) NOT NULL COMMENT '账号名称',
   `password` varchar(255) DEFAULT NULL COMMENT '账号密码（明文存储）',
-  `account_type` varchar(50) DEFAULT NULL COMMENT '账号类型',
   `platform_code` varchar(50) DEFAULT NULL COMMENT '平台编码（关联平台表的platform_code）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` varchar(50) DEFAULT 'idle' COMMENT '执行状态：idle-空闲，executing-执行中',
@@ -78,6 +77,23 @@ CREATE TABLE `bt_review_account` (
   KEY `idx_platform_code` (`platform_code`),
   KEY `idx_execution_status` (`execution_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';
+
+-- 账号订单类型关联表（支持一个账号多个订单类型）
+DROP TABLE IF EXISTS `bt_review_account_order_type`;
+CREATE TABLE `bt_review_account_order_type` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `review_account_id` bigint(20) NOT NULL COMMENT '测评账号ID',
+  `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_account_order_type` (`review_account_id`, `order_type_id`),
+  KEY `idx_review_account_id` (`review_account_id`),
+  KEY `idx_order_type_id` (`order_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号订单类型关联表-后台管理系统';
 
 -- 账号能力标签表
 DROP TABLE IF EXISTS `bt_account_capability`;
