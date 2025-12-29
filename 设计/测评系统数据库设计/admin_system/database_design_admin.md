@@ -47,6 +47,7 @@
 - **管理员权限**：创建、编辑、禁用/启用测评账号
 - **字段说明**：
   - `account_name`：账号名称
+  - `password`：账号密码（明文存储）
   - `account_type`：账号类型
   - `platform_id`：平台ID（关联平台表）
   - `is_auto_assign`：是否自动分配（0-否，1-是）

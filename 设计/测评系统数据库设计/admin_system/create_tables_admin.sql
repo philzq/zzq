@@ -62,6 +62,7 @@ DROP TABLE IF EXISTS `bt_review_account`;
 CREATE TABLE `bt_review_account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `account_name` varchar(100) NOT NULL COMMENT '账号名称',
+  `password` varchar(255) DEFAULT NULL COMMENT '账号密码（明文存储）',
   `account_type` varchar(50) DEFAULT NULL COMMENT '账号类型',
   `platform_id` bigint(20) DEFAULT NULL COMMENT '平台ID',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
