@@ -73,7 +73,7 @@
 - **字段说明**：
   - `tenant_id`：租户ID
   - `order_batch_id`：批次订单ID（关联测评系统的订单）
-  - `bill_type`：账单类型
+  - `bill_scene`：账单场景
   - `budget_amount`：预算金额
   - `actual_amount`：实际金额
   - `currency`：币种（默认KRW）

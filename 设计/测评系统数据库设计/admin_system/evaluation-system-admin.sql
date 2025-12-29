@@ -103,7 +103,7 @@ CREATE TABLE `bt_bill` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID',
   `order_batch_id` bigint(20) DEFAULT NULL COMMENT '批次订单ID（关联测评系统的订单）',
-  `bill_type` varchar(50) DEFAULT NULL COMMENT '账单类型',
+  `bill_scene` varchar(50) DEFAULT NULL COMMENT '账单场景',
   `budget_amount` decimal(10,2) DEFAULT 0.00 COMMENT '预算金额',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
   `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
