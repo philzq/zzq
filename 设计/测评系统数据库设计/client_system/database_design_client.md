@@ -76,7 +76,7 @@
   - `order_batch_id`：批次订单ID
   - `product_id`：产品ID
   - `store_id`：店铺ID
-  - `platform_id`：平台ID
+  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
   - `order_type_id`：订单类型ID（关联后台系统）
   - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
   - `order_date`：订单日期

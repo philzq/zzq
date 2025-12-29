@@ -98,7 +98,7 @@ CREATE TABLE `bt_order` (
   `order_batch_id` bigint(20) NOT NULL COMMENT '批次订单ID',
   `product_id` bigint(20) NOT NULL COMMENT '产品ID',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
-  `platform_id` bigint(20) NOT NULL COMMENT '平台ID',
+  `platform_code` varchar(50) NOT NULL COMMENT '平台编码（关联后台系统的bt_platform表的platform_code）',
   `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID（关联后台系统）',
   `order_status` varchar(50) DEFAULT 'pending' COMMENT '订单状态：pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成',
   `order_date` date NOT NULL COMMENT '订单日期',
@@ -114,6 +114,7 @@ CREATE TABLE `bt_order` (
   KEY `idx_order_batch_id` (`order_batch_id`),
   KEY `idx_product_id` (`product_id`),
   KEY `idx_store_id` (`store_id`),
+  KEY `idx_platform_code` (`platform_code`),
   KEY `idx_order_date` (`order_date`),
   KEY `idx_order_status` (`order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
