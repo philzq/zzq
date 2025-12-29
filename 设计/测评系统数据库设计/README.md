@@ -40,7 +40,6 @@
 4. **测评账号表** (`bt_review_account`) - 存储测评账号信息
    - 账号订单类型关联表 (`bt_review_account_order_type`)
    - 账号设备绑定表 (`bt_account_device`)
-   - 账号任务队列表 (`bt_account_task_queue`)
 5. **账单表** (`bt_bill`) - 存储账单信息
    - 账单明细表 (`bt_bill_detail`)
 

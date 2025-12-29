@@ -71,16 +71,6 @@
   - `device_name`：设备名称
   - **业务逻辑**：设备可以绑定账号，也可以不绑定（review_account_id为空），需均匀分布
 
-#### 3.3.3 账号任务队列表 (bt_account_task_queue)
-- 存储账号的任务队列信息
-- **管理员权限**：查看账号任务队列，支持人工调整顺序
-- **字段说明**：
-  - `review_account_id`：测评账号ID
-  - `order_detail_id`：明细订单ID（关联测评系统的订单）
-  - `queue_order`：队列顺序
-  - `queue_status`：队列状态（pending-待执行，executing-执行中，completed-已完成，failed-失败）
-  - **业务逻辑**：支持店铺均分排序，管理员可查看和调整队列顺序
-
 ### 3.4 财务账单管理模块
 
 #### 3.4.1 账单表 (bt_bill)
@@ -173,9 +163,8 @@
 2. **订单分配**：
    - 自动分配：定时任务根据账号订单类型匹配自动分配
    - 人工处理：管理员点击人工处理按钮，直接修改实际成交订单、付款信息、付款人等
-3. **任务队列**：支持店铺均分排序，管理员可查看和调整队列顺序
-4. **设备绑定**：设备可以绑定账号，也可以不绑定，需均匀分布
-5. **支付状态流转**：管理员点击状态流转，记录具体金额、币种等信息
+3. **设备绑定**：设备可以绑定账号，也可以不绑定，需均匀分布
+4. **支付状态流转**：管理员点击状态流转，记录具体金额、币种等信息
 
 ## 五、权限说明
 
@@ -210,8 +199,6 @@ bt_account_device (账号设备绑定表)
 bt_review_account_order_type (账号订单类型关联表)
     ↓ (N:1)
 bt_order_type (订单类型表)
-    ↓ (1:N)
-bt_account_task_queue (账号任务队列表)
 
 bt_order_type (订单类型表) - 独立表，供测评系统关联引用
 bt_order_status (订单状态表) - 独立表，供测评系统关联引用
@@ -222,7 +209,6 @@ bt_payment_status (支付状态表) - 独立表，供测评系统关联引用
 
 - `bt_bill.order_batch_id` → 关联测评系统的批次订单
 - `bt_bill_detail.order_detail_id` → 关联测评系统的明细订单
-- `bt_account_task_queue.order_detail_id` → 关联测评系统的明细订单
 - `bt_order_type.id` → 测评系统的订单表通过 `order_type_id` 关联
 - `bt_order_status.id` → 测评系统的订单表通过 `order_status_id` 关联
 - `bt_payment_status.id` → 测评系统的订单表通过 `payment_status_id` 关联
