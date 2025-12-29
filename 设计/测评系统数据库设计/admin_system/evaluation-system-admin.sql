@@ -64,6 +64,7 @@ CREATE TABLE `bt_review_account` (
   `account_name` varchar(100) NOT NULL COMMENT '账号名称',
   `password` varchar(255) DEFAULT NULL COMMENT '账号密码（明文存储）',
   `platform_code` varchar(50) DEFAULT NULL COMMENT '平台编码（关联平台表的platform_code）',
+  `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（关联设备表的device_id）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` varchar(50) DEFAULT 'idle' COMMENT '执行状态：idle-空闲，executing-执行中',
   `current_tasks` int(11) DEFAULT 0 COMMENT '当前任务数',
@@ -75,7 +76,8 @@ CREATE TABLE `bt_review_account` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_platform_code` (`platform_code`),
-  KEY `idx_execution_status` (`execution_status`)
+  KEY `idx_execution_status` (`execution_status`),
+  KEY `idx_device_id` (`device_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';
 
 -- 账号订单类型关联表（支持一个账号多个订单类型）
@@ -100,19 +102,16 @@ DROP TABLE IF EXISTS `bt_account_device`;
 CREATE TABLE `bt_account_device` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（设备唯一标识）',
-  `review_account_id` bigint(20) DEFAULT NULL COMMENT '测评账号ID（可为空，表示设备未绑定账号）',
   `device_name` varchar(200) DEFAULT NULL COMMENT '设备名称',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
-  `bind_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '绑定时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_device_id` (`device_id`),
-  KEY `idx_review_account_id` (`review_account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号设备绑定表-后台管理系统';
+  UNIQUE KEY `uk_device_id` (`device_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表-后台管理系统';
 
 -- ============================================
 -- 4. 财务账单管理表
