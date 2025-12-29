@@ -77,7 +77,6 @@
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `order_batch_id`：批次订单ID
-  - `detail_no`：明细订单号（唯一）
   - `product_id`：产品ID
   - `store_id`：店铺ID
   - `platform_id`：平台ID
@@ -85,12 +84,6 @@
   - `order_status`：订单状态（pending-待开始，processing-进行中，pending_confirm-待确认，completed-已完成）
   - `order_date`：订单日期
   - `keyword`：关键词
-  - `quantity`：数量
-  - `budget_amount`：预算金额
-  - `actual_amount`：实际金额
-  - `transaction_order_no`：成交订单号（返回信息）
-  - `transaction_price`：实际成交价格（返回信息）
-  - `is_resubmit`：是否重新提交（0-否，1-是）
   - `original_detail_id`：原订单ID（重新提交时关联）
 
 ### 3.4 订单查询模块
