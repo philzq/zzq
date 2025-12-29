@@ -33,7 +33,9 @@
 - 支持根据订单类型计算佣金
 - **客户权限**：查看订单类型列表
 - **字段说明**：
-  - `type_name`：类型名称
+  - `operation_scene`：操作场景
+  - `first_level_type_name`：一级类型名称
+  - `second_level_type_name`：二级类型名称
   - `commission_type`：佣金计算方式（percentage-按比例，fixed-固定金额）
   - `commission_rate`：佣金率（百分比，如10.5表示10.5%）
   - `commission_amount`：固定佣金金额（当commission_type为fixed时使用）

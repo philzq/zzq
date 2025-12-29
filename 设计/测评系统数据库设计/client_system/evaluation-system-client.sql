@@ -38,7 +38,9 @@ CREATE TABLE `bt_platform` (
 DROP TABLE IF EXISTS `bt_order_type`;
 CREATE TABLE `bt_order_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `type_name` varchar(100) NOT NULL COMMENT '类型名称',
+  `operation_scene` varchar(100) DEFAULT NULL COMMENT '操作场景',
+  `first_level_type_name` varchar(100) DEFAULT NULL COMMENT '一级类型名称',
+  `second_level_type_name` varchar(100) DEFAULT NULL COMMENT '二级类型名称',
   `commission_type` varchar(50) DEFAULT 'percentage' COMMENT '佣金计算方式：percentage-按比例，fixed-固定金额',
   `commission_rate` decimal(10,4) DEFAULT NULL COMMENT '佣金率（百分比，如10.5表示10.5%）',
   `commission_amount` decimal(10,2) DEFAULT NULL COMMENT '固定佣金金额（当commission_type为fixed时使用）',
@@ -178,9 +180,9 @@ INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `
 ('naver', 'Naver', 1, 2, 'system');
 
 -- 初始化订单类型数据
-INSERT INTO `bt_order_type` (`type_name`, `sort`, `status`, `create_by`) VALUES
-('点击', 1, 1, 'system'),
-('加购', 2, 1, 'system'),
-('测评', 3, 1, 'system');
+INSERT INTO `bt_order_type` (`sort`, `status`, `create_by`) VALUES
+(1, 1, 'system'),
+(2, 1, 'system'),
+(3, 1, 'system');
 
 SET FOREIGN_KEY_CHECKS = 1;
