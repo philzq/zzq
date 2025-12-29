@@ -65,12 +65,13 @@
   - `sort`：排序
 - **业务逻辑**：一个账号可以关联多个订单类型，用于订单分配时的匹配
 
-#### 3.3.2 设备表 (bt_account_device)
+#### 3.3.2 设备表 (bt_device)
 - 存储设备信息
 - **管理员权限**：创建、编辑、禁用/启用设备
 - **字段说明**：
   - `device_id`：设备ID（设备唯一标识，唯一键约束）
   - `device_name`：设备名称
+  - `device_type`：设备类型
   - `status`：状态（0-禁用，1-启用）
 - **业务逻辑**：设备与账号的关联关系通过账号表的 `device_id` 字段实现，一个账号对应一个设备
 - **唯一性约束**：`device_id` 字段具有唯一键约束，确保每个设备ID在系统中唯一
@@ -182,8 +183,8 @@ bt_bill_detail (账单明细表)
 bt_platform (平台表)
     ↓ (1:N)
 bt_review_account (测评账号表)
-    ↓ (1:N)
-bt_account_device (账号设备绑定表)
+    ↓ (1:1)
+bt_device (设备表)
     ↓ (N:M)
 bt_review_account_order_type (账号订单类型关联表)
     ↓ (N:1)

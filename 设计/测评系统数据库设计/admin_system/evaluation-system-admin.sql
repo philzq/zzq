@@ -97,12 +97,13 @@ CREATE TABLE `bt_review_account_order_type` (
   KEY `idx_order_type_id` (`order_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号订单类型关联表-后台管理系统';
 
--- 账号设备绑定表
-DROP TABLE IF EXISTS `bt_account_device`;
-CREATE TABLE `bt_account_device` (
+-- 设备表
+DROP TABLE IF EXISTS `bt_device`;
+CREATE TABLE `bt_device` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（设备唯一标识）',
   `device_name` varchar(200) DEFAULT NULL COMMENT '设备名称',
+  `device_type` varchar(50) DEFAULT NULL COMMENT '设备类型',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
