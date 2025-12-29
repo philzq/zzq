@@ -46,23 +46,6 @@
   - `status`：状态（0-禁用，1-启用）
 - **业务逻辑**：已下单的产品信息不随产品修改而改变
 
-#### 3.2.2 产品属性表 (bt_product_attribute)
-- 存储产品属性信息
-- 支持多属性
-- **字段说明**：
-  - `product_id`：产品ID
-  - `attribute_name`：属性名称
-  - `sort`：排序
-
-#### 3.2.3 产品图片表 (bt_product_image)
-- 存储产品图片信息
-- 支持主图上传
-- **字段说明**：
-  - `product_id`：产品ID
-  - `image_url`：图片URL
-  - `image_type`：图片类型（1-主图，2-详情图）
-  - `sort`：排序
-
 ### 3.3 订单创建和填写模块
 
 #### 3.3.1 批次订单表 (bt_order_batch)

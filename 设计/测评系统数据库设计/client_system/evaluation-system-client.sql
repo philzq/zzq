@@ -60,37 +60,6 @@ CREATE TABLE `bt_product` (
   KEY `idx_platform_code` (`platform_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品表-测评系统';
 
--- 产品属性表
-DROP TABLE IF EXISTS `bt_product_attribute`;
-CREATE TABLE `bt_product_attribute` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `product_id` bigint(20) NOT NULL COMMENT '产品ID',
-  `attribute_name` varchar(200) NOT NULL COMMENT '属性名称',
-  `sort` int(11) DEFAULT 0 COMMENT '排序',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `idx_product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品属性表-测评系统';
-
--- 产品图片表
-DROP TABLE IF EXISTS `bt_product_image`;
-CREATE TABLE `bt_product_image` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `product_id` bigint(20) NOT NULL COMMENT '产品ID',
-  `image_url` varchar(1000) NOT NULL COMMENT '图片URL',
-  `image_type` tinyint(1) DEFAULT 1 COMMENT '图片类型：1-主图，2-详情图',
-  `sort` int(11) DEFAULT 0 COMMENT '排序',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `idx_product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品图片表-测评系统';
-
 -- ============================================
 -- 3. 订单创建和填写表
 -- ============================================
