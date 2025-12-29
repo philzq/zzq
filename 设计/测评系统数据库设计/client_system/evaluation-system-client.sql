@@ -115,7 +115,6 @@ DROP TABLE IF EXISTS `bt_order_batch`;
 CREATE TABLE `bt_order_batch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
-  `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID（关联后台系统）',
   `batch_order_status` varchar(50) DEFAULT 'pending_payment' COMMENT '批次订单状态：pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
   `total_quantity` int(11) DEFAULT 0 COMMENT '总数量',
   `total_amount` decimal(10,2) DEFAULT 0.00 COMMENT '总金额（预算）',
@@ -128,7 +127,6 @@ CREATE TABLE `bt_order_batch` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_tenant_id` (`tenant_id`),
-  KEY `idx_order_type_id` (`order_type_id`),
   KEY `idx_batch_order_status` (`batch_order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批次订单表-测评系统';
 
