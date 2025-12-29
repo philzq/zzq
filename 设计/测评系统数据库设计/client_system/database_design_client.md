@@ -127,6 +127,7 @@
   - `tracking_number`：物流单号
   - `actual_order_price`：实际下单价格
   - `order_account`：下单账号
+  - `device_id`：设备ID
   - `keyword`：关键词
   - `review_date`：上评日期
   - `review_text_content`：评论文字内容

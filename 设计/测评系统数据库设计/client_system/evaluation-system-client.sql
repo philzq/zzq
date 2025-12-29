@@ -161,6 +161,7 @@ CREATE TABLE `bt_order` (
   `tracking_number` varchar(200) DEFAULT NULL COMMENT '物流单号',
   `actual_order_price` decimal(10,2) DEFAULT NULL COMMENT '实际下单价格',
   `order_account` varchar(100) DEFAULT NULL COMMENT '下单账号',
+  `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID',
   `keyword` varchar(200) DEFAULT NULL COMMENT '关键词',
   `review_date` date DEFAULT NULL COMMENT '上评日期',
   `review_text_content` text DEFAULT NULL COMMENT '评论文字内容',
