@@ -17,7 +17,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `bt_tenant`;
 CREATE TABLE `bt_tenant` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `tenant_code` varchar(50) NOT NULL COMMENT '租户编码',
   `tenant_name` varchar(200) NOT NULL COMMENT '租户名称（公司名称）',
   `email` varchar(100) NOT NULL COMMENT '邮箱',
   `wechat_id` varchar(100) DEFAULT NULL COMMENT '企业负责人微信号码',
@@ -30,7 +29,6 @@ CREATE TABLE `bt_tenant` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_tenant_code` (`tenant_code`),
   UNIQUE KEY `uk_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='租户表-后台管理系统';
 
