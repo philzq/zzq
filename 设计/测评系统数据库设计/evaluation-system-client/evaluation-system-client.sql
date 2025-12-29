@@ -202,3 +202,4 @@ INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `
 ('naver', 'Naver', 1, 2, 'system');
 
 SET FOREIGN_KEY_CHECKS = 1;
+

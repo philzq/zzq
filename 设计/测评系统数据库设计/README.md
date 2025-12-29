@@ -10,10 +10,10 @@
 
 ```
 .
-├── admin_system/                    # 测评后台管理系统
+├── evaluation-system-admin/         # 测评后台管理系统
 │   ├── database_design_admin.md     # 数据库设计文档
 │   └── evaluation-system-admin.sql  # 建表SQL脚本
-├── client_system/                   # 测评系统
+├── evaluation-system-client/        # 测评系统
 │   ├── database_design_client.md    # 数据库设计文档
 │   └── evaluation-system-client.sql # 建表SQL脚本
 ├── system_relationship.md           # 系统间数据关系说明
@@ -22,7 +22,7 @@
 
 ## 系统说明
 
-### 测评后台管理系统（admin_system）
+### 测评后台管理系统（evaluation-system-admin）
 
 **使用人员**：管理员、员工
 
@@ -43,7 +43,7 @@
 
 **数据库表前缀**：`bt_`
 
-### 测评系统（client_system）
+### 测评系统（evaluation-system-client）
 
 **使用人员**：客户（企业）
 
@@ -72,18 +72,18 @@
 
 ```sql
 -- 先执行后台管理系统的SQL
-source admin_system/evaluation-system-admin.sql;
+source evaluation-system-admin/evaluation-system-admin.sql;
 
 -- 再执行测评系统的SQL
-source client_system/evaluation-system-client.sql;
+source evaluation-system-client/evaluation-system-client.sql;
 ```
 
 #### 方式二：统一执行
 
 ```sql
 -- 在MySQL中依次执行两个SQL文件
-source admin_system/evaluation-system-admin.sql;
-source client_system/evaluation-system-client.sql;
+source evaluation-system-admin/evaluation-system-admin.sql;
+source evaluation-system-client/evaluation-system-client.sql;
 ```
 
 **注意**：
@@ -225,10 +225,10 @@ source client_system/evaluation-system-client.sql;
 
 ## 文件说明
 
-- `admin_system/database_design_admin.md` - 后台管理系统数据库设计文档
-- `admin_system/evaluation-system-admin.sql` - 后台管理系统建表SQL
-- `client_system/database_design_client.md` - 测评系统数据库设计文档
-- `client_system/evaluation-system-client.sql` - 测评系统建表SQL
+- `evaluation-system-admin/database_design_admin.md` - 后台管理系统数据库设计文档
+- `evaluation-system-admin/evaluation-system-admin.sql` - 后台管理系统建表SQL
+- `evaluation-system-client/database_design_client.md` - 测评系统数据库设计文档
+- `evaluation-system-client/evaluation-system-client.sql` - 测评系统建表SQL
 - `system_relationship.md` - 系统间数据关系说明文档
 
 ## 联系方式
