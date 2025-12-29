@@ -14,7 +14,37 @@
 
 ## 三、表结构设计
 
-### 3.1 店铺管理模块
+### 3.1 平台管理模块
+
+#### 3.1.1 平台表 (bt_platform)
+- 存储平台信息（coupang、naver等）
+- 支持平台扩展
+- **客户权限**：查看平台列表
+- **字段说明**：
+  - `platform_code`：平台编码（唯一）
+  - `platform_name`：平台名称
+  - `status`：状态（0-禁用，1-启用）
+  - `sort`：排序
+
+### 3.2 订单类型管理模块
+
+#### 3.2.1 订单类型表 (bt_order_type)
+- 存储订单类型信息（点击、加购、测评等）
+- 支持根据订单类型计算佣金
+- **客户权限**：查看订单类型列表
+- **字段说明**：
+  - `type_name`：类型名称
+  - `commission_type`：佣金计算方式（percentage-按比例，fixed-固定金额）
+  - `commission_rate`：佣金率（百分比，如10.5表示10.5%）
+  - `commission_amount`：固定佣金金额（当commission_type为fixed时使用）
+  - `currency`：币种（默认KRW）
+  - `sort`：排序
+  - `status`：状态（0-禁用，1-启用）
+- **佣金计算逻辑**：
+  - 按比例计算：佣金 = 订单金额 × commission_rate / 100
+  - 固定金额：佣金 = commission_amount
+
+### 3.3 店铺管理模块
 
 #### 3.1.1 店铺表 (bt_store)
 - 存储客户自己的店铺信息
@@ -23,13 +53,13 @@
 - **客户权限**：添加、修改自定义备注名称、删除店铺
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
-  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
+  - `platform_code`：平台编码（关联本系统的bt_platform表的platform_code）
   - `store_name_kr`：店铺韩文名称
   - `store_name_custom`：店铺自定义备注名称
   - `status`：状态（0-禁用，1-启用）
 - **业务逻辑**：删除店铺时使用物理删除
 
-### 3.2 产品管理模块
+### 3.4 产品管理模块
 
 #### 3.2.1 产品表 (bt_product)
 - 存储客户自己的产品信息
@@ -37,7 +67,7 @@
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `store_id`：店铺ID
-  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
+  - `platform_code`：平台编码（关联本系统的bt_platform表的platform_code）
   - `product_id`：产品ID（唯一，不可修改）
   - `product_title`：产品标题
   - `product_link`：产品链接
@@ -47,7 +77,7 @@
   - `status`：状态（0-禁用，1-启用）
 - **业务逻辑**：已下单的产品信息不随产品修改而改变
 
-### 3.3 订单创建和填写模块
+### 3.5 订单创建和填写模块
 
 #### 3.3.1 批次订单表 (bt_order_batch)
 - 存储客户创建的批次订单
@@ -55,7 +85,7 @@
 - **客户权限**：创建批次订单、查看自己的批次订单、取消未开始的订单
 - **字段说明**：
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
-  - `order_type_id`：订单类型ID（关联后台系统）
+  - `order_type_id`：订单类型ID（关联本系统的bt_order_type表）
   - `batch_order_status`：批次订单状态（pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）
   - `total_quantity`：总数量
   - `total_amount`：总金额（预算）
@@ -77,9 +107,9 @@
   - `store_id`：店铺ID
   - `store_name_kr`：店铺韩文名称（冗余字段，冗余bt_store表）
   - `store_name_custom`：店铺自定义备注名称（冗余字段，冗余bt_store表）
-  - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
+  - `platform_code`：平台编码（关联本系统的bt_platform表的platform_code）
   - `platform_name`：平台名称（冗余字段，冗余bt_platform表）
-  - `order_type_id`：订单类型ID（关联后台系统）
+  - `order_type_id`：订单类型ID（关联本系统的bt_order_type表）
   - `order_type_name`：订单类型名称（冗余字段，冗余bt_order_type表）
   - `product_title`：产品标题（冗余字段，冗余bt_product表）
   - `product_link`：产品链接（冗余字段，冗余bt_product表）
@@ -92,7 +122,7 @@
   - `original_detail_id`：原订单ID（重新提交时关联）
 - **业务逻辑**：冗余字段用于保存订单创建时的快照数据，即使关联表的数据发生变化，订单表中的冗余字段保持不变，保证历史数据的准确性
 
-### 3.4 订单查询模块
+### 3.6 订单查询模块
 
 #### 3.4.1 订单查询视图
 - 待开始订单：提前填写，但还未到日期开始（order_status = 'pending'）
@@ -138,14 +168,16 @@
 - **租户关联**：通过 `tenant_id` 关联后台系统的 `bt_tenant` 表
   - `bt_store.tenant_id` → `bt_tenant.id`
   - `bt_order_batch.tenant_id` → `bt_tenant.id`
-- **平台关联**：通过 `platform_code` 关联后台系统的 `bt_platform` 表
-- **订单类型关联**：通过 `order_type_id` 关联后台系统的 `bt_order_type` 表
+  - `bt_product.tenant_id` → `bt_tenant.id`
+  - `bt_order.tenant_id` → `bt_tenant.id`
+- **平台关联**：通过 `platform_code` 关联本系统的 `bt_platform` 表
+- **订单类型关联**：通过 `order_type_id` 关联本系统的 `bt_order_type` 表
 
 ### 6.2 数据同步
 
 - 租户数据：由后台系统创建，客户端通过 tenant_id 关联
-- 平台数据：由后台系统管理，客户端通过 platform_code 关联
-- 订单类型数据：由后台系统管理，客户端通过 order_type_id 关联
+- 平台数据：由客户端系统管理
+- 订单类型数据：由客户端系统管理
 - 订单数据：由客户端创建，后台系统通过订单ID关联查看和管理
 
 详见 `system_relationship.md` 文档。

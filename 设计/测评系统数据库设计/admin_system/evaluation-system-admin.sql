@@ -2,7 +2,7 @@
 -- 测评后台管理系统数据库设计
 -- 基于 eladmin 框架
 -- 管理员和员工使用
--- 包含：租户表、平台表、订单类型表、帮助文档表、测评账号表、账单表
+-- 包含：租户表、帮助文档表、测评账号表、账单表
 -- ============================================
 
 -- 设置字符集
@@ -33,28 +33,7 @@ CREATE TABLE `bt_tenant` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='租户表-后台管理系统';
 
 -- ============================================
--- 2. 平台管理表
--- ============================================
-
--- 平台表
-DROP TABLE IF EXISTS `bt_platform`;
-CREATE TABLE `bt_platform` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `platform_code` varchar(50) NOT NULL COMMENT '平台编码（coupang、naver等）',
-  `platform_name` varchar(100) NOT NULL COMMENT '平台名称',
-  `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
-  `sort` int(11) DEFAULT 0 COMMENT '排序',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_platform_code` (`platform_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='平台表-后台管理系统';
-
--- ============================================
--- 3. 测评账号管理表
+-- 2. 测评账号管理表
 -- ============================================
 
 -- 测评账号表
@@ -115,7 +94,7 @@ CREATE TABLE `bt_device` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表-后台管理系统';
 
 -- ============================================
--- 4. 财务账单管理表
+-- 3. 财务账单管理表
 -- ============================================
 
 -- 账单表
@@ -167,30 +146,7 @@ CREATE TABLE `bt_bill_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账单明细表-后台管理系统';
 
 -- ============================================
--- 5. 订单类型和状态管理表
--- ============================================
-
--- 订单类型表
-DROP TABLE IF EXISTS `bt_order_type`;
-CREATE TABLE `bt_order_type` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `type_name` varchar(100) NOT NULL COMMENT '类型名称',
-  `commission_type` varchar(50) DEFAULT 'percentage' COMMENT '佣金计算方式：percentage-按比例，fixed-固定金额',
-  `commission_rate` decimal(10,4) DEFAULT NULL COMMENT '佣金率（百分比，如10.5表示10.5%）',
-  `commission_amount` decimal(10,2) DEFAULT NULL COMMENT '固定佣金金额（当commission_type为fixed时使用）',
-  `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
-  `sort` int(11) DEFAULT 0 COMMENT '排序',
-  `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单类型表-后台管理系统';
-
--- ============================================
--- 6. 帮助和公共管理表
+-- 4. 帮助和公共管理表
 -- ============================================
 
 -- 帮助文档表
@@ -215,22 +171,6 @@ CREATE TABLE `bt_help_document` (
   KEY `idx_parent_id` (`parent_id`),
   KEY `idx_is_directory` (`is_directory`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帮助文档表-后台管理系统';
-
--- ============================================
--- 初始化数据
--- ============================================
-
--- 初始化平台数据
-INSERT INTO `bt_platform` (`platform_code`, `platform_name`, `status`, `sort`, `create_by`) VALUES
-('coupang', 'Coupang', 1, 1, 'system'),
-('naver', 'Naver', 1, 2, 'system');
-
--- 初始化订单类型数据
-INSERT INTO `bt_order_type` (`type_name`, `sort`, `status`, `create_by`) VALUES
-('点击', 1, 1, 'system'),
-('加购', 2, 1, 'system'),
-('测评', 3, 1, 'system');
-
 
 SET FOREIGN_KEY_CHECKS = 1;
 

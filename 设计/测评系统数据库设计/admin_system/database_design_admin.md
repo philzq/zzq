@@ -27,19 +27,7 @@
   - `status`：状态（0-禁用，1-启用）
   - `expire_time`：到期时间
 
-### 3.2 平台管理模块
-
-#### 3.2.1 平台表 (bt_platform)
-- 存储平台信息（coupang、naver等）
-- 支持平台扩展
-- **管理员权限**：创建、编辑、禁用/启用平台
-- **字段说明**：
-  - `platform_code`：平台编码（唯一）
-  - `platform_name`：平台名称
-  - `status`：状态（0-禁用，1-启用）
-  - `sort`：排序
-
-### 3.3 测评账号管理模块
+### 3.2 测评账号管理模块
 
 #### 3.3.1 测评账号表 (bt_review_account)
 - 存储测评账号信息
@@ -109,27 +97,9 @@
   - `actual_amount`：实际金额
   - `currency`：币种
 
-### 3.5 订单类型管理模块
+### 3.4 帮助和公共管理模块
 
-#### 3.5.1 订单类型表 (bt_order_type)
-- 存储订单类型信息（点击、加购、测评等）
-- 支持根据订单类型计算佣金
-- **管理员权限**：创建、编辑、禁用/启用订单类型，配置佣金参数
-- **字段说明**：
-  - `type_name`：类型名称
-  - `commission_type`：佣金计算方式（percentage-按比例，fixed-固定金额）
-  - `commission_rate`：佣金率（百分比，如10.5表示10.5%）
-  - `commission_amount`：固定佣金金额（当commission_type为fixed时使用）
-  - `currency`：币种（默认KRW）
-  - `sort`：排序
-  - `status`：状态（0-禁用，1-启用）
-- **佣金计算逻辑**：
-  - 按比例计算：佣金 = 订单金额 × commission_rate / 100
-  - 固定金额：佣金 = commission_amount
-
-### 3.6 帮助和公共管理模块
-
-#### 3.6.1 帮助文档表 (bt_help_document)
+#### 3.4.1 帮助文档表 (bt_help_document)
 - 存储帮助文档信息，支持目录层级结构
 - **管理员权限**：创建、编辑帮助文档和目录
 - **字段说明**：
@@ -180,24 +150,20 @@ bt_bill (账单表)
     ↓ (1:N)
 bt_bill_detail (账单明细表)
 
-bt_platform (平台表)
-    ↓ (1:N)
 bt_review_account (测评账号表)
     ↓ (1:1)
 bt_device (设备表)
     ↓ (N:M)
 bt_review_account_order_type (账号订单类型关联表)
     ↓ (N:1)
-bt_order_type (订单类型表)
-
-bt_order_type (订单类型表) - 独立表，供测评系统关联引用
+bt_order_type (订单类型表) - 位于测评系统客户端
 ```
 
 ### 6.2 与测评系统的关联
 
 - `bt_bill.order_batch_id` → 关联测评系统的批次订单
 - `bt_bill_detail.order_detail_id` → 关联测评系统的明细订单
-- `bt_order_type.id` → 测评系统的订单表通过 `order_type_id` 关联
+- `bt_review_account_order_type.order_type_id` → 关联测评系统客户端的 `bt_order_type.id`
 
 ## 七、数据字典
 
