@@ -70,7 +70,6 @@
 - `bt_review_account` - 测评账号表
 - `bt_review_account_order_type` - 账号订单类型关联表
 - `bt_account_device` - 账号设备绑定表
-- `bt_account_task_queue` - 账号任务队列表
 - `bt_bill` - 账单表
 - `bt_bill_detail` - 账单明细表
 - `bt_help_document` - 帮助文档表（可同步到测评系统）
@@ -194,11 +193,6 @@ bt_bill.order_batch_id ←→ client_order_batch.id (关联测评系统的订单
 bt_bill_detail.order_detail_id ←→ client_order_detail.id (关联测评系统的订单)
 ```
 
-### 7.3 任务队列数据映射
-
-```
-bt_account_task_queue.order_detail_id ←→ client_order_detail.id (关联测评系统的订单)
-```
 
 ## 八、注意事项
 
