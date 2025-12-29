@@ -21,9 +21,9 @@
 以下数据表在两个系统中共享，通过数据同步机制保持一致：
 
 #### 2.1.1 平台数据（platform）
-- **后台系统表**：`bt_platform`
-- **测评系统**：通过关联 `platform_id` 引用，不单独存储
-- **同步机制**：后台系统创建/修改平台后，测评系统通过接口或视图获取
+- **客户端系统表**：`bt_platform`
+- **后台系统**：通过关联 `platform_code` 引用（如测评账号表）
+- **同步机制**：客户端系统管理平台数据，后台系统通过 `platform_code` 关联引用
 
 ### 2.2 独立数据表
 
@@ -61,13 +61,23 @@
 以下数据表仅在后台系统中存在：
 
 - `bt_tenant` - 租户表
-- `bt_platform` - 平台表
 - `bt_review_account` - 测评账号表
 - `bt_review_account_order_type` - 账号订单类型关联表
 - `bt_device` - 设备表
 - `bt_bill` - 账单表
 - `bt_bill_detail` - 账单明细表
 - `bt_help_document` - 帮助文档表（可同步到测评系统）
+
+### 2.4 客户端系统独有数据表
+
+以下数据表仅在客户端系统中存在：
+
+- `bt_platform` - 平台表
+- `bt_order_type` - 订单类型表
+- `bt_store` - 店铺表
+- `bt_product` - 产品表
+- `bt_order_batch` - 批次订单表
+- `bt_order` - 订单表
 
 ## 三、数据同步方案
 
@@ -114,9 +124,11 @@
 ### 4.1 主数据源
 
 - **租户数据**：后台系统为主数据源
-- **店铺数据**：测评系统为主数据源（创建和修改）
-- **产品数据**：测评系统为主数据源（创建和修改）
-- **订单数据**：测评系统为主数据源（创建），后台系统为主数据源（状态更新）
+- **平台数据**：客户端系统为主数据源（创建和修改）
+- **订单类型数据**：客户端系统为主数据源（创建和修改）
+- **店铺数据**：客户端系统为主数据源（创建和修改）
+- **产品数据**：客户端系统为主数据源（创建和修改）
+- **订单数据**：客户端系统为主数据源（创建），后台系统为主数据源（状态更新）
 - **账单数据**：后台系统为主数据源（创建和管理）
 
 ### 4.2 冲突处理
@@ -180,7 +192,24 @@ bt_tenant.id ←→ bt_store.tenant_id (店铺关联租户)
 bt_tenant.id ←→ bt_order_batch.tenant_id (订单关联租户)
 ```
 
-### 7.2 订单数据映射
+### 7.2 平台数据映射
+
+```
+bt_platform.platform_code ←→ bt_store.platform_code (店铺关联平台)
+bt_platform.platform_code ←→ bt_product.platform_code (产品关联平台)
+bt_platform.platform_code ←→ bt_order.platform_code (订单关联平台)
+bt_platform.platform_code ←→ bt_review_account.platform_code (测评账号关联平台)
+```
+
+### 7.3 订单类型数据映射
+
+```
+bt_order_type.id ←→ bt_order_batch.order_type_id (批次订单关联订单类型)
+bt_order_type.id ←→ bt_order.order_type_id (订单关联订单类型)
+bt_order_type.id ←→ bt_review_account_order_type.order_type_id (测评账号关联订单类型)
+```
+
+### 7.4 订单数据映射
 
 ```
 bt_bill.order_batch_id ←→ bt_order_batch.id (后台账单关联测评系统的批次订单)
