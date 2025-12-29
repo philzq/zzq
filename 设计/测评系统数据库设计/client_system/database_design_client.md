@@ -35,6 +35,7 @@
 - 存储客户自己的产品信息
 - **客户权限**：添加、修改、删除产品
 - **字段说明**：
+  - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `store_id`：店铺ID
   - `platform_code`：平台编码（关联后台系统的bt_platform表的platform_code）
   - `product_id`：产品ID（唯一，不可修改）
@@ -74,6 +75,7 @@
   - 不同产品某几天的订单信息
 - **客户权限**：填写订单、导入订单、重新提交订单、查看自己的订单
 - **字段说明**：
+  - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `order_batch_id`：批次订单ID
   - `detail_no`：明细订单号（唯一）
   - `product_id`：产品ID

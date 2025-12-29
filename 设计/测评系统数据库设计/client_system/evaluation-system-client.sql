@@ -40,6 +40,7 @@ CREATE TABLE `bt_store` (
 DROP TABLE IF EXISTS `bt_product`;
 CREATE TABLE `bt_product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
   `store_id` bigint(20) NOT NULL COMMENT '店铺ID',
   `platform_code` varchar(50) NOT NULL COMMENT '平台编码（关联后台系统的bt_platform表的platform_code）',
   `product_id` varchar(100) NOT NULL COMMENT '产品ID（唯一，不可修改）',
@@ -56,6 +57,7 @@ CREATE TABLE `bt_product` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_product_id` (`product_id`),
+  KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_store_id` (`store_id`),
   KEY `idx_platform_code` (`platform_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品表-测评系统';
@@ -95,6 +97,7 @@ CREATE TABLE `bt_order_batch` (
 DROP TABLE IF EXISTS `bt_order`;
 CREATE TABLE `bt_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
   `order_batch_id` bigint(20) NOT NULL COMMENT '批次订单ID',
   `detail_no` varchar(100) NOT NULL COMMENT '明细订单号',
   `product_id` bigint(20) NOT NULL COMMENT '产品ID',
@@ -118,6 +121,7 @@ CREATE TABLE `bt_order` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_detail_no` (`detail_no`),
+  KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_order_batch_id` (`order_batch_id`),
   KEY `idx_product_id` (`product_id`),
   KEY `idx_store_id` (`store_id`),
