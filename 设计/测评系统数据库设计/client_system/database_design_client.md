@@ -129,6 +129,8 @@
   - `order_account`：下单账号
   - `device_id`：设备ID
   - `keyword`：关键词
+  - `click_count`：点击数量
+  - `cart_count`：加购数量
   - `review_date`：上评日期
   - `review_text_content`：评论文字内容
   - `review_image_content`：评论图片内容

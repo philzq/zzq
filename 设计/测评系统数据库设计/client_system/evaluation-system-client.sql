@@ -168,6 +168,8 @@ CREATE TABLE `bt_order` (
   `order_account` varchar(100) DEFAULT NULL COMMENT '下单账号',
   `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID',
   `keyword` varchar(200) DEFAULT NULL COMMENT '关键词',
+  `click_count` int(11) DEFAULT 0 COMMENT '点击数量',
+  `cart_count` int(11) DEFAULT 0 COMMENT '加购数量',
   `review_date` date DEFAULT NULL COMMENT '上评日期',
   `review_text_content` text DEFAULT NULL COMMENT '评论文字内容',
   `review_image_content` text DEFAULT NULL COMMENT '评论图片内容',
