@@ -62,8 +62,6 @@
   - `total_amount`：总金额（预算）
   - `actual_amount`：实际金额
   - `currency`：币种
-  - `start_date`：开始日期
-  - `end_date`：结束日期
 
 #### 3.3.2 订单表 (bt_order)
 - 存储客户填写的订单

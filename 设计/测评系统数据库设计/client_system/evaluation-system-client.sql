@@ -78,8 +78,6 @@ CREATE TABLE `bt_order_batch` (
   `total_amount` decimal(10,2) DEFAULT 0.00 COMMENT '总金额（预算）',
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
   `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
-  `start_date` date DEFAULT NULL COMMENT '开始日期',
-  `end_date` date DEFAULT NULL COMMENT '结束日期',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
