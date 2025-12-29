@@ -54,7 +54,6 @@
 - 支持点击、加购等批量订单创建
 - **客户权限**：创建批次订单、查看自己的批次订单、取消未开始的订单
 - **字段说明**：
-  - `batch_no`：批次订单号（唯一）
   - `tenant_id`：租户ID（关联后台系统的bt_tenant表）
   - `order_type_id`：订单类型ID（关联后台系统）
   - `batch_order_status`：批次订单状态（pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金）

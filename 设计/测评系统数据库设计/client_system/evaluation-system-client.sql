@@ -70,7 +70,6 @@ CREATE TABLE `bt_product` (
 DROP TABLE IF EXISTS `bt_order_batch`;
 CREATE TABLE `bt_order_batch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `batch_no` varchar(100) NOT NULL COMMENT '批次订单号',
   `tenant_id` bigint(20) NOT NULL COMMENT '租户ID（关联后台系统的bt_tenant表）',
   `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID（关联后台系统）',
   `batch_order_status` varchar(50) DEFAULT 'pending_payment' COMMENT '批次订单状态：pending_payment-待支付佣金，cancelled-已取消，paid-已支付佣金',
@@ -84,7 +83,6 @@ CREATE TABLE `bt_order_batch` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_batch_no` (`batch_no`),
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_order_type_id` (`order_type_id`),
   KEY `idx_batch_order_status` (`batch_order_status`)
