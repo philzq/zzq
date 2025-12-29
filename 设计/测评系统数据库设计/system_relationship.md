@@ -48,7 +48,7 @@
 
 **后台系统**：通过订单ID关联查看和管理订单
 
-**测评系统**：`bt_order_batch`、`bt_order_detail`
+**测评系统**：`bt_order_batch`、`bt_order`
 - 客户创建和填写订单
 - 通过 `tenant_id` 关联租户
 
@@ -184,7 +184,7 @@ bt_tenant.id ←→ bt_order_batch.tenant_id (订单关联租户)
 
 ```
 bt_bill.order_batch_id ←→ bt_order_batch.id (后台账单关联测评系统的批次订单)
-bt_bill_detail.order_detail_id ←→ bt_order_detail.id (后台账单明细关联测评系统的明细订单)
+bt_bill_detail.order_detail_id ←→ bt_order.id (后台账单明细关联测评系统的订单)
 ```
 
 

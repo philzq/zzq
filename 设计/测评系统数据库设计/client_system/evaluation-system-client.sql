@@ -91,9 +91,9 @@ CREATE TABLE `bt_order_batch` (
   KEY `idx_order_status` (`order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批次订单表-测评系统';
 
--- 明细订单表（客户填写）
-DROP TABLE IF EXISTS `bt_order_detail`;
-CREATE TABLE `bt_order_detail` (
+-- 订单表（客户填写）
+DROP TABLE IF EXISTS `bt_order`;
+CREATE TABLE `bt_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `order_batch_id` bigint(20) NOT NULL COMMENT '批次订单ID',
   `detail_no` varchar(100) NOT NULL COMMENT '明细订单号',
@@ -123,6 +123,6 @@ CREATE TABLE `bt_order_detail` (
   KEY `idx_store_id` (`store_id`),
   KEY `idx_order_date` (`order_date`),
   KEY `idx_order_status` (`order_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='明细订单表-测评系统';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
 SET FOREIGN_KEY_CHECKS = 1;
