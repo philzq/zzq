@@ -89,11 +89,12 @@ source client_system/create_tables_client.sql;
 
 #### 2.1 用户表关联
 
-两个系统都需要关联 eladmin 的 `sys_user` 表：
+测评系统需要关联 eladmin 的 `sys_user` 表：
 
-- `bt_tenant.user_id` → `sys_user.id`（后台管理系统租户表）
 - `client_customer.user_id` → `sys_user.id`（测评系统客户表）
 - `client_customer_sub_account.user_id` → `sys_user.id`（测评系统客户子账户表）
+
+**注意**：后台管理系统的租户表（`bt_tenant`）不关联 `sys_user` 表。
 
 #### 2.2 权限控制
 
