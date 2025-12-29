@@ -231,3 +231,4 @@ INSERT INTO `bt_order_type` (`type_name`, `sort`, `status`, `create_by`) VALUES
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+
