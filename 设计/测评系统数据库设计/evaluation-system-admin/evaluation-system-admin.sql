@@ -166,11 +166,8 @@ CREATE TABLE `bt_help_document` (
   `is_directory` tinyint(1) DEFAULT 0 COMMENT '是否是目录：0-文档，1-目录',
   `doc_title` varchar(200) NOT NULL COMMENT '文档标题/目录名称',
   `doc_content` text DEFAULT NULL COMMENT '文档内容（目录时可为空）',
-  `doc_type` varchar(50) DEFAULT NULL COMMENT '文档类型',
-  `doc_category` varchar(50) DEFAULT NULL COMMENT '文档分类',
   `sort` int(11) DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
-  `view_count` int(11) DEFAULT 0 COMMENT '查看次数',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -179,9 +176,7 @@ CREATE TABLE `bt_help_document` (
   PRIMARY KEY (`id`),
   KEY `idx_parent_id` (`parent_id`),
   KEY `idx_is_directory` (`is_directory`),
-  KEY `idx_status` (`status`),
-  KEY `idx_doc_type` (`doc_type`),
-  KEY `idx_doc_category` (`doc_category`)
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帮助文档表-后台管理系统';
 
 SET FOREIGN_KEY_CHECKS = 1;
