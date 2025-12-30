@@ -48,7 +48,6 @@ CREATE TABLE `bt_review_account` (
   `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（关联设备表的device_id）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` varchar(50) DEFAULT 'idle' COMMENT '执行状态：idle-空闲，executing-执行中',
-  `current_tasks` int(11) DEFAULT 0 COMMENT '当前任务数',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',

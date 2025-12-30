@@ -60,7 +60,6 @@
   - `device_id`：设备ID（关联设备表的device_id，一对一关系）
   - `is_auto_assign`：是否自动分配（0-否，1-是）
   - `execution_status`：执行状态（idle-空闲，executing-执行中）
-  - `current_tasks`：当前任务数
   - `status`：状态（0-禁用，1-启用）
 - **订单类型关联**：通过 `bt_review_account_order_type` 关联表支持一个账号关联多个订单类型
 - **设备关联**：通过 `device_id` 字段关联设备表，一个账号对应一个设备（注意设备的均匀分布）
