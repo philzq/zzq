@@ -197,6 +197,7 @@
   - `idx_execution_date`：执行日期索引
   - `idx_operation_scene`：操作场景索引
   - `idx_execution_result`：执行结果索引
+  - `idx_order_account`：下单账号索引
 - **业务逻辑**：
   - **填写订单**：支持多种填写方式
     - 某一天，单一产品的订单信息，提交产品的关键词和测评订单类型可能不一样

@@ -193,7 +193,8 @@ CREATE TABLE `bt_order` (
   KEY `idx_device_id` (`device_id`),
   KEY `idx_execution_date` (`execution_date`),
   KEY `idx_operation_scene` (`operation_scene`),
-  KEY `idx_execution_result` (`execution_result`)
+  KEY `idx_execution_result` (`execution_result`),
+  KEY `idx_order_account` (`order_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
 -- ============================================
