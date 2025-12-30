@@ -183,6 +183,7 @@
   - `review_image_content`：评论图片内容
   - `execution_result`：执行结果（0-失败，1-成功）
   - `execution_result_desc`：执行结果描述
+  - `auto_execution_count`：自动化执行次数（用于重试）
 - **索引**：
   - `idx_tenant_id`：租户ID索引
   - `idx_order_batch_id`：批次订单ID索引

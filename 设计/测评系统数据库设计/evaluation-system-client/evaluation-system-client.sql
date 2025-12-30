@@ -175,6 +175,7 @@ CREATE TABLE `bt_order` (
   `review_image_content` text DEFAULT NULL COMMENT '评论图片内容',
   `execution_result` tinyint(1) DEFAULT NULL COMMENT '执行结果：0-失败，1-成功',
   `execution_result_desc` varchar(500) DEFAULT NULL COMMENT '执行结果描述',
+  `auto_execution_count` int(11) DEFAULT 0 COMMENT '自动化执行次数（用于重试）',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
