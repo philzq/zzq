@@ -461,7 +461,7 @@
         <mxCell id="wRXFpzC9qgD4uNOPfPhq-11" value="记录失败状态和原因，执行重试次数+1" style="rounded=0;whiteSpace=wrap;html=1;" parent="W3W5jNinrp9ji7i6E5AB-4" vertex="1">
           <mxGeometry x="-930" y="3620" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="wRXFpzC9qgD4uNOPfPhq-31" value="基于空闲设备获取待确认订单且重试次数小于等于3次（获取自动化业务执行关键数据即可）" style="rounded=0;whiteSpace=wrap;html=1;" parent="W3W5jNinrp9ji7i6E5AB-4" vertex="1">
+        <mxCell id="wRXFpzC9qgD4uNOPfPhq-31" value="基于空闲设备获取待确认订单且重试次数小于等于3次且到达执行日期（获取自动化业务执行关键数据即可）" style="rounded=0;whiteSpace=wrap;html=1;" parent="W3W5jNinrp9ji7i6E5AB-4" vertex="1">
           <mxGeometry x="-930" y="3370" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="wRXFpzC9qgD4uNOPfPhq-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="W3W5jNinrp9ji7i6E5AB-4" source="54LPTSKX6qKzIjfOUYNH-89" target="wRXFpzC9qgD4uNOPfPhq-37" edge="1">
@@ -479,7 +479,7 @@
         <mxCell id="wRXFpzC9qgD4uNOPfPhq-93" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="W3W5jNinrp9ji7i6E5AB-4" source="wRXFpzC9qgD4uNOPfPhq-30" target="54LPTSKX6qKzIjfOUYNH-89" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wRXFpzC9qgD4uNOPfPhq-30" value="基于每个空闲设备id获取待确认订单且重试次数小于等于3次(分页获取，一页获取五十个)" style="rounded=0;whiteSpace=wrap;html=1;" parent="W3W5jNinrp9ji7i6E5AB-4" vertex="1">
+        <mxCell id="wRXFpzC9qgD4uNOPfPhq-30" value="基于空闲设备获取待确认订单且重试次数小于等于3次且到达执行日期(分页获取，一页获取五十个)" style="rounded=0;whiteSpace=wrap;html=1;" parent="W3W5jNinrp9ji7i6E5AB-4" vertex="1">
           <mxGeometry x="120" y="3378" width="120" height="66" as="geometry" />
         </mxCell>
         <mxCell id="wRXFpzC9qgD4uNOPfPhq-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="W3W5jNinrp9ji7i6E5AB-4" source="wRXFpzC9qgD4uNOPfPhq-37" target="wRXFpzC9qgD4uNOPfPhq-8" edge="1">
