@@ -56,9 +56,9 @@ CREATE TABLE `bt_review_account` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新人',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_device_id` (`device_id`),
   KEY `idx_platform_code` (`platform_code`),
   KEY `idx_execution_status` (`execution_status`),
-  KEY `idx_device_id` (`device_id`),
   KEY `idx_status` (`status`),
   KEY `idx_is_auto_assign` (`is_auto_assign`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';

@@ -65,9 +65,9 @@
 - **订单类型关联**：通过 `bt_review_account_order_type` 关联表支持一个账号关联多个订单类型
 - **设备关联**：通过 `device_id` 字段关联设备表，一个账号对应一个设备（注意设备的均匀分布）
 - **索引**：
+  - `uk_device_id`：设备ID唯一索引（确保一个设备只能关联一个账号）
   - `idx_platform_code`：平台编码索引
   - `idx_execution_status`：执行状态索引
-  - `idx_device_id`：设备ID索引
   - `idx_status`：状态索引
   - `idx_is_auto_assign`：是否自动分配索引
 - **业务逻辑**：
