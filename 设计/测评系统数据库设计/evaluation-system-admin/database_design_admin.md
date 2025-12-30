@@ -60,6 +60,7 @@
   - `device_id`：设备ID（关联设备表的device_id，一对一关系）
   - `is_auto_assign`：是否自动分配（0-否，1-是）
   - `execution_status`：执行状态（0-空闲，1-执行中）
+  - `execution_start_time`：执行开始时间（执行状态变为执行中时记录，用于检测超时）
   - `status`：状态（0-禁用，1-启用）
 - **订单类型关联**：通过 `bt_review_account_order_type` 关联表支持一个账号关联多个订单类型
 - **设备关联**：通过 `device_id` 字段关联设备表，一个账号对应一个设备（注意设备的均匀分布）
@@ -67,12 +68,21 @@
   - `uk_device_id`：设备ID唯一索引（确保一个设备只能关联一个账号）
   - `idx_platform_code`：平台编码索引
   - `idx_execution_status`：执行状态索引
+  - `idx_execution_start_time`：执行开始时间索引（用于查询超时的执行中账号）
+  - `idx_execution_status_start_time`：执行状态和执行开始时间联合索引（用于高效查询超时的执行中账号）
   - `idx_status`：状态索引
   - `idx_is_auto_assign`：是否自动分配索引
 - **业务逻辑**：
   - **自动分配**：定时任务检查待执行的明细订单，根据账号的订单类型匹配、是否自动分配等配置，自动分配执行（队列里的顺序要店铺均分排序）
   - **人工处理**：点击人工处理按钮，进入人工处理状态，可以回填处理，直接修改实际成交订单、付款信息、付款人等
   - **账号执行状态**：记录账号是否正在执行任务中
+  - **执行开始时间**：当账号状态变为执行中时，记录执行开始时间
+  - **超时检测与自动释放**：
+    - 定时任务（建议每1分钟执行一次）检查所有 `execution_status=1`（执行中）的账号
+    - 如果 `execution_start_time` 距离当前时间超过设定的超时时间（如30分钟），则认为执行超时
+    - 自动将超时的账号状态恢复为 `0`（空闲），清空 `execution_start_time`
+    - 恢复SQL示例：`UPDATE bt_review_account SET execution_status=0, execution_start_time=NULL WHERE execution_status=1 AND execution_start_time < DATE_SUB(NOW(), INTERVAL 30 MINUTE)`
+    - 这样可以防止执行中状态长时间未释放，导致业务场景不能正常进行
   - **任务队列**：可以查看账号的任务队列情况（后续可能支持人工调整顺序）
 
 #### 3.2.2 账号订单类型关联表 (bt_review_account_order_type)

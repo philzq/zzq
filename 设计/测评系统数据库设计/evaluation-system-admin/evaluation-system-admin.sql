@@ -48,6 +48,7 @@ CREATE TABLE `bt_review_account` (
   `device_id` varchar(100) DEFAULT NULL COMMENT '设备ID（关联设备表的device_id）',
   `is_auto_assign` tinyint(1) DEFAULT 1 COMMENT '是否自动分配：0-否，1-是',
   `execution_status` tinyint(1) DEFAULT 0 COMMENT '执行状态：0-空闲，1-执行中',
+  `execution_start_time` datetime DEFAULT NULL COMMENT '执行开始时间（执行状态变为执行中时记录，用于检测超时）',
   `status` tinyint(1) DEFAULT 1 COMMENT '状态：0-禁用，1-启用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
@@ -58,6 +59,8 @@ CREATE TABLE `bt_review_account` (
   UNIQUE KEY `uk_device_id` (`device_id`),
   KEY `idx_platform_code` (`platform_code`),
   KEY `idx_execution_status` (`execution_status`),
+  KEY `idx_execution_start_time` (`execution_start_time`),
+  KEY `idx_execution_status_start_time` (`execution_status`, `execution_start_time`),
   KEY `idx_status` (`status`),
   KEY `idx_is_auto_assign` (`is_auto_assign`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测评账号表-后台管理系统';
