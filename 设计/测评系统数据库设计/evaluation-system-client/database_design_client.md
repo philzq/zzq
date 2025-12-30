@@ -169,6 +169,8 @@
   - `main_image_url`：产品主图URL（冗余字段，冗余bt_product表）
   - `selling_price`：售价（冗余字段，冗余bt_product表）
   - `order_status`：订单状态（0-待开始，1-待分配，2-进行中，3-待确认，4-已完成）
+  - `account_assign_result`：账号分配结果（0-失败，1-成功）
+  - `account_assign_result_desc`：账号分配结果描述
   - `platform_order_no`：平台订单号
   - `express_company`：快递公司
   - `tracking_number`：物流单号
@@ -198,6 +200,7 @@
   - `idx_operation_scene`：操作场景索引
   - `idx_execution_result`：执行结果索引
   - `idx_order_account`：下单账号索引
+  - `idx_account_assign_result`：账号分配结果索引
 - **业务逻辑**：
   - **填写订单**：支持多种填写方式
     - 某一天，单一产品的订单信息，提交产品的关键词和测评订单类型可能不一样

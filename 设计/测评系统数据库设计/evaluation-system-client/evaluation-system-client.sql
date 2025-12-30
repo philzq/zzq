@@ -161,6 +161,8 @@ CREATE TABLE `bt_order` (
   `main_image_url` varchar(1000) DEFAULT NULL COMMENT '产品主图URL（冗余字段）',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '售价（冗余字段）',
   `order_status` tinyint(1) DEFAULT 0 COMMENT '订单状态：0-待开始，1-待分配，2-进行中，3-待确认，4-已完成',
+  `account_assign_result` tinyint(1) DEFAULT NULL COMMENT '账号分配结果：0-失败，1-成功',
+  `account_assign_result_desc` varchar(500) DEFAULT NULL COMMENT '账号分配结果描述',
   `platform_order_no` varchar(200) DEFAULT NULL COMMENT '平台订单号',
   `express_company` varchar(100) DEFAULT NULL COMMENT '快递公司',
   `tracking_number` varchar(200) DEFAULT NULL COMMENT '物流单号',
@@ -194,7 +196,8 @@ CREATE TABLE `bt_order` (
   KEY `idx_execution_date` (`execution_date`),
   KEY `idx_operation_scene` (`operation_scene`),
   KEY `idx_execution_result` (`execution_result`),
-  KEY `idx_order_account` (`order_account`)
+  KEY `idx_order_account` (`order_account`),
+  KEY `idx_account_assign_result` (`account_assign_result`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表-测评系统';
 
 -- ============================================
