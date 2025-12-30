@@ -179,7 +179,8 @@
   - `order_account`：下单账号
   - `device_id`：设备ID
   - `keyword`：关键词
-  - `click_count`：点击数量
+  - `planned_click_count`：计划点击次数
+  - `actual_click_count`：实际点击次数
   - `cart_count`：加购数量
   - `planned_execution_date`：计划执行日期
   - `execution_time`：执行时间
