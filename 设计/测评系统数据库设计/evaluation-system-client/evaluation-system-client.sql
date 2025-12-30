@@ -39,7 +39,7 @@ CREATE TABLE `bt_platform` (
 DROP TABLE IF EXISTS `bt_order_type`;
 CREATE TABLE `bt_order_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `operation_scene` varchar(100) DEFAULT NULL COMMENT '操作场景：测评、点击、加购',
+  `operation_scene` tinyint(1) DEFAULT NULL COMMENT '操作场景：0-测评，1-点击，2-加购',
   `first_level_type_name` varchar(100) DEFAULT NULL COMMENT '一级类型名称',
   `second_level_type_name` varchar(100) DEFAULT NULL COMMENT '二级类型名称',
   `commission_type` varchar(50) DEFAULT 'percentage' COMMENT '佣金计算方式：percentage-按比例，fixed-固定金额',
@@ -152,7 +152,7 @@ CREATE TABLE `bt_order` (
   `platform_code` varchar(50) NOT NULL COMMENT '平台编码（关联后台系统的bt_platform表的platform_code）',
   `platform_name` varchar(100) DEFAULT NULL COMMENT '平台名称（冗余字段）',
   `order_type_id` bigint(20) NOT NULL COMMENT '订单类型ID（关联后台系统）',
-  `operation_scene` varchar(100) DEFAULT NULL COMMENT '操作场景（冗余字段，冗余bt_order_type表）：测评、点击、加购',
+  `operation_scene` tinyint(1) DEFAULT NULL COMMENT '操作场景（冗余字段，冗余bt_order_type表）：0-测评，1-点击，2-加购',
   `first_level_type_name` varchar(100) DEFAULT NULL COMMENT '一级类型名称（冗余字段，冗余bt_order_type表）',
   `second_level_type_name` varchar(100) DEFAULT NULL COMMENT '二级类型名称（冗余字段，冗余bt_order_type表）',
   `product_title` varchar(500) DEFAULT NULL COMMENT '产品标题（冗余字段）',

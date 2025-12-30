@@ -53,7 +53,7 @@
 - **业务说明**：存储订单类型信息，对应思维导图中的"费用等基础参数维护-订单类型维护"
 - **客户权限**：查看订单类型列表
 - **字段说明**：
-  - `operation_scene`：操作场景（测评、点击、加购）
+  - `operation_scene`：操作场景（0-测评，1-点击，2-加购）
   - `first_level_type_name`：一级类型名称
   - `second_level_type_name`：二级类型名称
   - `commission_type`：佣金计算方式（percentage-按比例，fixed-固定金额）
@@ -160,7 +160,7 @@
   - `platform_code`：平台编码（关联本系统的bt_platform表的platform_code）
   - `platform_name`：平台名称（冗余字段，冗余bt_platform表）
   - `order_type_id`：订单类型ID（关联本系统的bt_order_type表）
-  - `operation_scene`：操作场景（冗余字段，冗余bt_order_type表）：测评、点击、加购
+  - `operation_scene`：操作场景（冗余字段，冗余bt_order_type表）：0-测评，1-点击，2-加购
   - `first_level_type_name`：一级类型名称（冗余字段，冗余bt_order_type表）
   - `second_level_type_name`：二级类型名称（冗余字段，冗余bt_order_type表）
   - `product_title`：产品标题（冗余字段，冗余bt_product表）
