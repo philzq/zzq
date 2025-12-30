@@ -43,7 +43,7 @@
         <mxCell id="28Qrqp1_BVMfj95m7a_z-48" value="订单类型查询" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="W3W5jNinrp9ji7i6E5AB-6">
           <mxGeometry x="75" y="4690" width="100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="28Qrqp1_BVMfj95m7a_z-85" value="邮箱登录" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="W3W5jNinrp9ji7i6E5AB-6">
+        <mxCell id="28Qrqp1_BVMfj95m7a_z-85" value="邮箱登录/密码找回/首次登录修改密码" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="W3W5jNinrp9ji7i6E5AB-6">
           <mxGeometry x="65" y="5150" width="100" height="60" as="geometry" />
         </mxCell>
         <mxCell id="W3W5jNinrp9ji7i6E5AB-5" value="内部用户（管理员/员工）" style="swimlane;startSize=20;" parent="W3W5jNinrp9ji7i6E5AB-1" vertex="1">
@@ -257,7 +257,7 @@
         <mxCell id="28Qrqp1_BVMfj95m7a_z-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="W3W5jNinrp9ji7i6E5AB-2" source="28Qrqp1_BVMfj95m7a_z-4" target="28Qrqp1_BVMfj95m7a_z-13">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="28Qrqp1_BVMfj95m7a_z-86" value="邮箱登录" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="W3W5jNinrp9ji7i6E5AB-2">
+        <mxCell id="28Qrqp1_BVMfj95m7a_z-86" value="邮箱登录/密码找回/首次登录修改密码" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="W3W5jNinrp9ji7i6E5AB-2">
           <mxGeometry x="113" y="5150" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="W3W5jNinrp9ji7i6E5AB-3" value="evaluation-system-admin" style="swimlane;startSize=20;" parent="W3W5jNinrp9ji7i6E5AB-1" vertex="1">
