@@ -128,7 +128,6 @@ CREATE TABLE `bt_order_batch` (
   `actual_amount` decimal(10,2) DEFAULT NULL COMMENT '实际金额',
   `currency` varchar(10) DEFAULT 'KRW' COMMENT '币种',
   `batch_text_content` longtext DEFAULT NULL COMMENT '批次文本内容（记录提交的完整数据）',
-  `is_allocation_complete` tinyint(1) DEFAULT 0 COMMENT '订单是否分配完成：0-未分配完成，1-已分配完成',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -136,8 +135,7 @@ CREATE TABLE `bt_order_batch` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_tenant_id` (`tenant_id`),
-  KEY `idx_batch_order_status` (`batch_order_status`),
-  KEY `idx_is_allocation_complete` (`is_allocation_complete`)
+  KEY `idx_batch_order_status` (`batch_order_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='批次订单表-测评系统';
 
 -- 订单表（客户填写）
