@@ -171,6 +171,7 @@
   - `order_status`：订单状态（0-待开始，1-待分配，2-进行中，3-待确认，4-已完成）
   - `account_assign_result`：账号分配结果（0-失败，1-成功）
   - `account_assign_result_desc`：账号分配结果描述
+  - `account_assign_time`：账号分配时间
   - `platform_order_no`：平台订单号
   - `express_company`：快递公司
   - `tracking_number`：物流单号
@@ -180,7 +181,8 @@
   - `keyword`：关键词
   - `click_count`：点击数量
   - `cart_count`：加购数量
-  - `execution_date`：执行日期
+  - `planned_execution_date`：计划执行日期
+  - `execution_time`：执行时间
   - `review_text_content`：评论文字内容
   - `review_image_content`：评论图片内容
   - `execution_result`：执行结果（0-失败，1-成功）
@@ -196,7 +198,7 @@
   - `idx_order_type_id`：订单类型ID索引
   - `idx_platform_order_no`：平台订单号索引
   - `idx_device_id`：设备ID索引
-  - `idx_execution_date`：执行日期索引
+  - `idx_planned_execution_date`：计划执行日期索引
   - `idx_operation_scene`：操作场景索引
   - `idx_execution_result`：执行结果索引
   - `idx_order_account`：下单账号索引
@@ -308,7 +310,7 @@
 所有关键查询字段都已建立索引，包括：
 - 外键字段索引（tenant_id、order_batch_id、product_id、store_id等）
 - 状态字段索引（status、order_status、batch_order_status等）
-- 日期字段索引（execution_date等）
+- 日期字段索引（planned_execution_date-计划执行日期等）
 - 业务查询字段索引（platform_code、platform_order_no、device_id、operation_scene等）
 
 索引设计遵循以下原则：
