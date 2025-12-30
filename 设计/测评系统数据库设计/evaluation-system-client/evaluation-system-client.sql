@@ -160,7 +160,7 @@ CREATE TABLE `bt_order` (
   `attribute_name` varchar(200) DEFAULT NULL COMMENT '属性名称（冗余字段）',
   `main_image_url` varchar(1000) DEFAULT NULL COMMENT '产品主图URL（冗余字段）',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '售价（冗余字段）',
-  `order_status` tinyint(1) DEFAULT 0 COMMENT '订单状态：0-待开始，1-进行中，2-待确认，3-已完成',
+  `order_status` tinyint(1) DEFAULT 0 COMMENT '订单状态：0-待开始，1-待分配，2-进行中，3-待确认，4-已完成',
   `platform_order_no` varchar(200) DEFAULT NULL COMMENT '平台订单号',
   `express_company` varchar(100) DEFAULT NULL COMMENT '快递公司',
   `tracking_number` varchar(200) DEFAULT NULL COMMENT '物流单号',

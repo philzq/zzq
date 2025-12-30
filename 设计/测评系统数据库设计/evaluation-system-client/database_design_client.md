@@ -168,7 +168,7 @@
   - `attribute_name`：属性名称（冗余字段，冗余bt_product表）
   - `main_image_url`：产品主图URL（冗余字段，冗余bt_product表）
   - `selling_price`：售价（冗余字段，冗余bt_product表）
-  - `order_status`：订单状态（0-待开始，1-进行中，2-待确认，3-已完成）
+  - `order_status`：订单状态（0-待开始，1-待分配，2-进行中，3-待确认，4-已完成）
   - `platform_order_no`：平台订单号
   - `express_company`：快递公司
   - `tracking_number`：物流单号
@@ -214,9 +214,10 @@
 
 #### 3.6.1 订单查询视图
 - **待开始订单**：提前填写，但还未到日期开始（order_status = 0）
-- **进行中订单**：当天订单，订单任务已经分配（order_status = 1）
-- **待确认订单**：还未上评的订单（order_status = 2）
-- **已完成订单**：订单已经评价完毕，订单终结（order_status = 3）
+- **待分配订单**：已到执行日期，等待分配执行账号（order_status = 1）
+- **进行中订单**：订单任务已经分配，正在执行中（order_status = 2）
+- **待确认订单**：还未上评的订单（order_status = 3）
+- **已完成订单**：订单已经评价完毕，订单终结（order_status = 4）
   - 包含成交订单号、实际成交价格等返回信息
 - **批次订单**：查看批次订单汇总
 - **明细订单**：查看订单详情
