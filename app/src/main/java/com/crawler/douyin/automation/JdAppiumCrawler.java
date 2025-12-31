@@ -201,21 +201,18 @@ public class JdAppiumCrawler {
             
             // 点击搜索按钮
             try {
-                WebElement searchButton = driver.findElement(SEARCH_BUTTON);
-                searchButton.click();
-            } catch (NoSuchElementException e) {
-                // 如果没有搜索按钮，尝试点击键盘的搜索/确认按钮
-                try {
-                    // 使用adb命令模拟回车键
-                    ((AndroidDriver) driver).executeScript("mobile: shell", java.util.Map.of(
-                        "command", "input",
-                        "args", java.util.List.of("keyevent", "66")  // KEYCODE_ENTER = 66
-                    ));
-                } catch (Exception ex) {
-                    logger.warn("无法执行搜索操作，请手动点击搜索按钮");
-                    // 等待用户手动操作或使用其他方法
-                    randomDelay(2000, 3000);
+                List<WebElement> searchButtons = driver.findElements(SEARCH_BUTTON);
+                if (!searchButtons.isEmpty()) {
+                    searchButtons.get(0).click();
+                } else {
+                    // 如果找不到搜索按钮，尝试点击屏幕上的"搜索"文本
+                    WebElement searchText = driver.findElement(By.xpath("//android.widget.TextView[@text='搜索']"));
+                    searchText.click();
                 }
+            } catch (NoSuchElementException e) {
+                logger.warn("未找到搜索按钮，等待用户手动操作或尝试其他方式");
+                // 等待一段时间，可能需要手动点击搜索按钮
+                randomDelay(2000, 3000);
             }
             
             randomDelay(2000, 3000);
