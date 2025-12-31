@@ -1,6 +1,6 @@
-# 今日头条APP自动化爬虫Demo
+# 京东APP自动化爬虫Demo
 
-这是一个使用Java + Appium实现的今日头条Android APP自动化爬虫demo项目，通过模拟用户行为（滑动、点击等）来操作今日头条APP并获取文章信息。
+这是一个使用Java + Appium实现的京东Android APP自动化爬虫demo项目，通过模拟用户行为（滑动、点击、搜索等）来操作京东APP并获取商品信息。
 
 ## 技术栈
 
@@ -23,11 +23,11 @@ app/
 │       │           └── douyin/
 │       │               ├── Main.java                    # 主程序入口
 │       │               ├── automation/
-│       │               │   └── ToutiaoAppiumCrawler.java # Appium自动化操作类
+│       │               │   └── JdAppiumCrawler.java     # Appium自动化操作类
 │       │               ├── config/
 │       │               │   └── AppiumConfig.java        # Appium配置类
 │       │               └── model/
-│       │                   └── ArticleInfo.java         # 文章信息模型
+│       │                   └── ProductInfo.java         # 商品信息模型
 │       └── resources/
 │           └── logback.xml                              # 日志配置
 ├── docs/
@@ -39,11 +39,12 @@ app/
 ## 功能特性
 
 - ✅ 通过Appium控制真实Android设备
-- ✅ 模拟用户行为（滑动、点击等）
-- ✅ 自动获取文章信息（标题、作者、阅读数、评论数等）
-- ✅ 支持批量爬取多篇文章
+- ✅ 模拟用户行为（滑动、点击、搜索等）
+- ✅ 自动获取商品信息（名称、价格、店铺、评价数等）
+- ✅ 支持搜索商品功能
+- ✅ 支持批量爬取多个商品
 - ✅ 更接近真实用户行为，不易被检测
-- ✅ 支持点击文章查看详情等操作
+- ✅ 支持点击商品查看详情等操作
 
 ## 快速开始
 
@@ -85,22 +86,23 @@ app/
 
 ### 核心类说明
 
-1. **ToutiaoAppiumCrawler** - Appium自动化操作类
-   - `initDriver()` - 初始化Appium驱动，启动今日头条APP
-   - `crawlArticles(int count)` - 滑动并爬取多篇文章
-   - `getCurrentArticles()` - 获取当前可见的文章列表
-   - `getArticleDetail()` - 获取文章详情页信息
-   - `clickArticle(String title)` - 点击文章进入详情页
+1. **JdAppiumCrawler** - Appium自动化操作类
+   - `initDriver()` - 初始化Appium驱动，启动京东APP
+   - `searchProduct(String keyword)` - 搜索商品
+   - `crawlProducts(int count)` - 滑动并爬取多个商品
+   - `getCurrentProducts()` - 获取当前可见的商品列表
+   - `getProductDetail()` - 获取商品详情页信息
+   - `clickProduct(String title)` - 点击商品进入详情页
    - `swipeUp()` / `swipeDown()` - 滑动页面
-   - `clickHomeTab()` - 点击首页标签
+   - `clickHomeTab()` / `clickCategoryTab()` - 点击底部标签
    - `goBack()` - 返回上一页
 
 2. **AppiumConfig** - Appium配置类
    - 配置Appium服务器地址、设备信息等
-   - 默认配置今日头条APP包名和Activity
+   - 默认配置京东APP包名和Activity
 
-3. **ArticleInfo** - 文章信息数据模型
-   - 包含文章ID、标题、作者、阅读数、评论数、点赞数等字段
+3. **ProductInfo** - 商品信息数据模型
+   - 包含商品ID、名称、价格、店铺、评价数、销量等字段
 
 ### 使用示例
 
@@ -111,22 +113,25 @@ config.setServerUrl("http://127.0.0.1:4723");
 config.setPlatformVersion("11.0");
 
 // 创建Appium爬虫实例
-ToutiaoAppiumCrawler crawler = new ToutiaoAppiumCrawler(config);
+JdAppiumCrawler crawler = new JdAppiumCrawler(config);
 
 try {
-    // 初始化驱动（会启动今日头条APP）
+    // 初始化驱动（会启动京东APP）
     crawler.initDriver();
     
-    // 获取当前可见的文章列表
-    List<ArticleInfo> articles = crawler.getCurrentArticles();
+    // 搜索商品
+    crawler.searchProduct("手机");
     
-    // 滑动并爬取多篇文章
-    List<ArticleInfo> articleList = crawler.crawlArticles(10);
+    // 获取当前可见的商品列表
+    List<ProductInfo> products = crawler.getCurrentProducts();
     
-    // 点击文章查看详情
-    if (!articleList.isEmpty()) {
-        crawler.clickArticle(articleList.get(0).getTitle());
-        ArticleInfo detail = crawler.getArticleDetail();
+    // 滑动并爬取多个商品
+    List<ProductInfo> productList = crawler.crawlProducts(10);
+    
+    // 点击商品查看详情
+    if (!productList.isEmpty()) {
+        crawler.clickProduct(productList.get(0).getTitle());
+        ProductInfo detail = crawler.getProductDetail();
         crawler.goBack();
     }
     
@@ -142,10 +147,11 @@ try {
 1. **合法性**：仅用于学习研究，遵守法律法规
 2. **设备准备**：需要Android设备（真实手机或模拟器）已连接
 3. **Appium服务器**：运行前必须启动Appium服务器
-4. **APP更新**：今日头条APP更新后，元素ID可能变化，需要使用Appium Inspector查看并更新代码
+4. **APP更新**：京东APP更新后，元素ID可能变化，需要使用Appium Inspector查看并更新代码
 5. **频率控制**：不要操作过快，避免被限制
 6. **稳定性**：网络波动、APP加载慢等情况可能影响稳定性
 7. **元素定位**：代码中使用XPath定位，如果定位失败，请使用Appium Inspector查看实际元素结构
+8. **包名确认**：京东APP包名为 `com.jingdong.app.mall`，如果连接失败请确认APP已正确安装
 
 ## 常见问题
 

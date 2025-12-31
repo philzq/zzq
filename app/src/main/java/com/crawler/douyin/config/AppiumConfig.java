@@ -31,14 +31,14 @@ public class AppiumConfig {
     private String deviceName = "Android Device";
     
     /**
-     * APP包名（今日头条包名）
+     * APP包名（京东APP包名）
      */
-    private String appPackage = "com.ss.android.article.news";
+    private String appPackage = "com.jingdong.app.mall";
     
     /**
      * APP启动Activity
      */
-    private String appActivity = ".activity.MainActivity";
+    private String appActivity = ".activity.MainFrameActivity";
     
     /**
      * 命令超时时间（秒）

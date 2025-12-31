@@ -1,16 +1,16 @@
 package com.crawler.douyin;
 
-import com.crawler.douyin.automation.ToutiaoAppiumCrawler;
+import com.crawler.douyin.automation.JdAppiumCrawler;
 import com.crawler.douyin.config.AppiumConfig;
-import com.crawler.douyin.model.ArticleInfo;
+import com.crawler.douyin.model.ProductInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 /**
- * 今日头条APP自动化爬虫Demo主程序入口
- * 通过Appium模拟用户行为（滑动、点击等）来爬取今日头条文章
+ * 京东APP自动化爬虫Demo主程序入口
+ * 通过Appium模拟用户行为（滑动、点击、搜索等）来操作京东APP并获取商品信息
  * 
  * @author crawler
  */
@@ -18,7 +18,7 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.info("今日头条APP自动化爬虫Demo启动...");
+        logger.info("京东APP自动化爬虫Demo启动...");
 
         AppiumConfig config = new AppiumConfig();
         
@@ -28,56 +28,61 @@ public class Main {
         config.setPlatformVersion("11.0");  // Android版本
         config.setDeviceName("Android Device");
         
-        ToutiaoAppiumCrawler crawler = new ToutiaoAppiumCrawler(config);
+        JdAppiumCrawler crawler = new JdAppiumCrawler(config);
 
         try {
-            // 初始化Appium驱动（会启动今日头条APP）
+            // 初始化Appium驱动（会启动京东APP）
             logger.info("正在初始化Appium连接...");
             crawler.initDriver();
-            logger.info("Appium连接成功，今日头条APP已启动");
+            logger.info("Appium连接成功，京东APP已启动");
 
             // 等待APP完全加载
             Thread.sleep(5000);
 
-            // 示例1：获取当前可见的文章列表
-            logger.info("=== 示例1：获取当前可见的文章列表 ===");
-            List<ArticleInfo> currentArticles = crawler.getCurrentArticles();
-            logger.info("当前可见文章数: {}", currentArticles.size());
-            for (ArticleInfo article : currentArticles) {
-                logger.info("文章标题: {}", article.getTitle());
-                logger.info("  作者: {}", article.getAuthor());
-                logger.info("  阅读数: {}", article.getReadCount());
-                logger.info("  评论数: {}", article.getCommentCount());
+            // 示例1：搜索商品
+            logger.info("=== 示例1：搜索商品 ===");
+            crawler.searchProduct("手机");
+            Thread.sleep(3000);
+
+            // 示例2：获取当前可见的商品列表
+            logger.info("=== 示例2：获取当前可见的商品列表 ===");
+            List<ProductInfo> currentProducts = crawler.getCurrentProducts();
+            logger.info("当前可见商品数: {}", currentProducts.size());
+            for (ProductInfo product : currentProducts) {
+                logger.info("商品名称: {}", product.getTitle());
+                logger.info("  价格: {}", product.getPrice());
+                logger.info("  店铺: {}", product.getShopName());
+                logger.info("  评价数: {}", product.getCommentCount());
                 logger.info("---");
             }
             
             Thread.sleep(2000);
 
-            // 示例2：滑动并爬取多个文章
-            logger.info("=== 示例2：滑动并爬取10篇文章 ===");
-            List<ArticleInfo> articleList = crawler.crawlArticles(10);
+            // 示例3：滑动并爬取多个商品
+            logger.info("=== 示例3：滑动并爬取10个商品 ===");
+            List<ProductInfo> productList = crawler.crawlProducts(10);
             
-            if (articleList != null && !articleList.isEmpty()) {
-                logger.info("成功爬取 {} 篇文章", articleList.size());
-                for (int i = 0; i < articleList.size(); i++) {
-                    ArticleInfo article = articleList.get(i);
-                    logger.info("文章 {}:", i + 1);
-                    logger.info("  标题: {}", article.getTitle());
-                    logger.info("  作者: {}", article.getAuthor());
-                    logger.info("  阅读数: {}", article.getReadCount());
-                    logger.info("  评论数: {}", article.getCommentCount());
+            if (productList != null && !productList.isEmpty()) {
+                logger.info("成功爬取 {} 个商品", productList.size());
+                for (int i = 0; i < productList.size(); i++) {
+                    ProductInfo product = productList.get(i);
+                    logger.info("商品 {}:", i + 1);
+                    logger.info("  名称: {}", product.getTitle());
+                    logger.info("  价格: {}", product.getPrice());
+                    logger.info("  店铺: {}", product.getShopName());
+                    logger.info("  评价数: {}", product.getCommentCount());
                     logger.info("---");
                 }
             } else {
                 logger.warn("未爬取到数据");
             }
 
-            // 示例3：点击文章进入详情页（可选）
-            // logger.info("=== 示例3：点击文章查看详情 ===");
-            // if (!articleList.isEmpty()) {
-            //     crawler.clickArticle(articleList.get(0).getTitle());
-            //     ArticleInfo detail = crawler.getArticleDetail();
-            //     logger.info("文章详情: {}", detail);
+            // 示例4：点击商品查看详情（可选）
+            // logger.info("=== 示例4：点击商品查看详情 ===");
+            // if (!productList.isEmpty()) {
+            //     crawler.clickProduct(productList.get(0).getTitle());
+            //     ProductInfo detail = crawler.getProductDetail();
+            //     logger.info("商品详情: {}", detail);
             //     crawler.goBack();
             // }
 
