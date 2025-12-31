@@ -74,7 +74,10 @@ public class JdAppiumCrawler {
             }
             
             options.setAppPackage(config.getAppPackage());
-            options.setAppActivity(config.getAppActivity());
+            // 如果设置了Activity就使用，否则让Appium自动检测
+            if (config.getAppActivity() != null && !config.getAppActivity().isEmpty()) {
+                options.setAppActivity(config.getAppActivity());
+            }
             options.setNewCommandTimeout(Duration.ofSeconds(config.getNewCommandTimeout()));
             options.setNoReset(config.isNoReset());
             options.setSkipServerInstallation(config.isSkipServerInstallation());

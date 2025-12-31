@@ -37,8 +37,13 @@ public class AppiumConfig {
     
     /**
      * APP启动Activity
+     * 京东APP常用Activity：
+     * - .MainActivity（主Activity，推荐）
+     * - .activity.MainFrameActivity（主框架Activity）
+     * - .activity.SplashActivity（启动页Activity）
+     * 如果不确定，可以不设置或设为null，让Appium自动检测主Activity
      */
-    private String appActivity = ".activity.MainFrameActivity";
+    private String appActivity = ".MainActivity";
     
     /**
      * 命令超时时间（秒）
