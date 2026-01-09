@@ -1,0 +1,39 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+
+# 编译输出
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 分析结果
+analysis_*.json
+
+# 下载的图片
+downloads/
+
